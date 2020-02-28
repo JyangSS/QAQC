@@ -9,6 +9,9 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="Git.Rebase.Settings">
+    <option name="ONTO" value="refs/remotes/origin/master" />
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
     <option name="UPDATE_TYPE" value="MERGE" />
@@ -69,19 +72,20 @@
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="432" y="200" key="#com.intellij.ide.actions.ChooseComponentsToExportDialog/0.0.1366.728@0.0.1366.728" timestamp="1582273180157" />
-    <state x="-1029" y="0" key="CommitChangelistDialog2" timestamp="1582856180430">
+    <state x="-1029" y="0" key="CommitChangelistDialog2" timestamp="1582858076323">
       <screen x="-1366" y="0" width="1366" height="728" />
     </state>
-    <state x="-1029" y="0" key="CommitChangelistDialog2/0.0.1366.728/-1366.0.1366.728@-1366.0.1366.728" timestamp="1582856180430" />
+    <state x="-1029" y="0" key="CommitChangelistDialog2/0.0.1366.728/-1366.0.1366.728@-1366.0.1366.728" timestamp="1582858076323" />
     <state x="337" y="0" key="CommitChangelistDialog2/0.0.1366.728@0.0.1366.728" timestamp="1582273815919" />
     <state x="463" y="119" key="FileChooserDialogImpl" timestamp="1582772555079">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="463" y="119" key="FileChooserDialogImpl/0.0.1366.728/-1366.0.1366.728@0.0.1366.728" timestamp="1582265466335" />
     <state x="463" y="119" key="FileChooserDialogImpl/0.0.1366.728@0.0.1366.728" timestamp="1582772555079" />
-    <state x="553" y="257" key="Github.ShareDialog" timestamp="1582275766861">
-      <screen x="0" y="0" width="1366" height="728" />
+    <state x="-813" y="257" key="Github.ShareDialog" timestamp="1582858434505">
+      <screen x="-1366" y="0" width="1366" height="728" />
     </state>
+    <state x="-813" y="257" key="Github.ShareDialog/0.0.1366.728/-1366.0.1366.728@-1366.0.1366.728" timestamp="1582858434505" />
     <state x="553" y="257" key="Github.ShareDialog/0.0.1366.728@0.0.1366.728" timestamp="1582275766861" />
     <state x="-1182" y="6" key="SettingsEditor" timestamp="1582854709559">
       <screen x="-1366" y="0" width="1366" height="728" />
@@ -89,9 +93,25 @@
     <state x="-1182" y="6" key="SettingsEditor/0.0.1366.728/-1366.0.1366.728@-1366.0.1366.728" timestamp="1582854709559" />
     <state x="184" y="6" key="SettingsEditor/0.0.1366.728/-1366.0.1366.728@0.0.1366.728" timestamp="1582254497195" />
     <state x="184" y="6" key="SettingsEditor/0.0.1366.728@0.0.1366.728" timestamp="1582704968052" />
+    <state x="-917" y="68" key="VCS.ChangeListViewerDialog" timestamp="1582858022613">
+      <screen x="-1366" y="0" width="1366" height="728" />
+    </state>
+    <state x="-917" y="68" key="VCS.ChangeListViewerDialog/0.0.1366.728/-1366.0.1366.728@-1366.0.1366.728" timestamp="1582858022613" />
+    <state x="-1274" y="92" width="1182" height="544" key="com.intellij.history.integration.ui.views.FileHistoryDialog" timestamp="1582858051315">
+      <screen x="-1366" y="0" width="1366" height="728" />
+    </state>
+    <state x="-1274" y="92" width="1182" height="544" key="com.intellij.history.integration.ui.views.FileHistoryDialog/0.0.1366.728/-1366.0.1366.728@-1366.0.1366.728" timestamp="1582858051315" />
     <state x="-874" y="281" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1582855975201">
       <screen x="-1366" y="0" width="1366" height="728" />
     </state>
     <state x="-874" y="281" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1366.728/-1366.0.1366.728@-1366.0.1366.728" timestamp="1582855975201" />
+    <state x="-878" y="228" key="git4idea.rebase.GitRebaseDialog" timestamp="1582858023911">
+      <screen x="-1366" y="0" width="1366" height="728" />
+    </state>
+    <state x="-878" y="228" key="git4idea.rebase.GitRebaseDialog/0.0.1366.728/-1366.0.1366.728@-1366.0.1366.728" timestamp="1582858023911" />
+    <state x="-942" y="105" key="git4idea.rebase.GitRebaseEditor" timestamp="1582858034771">
+      <screen x="-1366" y="0" width="1366" height="728" />
+    </state>
+    <state x="-942" y="105" key="git4idea.rebase.GitRebaseEditor/0.0.1366.728/-1366.0.1366.728@-1366.0.1366.728" timestamp="1582858034771" />
   </component>
 </project>
