@@ -1,0 +1,53 @@
+{% extends 'accounts/base.html' %}
+{% block title %} Sign up {% endblock title %}
+{% load crispy_forms_tags %}
+{% crispy form form.helper %}
+{% block content %}
+
+<style>
+    .input-group.is-invalid {
+  ~ .invalid-feedback {
+    display: none;
+  }
+}
+
+
+</style>
+<div class="content-section" style="margin-top:80px">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card jumbotron">
+            <div class="border-bottom mb-4"><h2 style="text-align:center">Create an account</h2></div>
+            <article class="card-body">
+                {% crispy form %}
+                <script>
+                        $("#id_branch").change(function () {
+                          var branchId = $(this).val();
+
+                          $.ajax({
+                            url: "{% url 'accounts:ajax_load_department' %}",
+                            data: {
+                              'branch': branchId
+                            },
+                            success: function (data) {
+                              $("#id_department").html(data);
+                            }
+                          });
+
+                        });
+
+                        $(document).ready(function(){
+                            $( "#submit-id-submit" ).removeClass( "btn-primary" );
+                        });
+                </script>
+            </article>
+
+            <div class="border-top pt-3" style="text-align:center">
+                <small class="text-muted">Have an account? <a class="ml-2" href="{% url 'accounts:login' %}">Login</a></small>
+            </div>
+</div>
+</div>
+ </div>
+</div>
+
+{% endblock content %}

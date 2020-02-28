@@ -4,6 +4,7 @@
     <list default="true" id="93c6f6a3-dc02-4e25-b928-470c71be76f4" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/QAQC/QAQC/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/source/QAQC/QAQC/urls.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -32,6 +33,14 @@
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\wong_jy\Dev\QAQC\source\QAQC" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\wong_jy\Dev\QAQC" />
+    </key>
+  </component>
   <component name="SvnConfiguration">
     <configuration />
   </component>
@@ -45,19 +54,38 @@
     </task>
     <servers />
   </component>
+  <component name="VcsManagerConfiguration">
+    <ignored-roots>
+      <path value="$PROJECT_DIR$/QaQc" />
+    </ignored-roots>
+  </component>
   <component name="WindowStateProjectService">
+    <state x="275" y="22" key="#Notifications" timestamp="1582273930931">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state x="275" y="22" key="#Notifications/0.0.1366.728@0.0.1366.728" timestamp="1582273930931" />
     <state x="432" y="200" key="#com.intellij.ide.actions.ChooseComponentsToExportDialog" timestamp="1582273180157">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="432" y="200" key="#com.intellij.ide.actions.ChooseComponentsToExportDialog/0.0.1366.728@0.0.1366.728" timestamp="1582273180157" />
-    <state x="463" y="119" key="FileChooserDialogImpl" timestamp="1582265466335">
+    <state x="337" y="0" key="CommitChangelistDialog2" timestamp="1582273815919">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state x="337" y="0" key="CommitChangelistDialog2/0.0.1366.728@0.0.1366.728" timestamp="1582273815919" />
+    <state x="463" y="119" key="FileChooserDialogImpl" timestamp="1582772555079">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="463" y="119" key="FileChooserDialogImpl/0.0.1366.728/-1366.0.1366.728@0.0.1366.728" timestamp="1582265466335" />
-    <state x="184" y="6" key="SettingsEditor" timestamp="1582272270372">
+    <state x="463" y="119" key="FileChooserDialogImpl/0.0.1366.728@0.0.1366.728" timestamp="1582772555079" />
+    <state x="553" y="257" key="Github.ShareDialog" timestamp="1582275766861">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
+    <state x="553" y="257" key="Github.ShareDialog/0.0.1366.728@0.0.1366.728" timestamp="1582275766861" />
+    <state x="-1182" y="6" key="SettingsEditor" timestamp="1582854709559">
+      <screen x="-1366" y="0" width="1366" height="728" />
+    </state>
+    <state x="-1182" y="6" key="SettingsEditor/0.0.1366.728/-1366.0.1366.728@-1366.0.1366.728" timestamp="1582854709559" />
     <state x="184" y="6" key="SettingsEditor/0.0.1366.728/-1366.0.1366.728@0.0.1366.728" timestamp="1582254497195" />
-    <state x="184" y="6" key="SettingsEditor/0.0.1366.728@0.0.1366.728" timestamp="1582272270372" />
+    <state x="184" y="6" key="SettingsEditor/0.0.1366.728@0.0.1366.728" timestamp="1582704968052" />
   </component>
 </project>

@@ -39,6 +39,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'accounts.apps.AccountsConfig',
+    'generals.apps.GeneralsConfig',
+    'crispy_forms',
 ]
 
 MIDDLEWARE = [
@@ -78,8 +81,8 @@ WSGI_APPLICATION = 'QAQC.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'qaqc',
-        'USER': 'Yang',
+        'NAME': 'salesform',
+        'USER': 'Yan',
         'PASSWORD': 'killerb95',
         'HOST': '127.0.0.1',
         'PORT': '3306',
@@ -124,3 +127,5 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
+AUTH_USER_MODEL = 'accounts.Profile'
+LOGIN_URL = 'accounts:login'
