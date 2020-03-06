@@ -5,7 +5,7 @@ from .models import Profile
 def approve_user(modeladmin, request, queryset):
     for profile in queryset:
         profile.is_active = 'True'
-        profile.is_staff = 'True'#sadacca
+        profile.is_staff = 'True'
         if profile.is_superuser is not True:
             profile.is_superuser = False
         if profile.is_documentcontroller is not True:

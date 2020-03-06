@@ -25,7 +25,7 @@ SECRET_KEY = '7qv=xjuz8ob4av=3@@rf6#^q60inoa&7b5ae91a*03_q2i$ks+'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -81,11 +81,11 @@ WSGI_APPLICATION = 'QAQC.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'salesform',
-        'USER': 'Yan',
-        'PASSWORD': 'killerb95',
-        'HOST': '127.0.0.1',
-        'PORT': '3306',
+        'NAME': 'qaqc(master)',
+        'USER': 'root',
+        'PASSWORD': '',
+        'HOST': '',
+        'PORT': '',
         'OPTIONS': {'autocommit': True}
     },
 }
