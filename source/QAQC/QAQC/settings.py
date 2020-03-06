@@ -15,7 +15,6 @@ import os
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
@@ -26,7 +25,6 @@ SECRET_KEY = '7qv=xjuz8ob4av=3@@rf6#^q60inoa&7b5ae91a*03_q2i$ks+'
 DEBUG = True
 
 ALLOWED_HOSTS = ['*']
-
 
 # Application definition
 
@@ -42,7 +40,11 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'accounts.apps.AccountsConfig',
     'generals.apps.GeneralsConfig',
+    'widget_tweaks',
     'crispy_forms',
+    'ckeditor',
+    'ckeditor_uploader',
+
 ]
 
 MIDDLEWARE = [
@@ -75,14 +77,13 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'QAQC.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'qaqc/master',
+        'NAME': 'qaqc(master)',
         'USER': 'root',
         'PASSWORD': '',
         'HOST': '',
@@ -109,20 +110,18 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/3.0/topics/i18n/
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Kuala_Lumpur'
 
 USE_I18N = True
 
 USE_L10N = True
 
-USE_TZ = True
-
+USE_TZ = False
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
@@ -130,3 +129,29 @@ USE_TZ = True
 STATIC_URL = '/static/'
 AUTH_USER_MODEL = 'accounts.Profile'
 LOGIN_URL = 'accounts:login'
+
+CKEDITOR_JQUERY_URL = 'https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js'
+CKEDITOR_UPLOAD_PATH = 'uploads/'
+CKEDITOR_IMAGE_BACKEND = 'pillow'
+
+STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+AUTH_USER_MODEL = 'accounts.Profile'
+LOGIN_URL = 'accounts:login'
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+CKEDITOR_JQUERY_URL = 'https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js'
+
+CKEDITOR_UPLOAD_PATH = 'uploads/'
+CKEDITOR_IMAGE_BACKEND = "pillow"
+
+CKEDITOR_CONFIGS = {
+    'default': {
+
+        'toolbar': 'full',
+        'width': 'auto',
+    },
+}
