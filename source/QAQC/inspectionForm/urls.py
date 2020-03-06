@@ -6,5 +6,5 @@ app_name = 'inspectionForm'
 
 
 urlpatterns = [
-
+    path('test/', views.createObject, name='test'),
 ]
