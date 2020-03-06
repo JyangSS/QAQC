@@ -81,7 +81,7 @@ WSGI_APPLICATION = 'QAQC.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'qaqc(master)',
+        'NAME': 'qaqc/master',
         'USER': 'root',
         'PASSWORD': '',
         'HOST': '',
