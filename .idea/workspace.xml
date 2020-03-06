@@ -33,14 +33,14 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../sales_form" />
-    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
+    <property name="settings.editor.selected.configurable" value="vcs.Git" />
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\wong_jy\Dev\QAQC\source\QAQC" />
-    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\wong_jy\Dev\QAQC" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\wong_jy\Dev\QAQC\source\QAQC" />
     </key>
   </component>
   <component name="SvnConfiguration">
@@ -95,12 +95,12 @@
     </state>
     <state x="-813" y="257" key="Github.ShareDialog/0.0.1366.728/-1366.0.1366.728@-1366.0.1366.728" timestamp="1582858726018" />
     <state x="553" y="257" key="Github.ShareDialog/0.0.1366.728@0.0.1366.728" timestamp="1582275766861" />
-    <state x="184" y="0" key="SettingsEditor" timestamp="1583479224659">
+    <state x="184" y="0" key="SettingsEditor" timestamp="1583480668226">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="-1182" y="6" key="SettingsEditor/0.0.1366.728/-1366.0.1366.728@-1366.0.1366.728" timestamp="1582854709559" />
     <state x="184" y="6" key="SettingsEditor/0.0.1366.728/-1366.0.1366.728@0.0.1366.728" timestamp="1582254497195" />
-    <state x="184" y="0" key="SettingsEditor/0.0.1366.728@0.0.1366.728" timestamp="1583479224659" />
+    <state x="184" y="0" key="SettingsEditor/0.0.1366.728@0.0.1366.728" timestamp="1583480668226" />
     <state x="-917" y="68" key="VCS.ChangeListViewerDialog" timestamp="1582858022613">
       <screen x="-1366" y="0" width="1366" height="728" />
     </state>
