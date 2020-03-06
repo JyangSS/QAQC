@@ -40,7 +40,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'accounts.apps.AccountsConfig',
     'generals.apps.GeneralsConfig',
-    'widget_tweaks',
     'crispy_forms',
     'ckeditor',
     'ckeditor_uploader',
