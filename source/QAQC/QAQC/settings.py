@@ -31,6 +31,7 @@ ALLOWED_HOSTS = ['*']
 # Application definition
 
 INSTALLED_APPS = [
+    'inspectionForm',
     'adminlte3',
     'adminlte3_theme',
     'django.contrib.admin',
