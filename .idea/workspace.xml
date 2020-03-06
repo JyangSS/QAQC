@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="93c6f6a3-dc02-4e25-b928-470c71be76f4" name="Default Changelist" comment="Authenticate">
+    <list default="true" id="93c6f6a3-dc02-4e25-b928-470c71be76f4" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -32,7 +32,7 @@
   </component>
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../sales_form" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RecentsManager">
@@ -54,6 +54,14 @@
       <option name="presentableId" value="Default" />
       <updated>1582253719042</updated>
     </task>
+    <task id="LOCAL-00001" summary="Authenticate">
+      <created>1582858608489</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1582858608489</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -72,20 +80,20 @@
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="432" y="200" key="#com.intellij.ide.actions.ChooseComponentsToExportDialog/0.0.1366.728@0.0.1366.728" timestamp="1582273180157" />
-    <state x="-1029" y="0" key="CommitChangelistDialog2" timestamp="1582858076323">
+    <state x="-1029" y="0" key="CommitChangelistDialog2" timestamp="1582858606341">
       <screen x="-1366" y="0" width="1366" height="728" />
     </state>
-    <state x="-1029" y="0" key="CommitChangelistDialog2/0.0.1366.728/-1366.0.1366.728@-1366.0.1366.728" timestamp="1582858076323" />
+    <state x="-1029" y="0" key="CommitChangelistDialog2/0.0.1366.728/-1366.0.1366.728@-1366.0.1366.728" timestamp="1582858606341" />
     <state x="337" y="0" key="CommitChangelistDialog2/0.0.1366.728@0.0.1366.728" timestamp="1582273815919" />
-    <state x="463" y="119" key="FileChooserDialogImpl" timestamp="1582772555079">
+    <state x="463" y="119" key="FileChooserDialogImpl" timestamp="1583057495543">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="463" y="119" key="FileChooserDialogImpl/0.0.1366.728/-1366.0.1366.728@0.0.1366.728" timestamp="1582265466335" />
-    <state x="463" y="119" key="FileChooserDialogImpl/0.0.1366.728@0.0.1366.728" timestamp="1582772555079" />
-    <state x="-813" y="257" key="Github.ShareDialog" timestamp="1582858434505">
+    <state x="463" y="119" key="FileChooserDialogImpl/0.0.1366.728@0.0.1366.728" timestamp="1583057495543" />
+    <state x="-813" y="257" key="Github.ShareDialog" timestamp="1582858726018">
       <screen x="-1366" y="0" width="1366" height="728" />
     </state>
-    <state x="-813" y="257" key="Github.ShareDialog/0.0.1366.728/-1366.0.1366.728@-1366.0.1366.728" timestamp="1582858434505" />
+    <state x="-813" y="257" key="Github.ShareDialog/0.0.1366.728/-1366.0.1366.728@-1366.0.1366.728" timestamp="1582858726018" />
     <state x="553" y="257" key="Github.ShareDialog/0.0.1366.728@0.0.1366.728" timestamp="1582275766861" />
     <state x="-1182" y="6" key="SettingsEditor" timestamp="1582854709559">
       <screen x="-1366" y="0" width="1366" height="728" />
@@ -101,10 +109,10 @@
       <screen x="-1366" y="0" width="1366" height="728" />
     </state>
     <state x="-1274" y="92" width="1182" height="544" key="com.intellij.history.integration.ui.views.FileHistoryDialog/0.0.1366.728/-1366.0.1366.728@-1366.0.1366.728" timestamp="1582858051315" />
-    <state x="-874" y="281" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1582855975201">
+    <state x="-874" y="281" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1582858698914">
       <screen x="-1366" y="0" width="1366" height="728" />
     </state>
-    <state x="-874" y="281" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1366.728/-1366.0.1366.728@-1366.0.1366.728" timestamp="1582855975201" />
+    <state x="-874" y="281" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1366.728/-1366.0.1366.728@-1366.0.1366.728" timestamp="1582858698914" />
     <state x="-878" y="228" key="git4idea.rebase.GitRebaseDialog" timestamp="1582858023911">
       <screen x="-1366" y="0" width="1366" height="728" />
     </state>
