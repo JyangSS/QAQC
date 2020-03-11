@@ -57,7 +57,7 @@ class UnitNumber(models.Model):
 
     phase_id = models.ForeignKey(Phase, verbose_name="Phase", on_delete=models.CASCADE)
     block = models.CharField(max_length=10)
-    level = models.IntegerField(max_length=2)
+    level = models.IntegerField()
     unit_number = models.CharField(max_length=10)
     inspection_object = models.CharField(max_length=50)
     is_active = models.BooleanField(null=True)

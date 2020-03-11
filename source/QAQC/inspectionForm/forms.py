@@ -11,10 +11,6 @@ class ElementForm(forms.ModelForm):
             'description',
         )
 
-        def save(self, commit=True):
-            self.instance.creator_user_id = self.request.user.username
-            return super().save(commit=commit)
-
 
 class GroupForm(forms.ModelForm):
     class Meta:
