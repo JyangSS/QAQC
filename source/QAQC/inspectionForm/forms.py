@@ -31,15 +31,6 @@ class ProjectForm(forms.ModelForm):
         ]
 
 
-class PhaseForm(forms.ModelForm):
-    class Meta:
-        model = Phase
-        fields = [
-            'phase_description',
-            'phase_short_form',
-        ]
-
-
 class UnitNumberForm(forms.ModelForm):
     class Meta:
         model = UnitNumber
