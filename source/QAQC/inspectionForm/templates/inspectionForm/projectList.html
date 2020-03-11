@@ -1,0 +1,85 @@
+
+
+{% load crispy_forms_tags %}
+<style>
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+</style>
+</head>
+<body>
+
+<h2>Project List</h2>
+<button class="1">1</button>
+<button class="2">2</button>
+<button class="3">3</button>
+<table>
+  <tr>
+    <th>No</th>
+    <th>Project Name</th>
+    <th>Phase</th>
+    <th>Block</th>
+    <th>Level</th>
+    <th>Unit Number</th>
+  </tr>
+    {% if button==1 %}
+
+  <tr>
+    <td>{{ a.id }}</td>
+    <td>{{ a.phase_id.project_id.project_description }}</td>
+    <td>{{ a.phase_id.phase_description }}</td>
+
+      <td>{{ a.block }}</td>
+      <td>{{ a.level }}</td>
+       <td>{{ a.unit_number }}</td>
+  </tr>
+    {% endfor %}
+
+</table>
+     <tr>
+    <th>No</th>
+    <th>Project Name</th>
+    <th>Phase</th>
+    <th>Block</th>
+    <th>Level</th>
+    <th>Unit Number</th>
+  </tr>
+    {% for a in phase %}
+  <tr>
+    <td>{{ a.id }}</td>
+    <td>{{ a.project_id.project_description }}</td>
+    <td>{{ a.phase_description }}</td>
+
+
+  </tr>
+{% endfor %}
+</table>
+
+     <tr>
+    <th>No</th>
+    <th>Project Name</th>
+    <th>Phase</th>
+    <th>Block</th>
+    <th>Level</th>
+    <th>Unit Number</th>
+  </tr>
+    {% for a in project %}
+  <tr>
+    <td>{{ a.id }}</td>
+    <td>{{ a.project_description }}</td>
+  </tr>
+{% endfor %}
+</table>
+</body>
