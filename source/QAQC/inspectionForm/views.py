@@ -170,12 +170,18 @@ def createPhase(request):
     return render(request, 'inspectionForm/createPhase.html', {'phase': phase, 'project': project})
 
 
-def projectList(request):
+def unitList(request):
     unit = UnitNumber.objects.all()
-    phase = Phase.objects.all()
-    project = Project.objects.all()
-    return render(request, 'inspectionForm/projectList.html', {'project': project, 'phase': phase, 'unit': unit})
+    return render(request, 'inspectionForm/unitList.html', {'unit': unit})
 
+def projectList(request):
+    project = Project.objects.all()
+    return render(request,'inspectionForm/projectList.html', {'project': project})
+
+def phaseList(request):
+    phase = Phase.objects.all()
+    return render(request,'inspectionForm/phaseList.html', {'phase': phase})
 
 def test(request):
     return render(request, 'inspectionForm/test.html')
+

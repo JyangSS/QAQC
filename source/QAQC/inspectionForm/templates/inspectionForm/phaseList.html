@@ -44,6 +44,8 @@ tr:nth-child(even) {
 
 <div class="content-wrapper" style="margin-left:0">
 
+
+
   <!-- Content Wrapper. Contains page content -->
 
     <!-- Content Header (Page header) -->
@@ -96,14 +98,16 @@ tr:nth-child(even) {
                 </tr>
                 </thead>
                 <tbody>
-                 {% for a in project %}
+                {% for a in phase %}
   <tr>
     <td>{{ a.id }}</td>
-    <td>{{ a.project_description }}</td>
+    <td>{{ a.project_id.project_description }}</td>
+    <td>{{ a.phase_description }}</td>
+
       <td></td>
       <td></td>
       <td></td>
-      <td></td>
+
   </tr>
 {% endfor %}
                 </tbody>
@@ -133,6 +137,9 @@ tr:nth-child(even) {
   <aside class="control-sidebar control-sidebar-dark">
     <!-- Control sidebar content goes here -->
   </aside>
+
+
+
 
 
 <script src="{% static 'plugins/jquery/jquery.min.js' %}"></script>
