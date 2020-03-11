@@ -2,7 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="93c6f6a3-dc02-4e25-b928-470c71be76f4" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/QAQC/QAQC/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/source/QAQC/QAQC/settings.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/QAQC/inspectionForm/form.py" beforeDir="false" afterPath="$PROJECT_DIR$/source/QAQC/inspectionForm/form.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/QAQC/inspectionForm/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/source/QAQC/inspectionForm/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/QAQC/inspectionForm/templates/inspectionForm/createObject.html" beforeDir="false" afterPath="$PROJECT_DIR$/source/QAQC/inspectionForm/templates/inspectionForm/createObject.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/QAQC/inspectionForm/templates/inspectionForm/projectList.html" beforeDir="false" afterPath="$PROJECT_DIR$/source/QAQC/inspectionForm/templates/inspectionForm/projectList.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/QAQC/inspectionForm/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/source/QAQC/inspectionForm/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/QAQC/inspectionForm/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/source/QAQC/inspectionForm/views.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -13,6 +19,7 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Python Script" />
+        <option value="HTML File" />
       </list>
     </option>
   </component>
@@ -31,16 +38,19 @@
     </option>
   </component>
   <component name="ProjectId" id="1Y6CaTD411PFRn3E7vEaD5RbUPu" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="1" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showExcludedFiles" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="DefaultHtmlFileTemplate" value="HTML File" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../sales_form" />
-    <property name="settings.editor.selected.configurable" value="vcs.Git" />
+    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -70,6 +80,10 @@
     </task>
     <option name="localTasksCounter" value="2" />
     <servers />
+  </component>
+  <component name="UnknownFeatures">
+    <option featureType="com.intellij.fileTypeFactory" implementationName="*.css" />
+    <option featureType="com.intellij.fileTypeFactory" implementationName="*.js" />
   </component>
   <component name="VcsManagerConfiguration">
     <ignored-roots>
@@ -102,12 +116,12 @@
     </state>
     <state x="-813" y="257" key="Github.ShareDialog/0.0.1366.728/-1366.0.1366.728@-1366.0.1366.728" timestamp="1582858726018" />
     <state x="553" y="257" key="Github.ShareDialog/0.0.1366.728@0.0.1366.728" timestamp="1582275766861" />
-    <state x="184" y="0" key="SettingsEditor" timestamp="1583480668226">
+    <state x="184" y="0" key="SettingsEditor" timestamp="1583733852770">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="-1182" y="6" key="SettingsEditor/0.0.1366.728/-1366.0.1366.728@-1366.0.1366.728" timestamp="1582854709559" />
     <state x="184" y="6" key="SettingsEditor/0.0.1366.728/-1366.0.1366.728@0.0.1366.728" timestamp="1582254497195" />
-    <state x="184" y="0" key="SettingsEditor/0.0.1366.728@0.0.1366.728" timestamp="1583480668226" />
+    <state x="184" y="0" key="SettingsEditor/0.0.1366.728@0.0.1366.728" timestamp="1583733852770" />
     <state x="-917" y="68" key="VCS.ChangeListViewerDialog" timestamp="1582858022613">
       <screen x="-1366" y="0" width="1366" height="728" />
     </state>
@@ -116,10 +130,11 @@
       <screen x="-1366" y="0" width="1366" height="728" />
     </state>
     <state x="-1274" y="92" width="1182" height="544" key="com.intellij.history.integration.ui.views.FileHistoryDialog/0.0.1366.728/-1366.0.1366.728@-1366.0.1366.728" timestamp="1582858051315" />
-    <state x="-874" y="281" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1582858698914">
-      <screen x="-1366" y="0" width="1366" height="728" />
+    <state x="492" y="281" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1583896953821">
+      <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="-874" y="281" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1366.728/-1366.0.1366.728@-1366.0.1366.728" timestamp="1582858698914" />
+    <state x="492" y="281" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1366.728@0.0.1366.728" timestamp="1583896953821" />
     <state x="-878" y="228" key="git4idea.rebase.GitRebaseDialog" timestamp="1582858023911">
       <screen x="-1366" y="0" width="1366" height="728" />
     </state>

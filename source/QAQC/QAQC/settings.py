@@ -114,7 +114,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'Asia/Kuala_Lumpur'
+TIME_ZONE = 'Asia/Kolkata'
 
 USE_I18N = True
 
@@ -133,8 +133,7 @@ CKEDITOR_JQUERY_URL = 'https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery
 CKEDITOR_UPLOAD_PATH = 'uploads/'
 CKEDITOR_IMAGE_BACKEND = 'pillow'
 
-STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
 AUTH_USER_MODEL = 'accounts.Profile'
 LOGIN_URL = 'accounts:login'
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
@@ -154,3 +153,7 @@ CKEDITOR_CONFIGS = {
         'width': 'auto',
     },
 }
+
+CRISPY_TEMPLATE_PACK = 'bootstrap3'
+STATIC_URL = '/static/'
+

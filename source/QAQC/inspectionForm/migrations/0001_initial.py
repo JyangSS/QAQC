@@ -18,7 +18,7 @@ class Migration(migrations.Migration):
             name='Element',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('element', models.CharField(max_length=50)),
+                ('elements', models.CharField(max_length=50)),
                 ('description', models.CharField(max_length=200)),
                 ('is_active', models.BooleanField()),
                 ('creation_time', models.DateTimeField(blank=True, default=datetime.datetime.now)),
