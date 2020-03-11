@@ -7,9 +7,8 @@ from django.shortcuts import render, redirect
 
 
 def element_list(request):
-    elements = Element.objects.all()
-    groups = Group.objects.all()
-
+    elements = Element.objects.filter(is_active=True)
+    groups = Group.objects.filter(is_active=True)
     context = {
         'elements': elements,
         'groups': groups,
@@ -24,8 +23,7 @@ def save_all(request, form, template_name):
         if form.is_valid():
             form.save()
             data['form_is_valid'] = True
-            elements = Element.objects.all()
-
+            elements = Element.objects.filter(is_active=True)
             data['element_list'] = render_to_string('elements/element_list_2.html',
                                                     {'elements': elements})
         else:
@@ -43,7 +41,7 @@ def save_all_2(request, form, template_name):
         if form.is_valid():
             form.save()
             data['form_is_valid'] = True
-            groups = Group.objects.all()
+            groups = Group.objects.filter(is_active=True)
             data['group_list'] = render_to_string('elements/group_list_2.html',
                                                   {'groups': groups})
         else:
@@ -58,6 +56,7 @@ def save_all_2(request, form, template_name):
 def element_create(request):
     if request.method == 'POST':
         form = ElementForm(request.POST)
+
     else:
         form = ElementForm()
     return save_all(request, form, 'elements/element_create.html')
@@ -86,6 +85,7 @@ def group_update(request, id):
     if request.method == 'POST':
         form = GroupForm(request.POST, instance=group)
 
+
     else:
         form = GroupForm(instance=group)
     return save_all_2(request, form, 'elements/group_update.html')
@@ -95,9 +95,12 @@ def element_delete(request, id):
     data = dict()
     element = get_object_or_404(Element, id=id)
     if request.method == 'POST':
-        element.delete()
+        element.is_deleted = True
+        element.is_active = False
+        element.delete_user_id = request.user.username
+        element.save()
         data['form_is_valid'] = True
-        elements = Element.objects.all()
+        elements = Element.objects.filter(is_active=True)
         data['element_list'] = render_to_string('elements/element_list_2.html', {'elements': elements})
     else:
         context = {'element': element}
@@ -110,9 +113,12 @@ def group_delete(request, id):
     data = dict()
     group = get_object_or_404(Group, id=id)
     if request.method == 'POST':
-        group.delete()
+        group.is_deleted = True
+        group.is_active = False
+        group.delete_user_id = request.user.username
+        group.save()
         data['form_is_valid'] = True
-        groups = Group.objects.all()
+        groups = Group.objects.filter(is_active=True)
         data['group_list'] = render_to_string('elements/group_list_2.html', {'groups': groups})
     else:
         context = {'group': group}

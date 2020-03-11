@@ -2,12 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="93c6f6a3-dc02-4e25-b928-470c71be76f4" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/source/QAQC/QAQC/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/source/QAQC/QAQC/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/QAQC/inspectionForm/form.py" beforeDir="false" afterPath="$PROJECT_DIR$/source/QAQC/inspectionForm/form.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/QAQC/inspectionForm/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/source/QAQC/inspectionForm/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/QAQC/inspectionForm/templates/inspectionForm/createObject.html" beforeDir="false" afterPath="$PROJECT_DIR$/source/QAQC/inspectionForm/templates/inspectionForm/createObject.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/QAQC/inspectionForm/templates/inspectionForm/projectList.html" beforeDir="false" afterPath="$PROJECT_DIR$/source/QAQC/inspectionForm/templates/inspectionForm/projectList.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/QAQC/inspectionForm/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/source/QAQC/inspectionForm/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/QAQC/inspectionForm/forms.py" beforeDir="false" afterPath="$PROJECT_DIR$/source/QAQC/inspectionForm/forms.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/source/QAQC/inspectionForm/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/source/QAQC/inspectionForm/views.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -97,10 +93,18 @@
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="275" y="22" key="#Notifications/0.0.1366.728@0.0.1366.728" timestamp="1582273930931" />
+    <state x="137" y="18" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1583915337883">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state x="137" y="18" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1366.728@0.0.1366.728" timestamp="1583915337883" />
     <state x="432" y="200" key="#com.intellij.ide.actions.ChooseComponentsToExportDialog" timestamp="1582273180157">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="432" y="200" key="#com.intellij.ide.actions.ChooseComponentsToExportDialog/0.0.1366.728@0.0.1366.728" timestamp="1582273180157" />
+    <state x="413" y="110" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1583912990775">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state x="413" y="110" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1366.728@0.0.1366.728" timestamp="1583912990775" />
     <state x="-1029" y="0" key="CommitChangelistDialog2" timestamp="1582858606341">
       <screen x="-1366" y="0" width="1366" height="728" />
     </state>

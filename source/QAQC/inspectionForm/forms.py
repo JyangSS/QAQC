@@ -11,6 +11,10 @@ class ElementForm(forms.ModelForm):
             'description',
         )
 
+        def save(self, commit=True):
+            self.instance.creator_user_id = self.request.user.username
+            return super().save(commit=commit)
+
 
 class GroupForm(forms.ModelForm):
     class Meta:
@@ -31,15 +35,6 @@ class ProjectForm(forms.ModelForm):
         ]
 
 
-class PhaseForm(forms.ModelForm):
-    class Meta:
-        model = Phase
-        fields = [
-            'phase_description',
-            'phase_short_form',
-        ]
-
-
 class UnitNumberForm(forms.ModelForm):
     class Meta:
         model = UnitNumber
@@ -52,8 +47,6 @@ class UnitNumberForm(forms.ModelForm):
 
     helper = FormHelper()
     helper.form_method = 'POST'
-
-
 
 
 class PhaseForm(forms.ModelForm):
