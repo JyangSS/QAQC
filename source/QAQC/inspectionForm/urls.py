@@ -1,7 +1,7 @@
-from django.conf.urls import url, include, path
+from django.conf.urls import url, include
 from .views import *
 from . import views
-
+from django.urls import path
 
 urlpatterns = [
     url(r'^elements/$', element_list, name='element_list'),

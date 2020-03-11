@@ -8,7 +8,8 @@ class Project(models.Model):
     class Meta:
         verbose_name = 'Project'
         verbose_name_plural = 'Projects'
-    project_description = models.CharField( max_length=100)
+
+    project_description = models.CharField(max_length=100)
     project_short_form = models.CharField(max_length=10)
     location = models.CharField(max_length=100)
     is_active = models.BooleanField(null=True)
@@ -21,7 +22,8 @@ class Project(models.Model):
     delete_user_id = models.CharField(max_length=50)
 
     def __str__(self):
-        return str(self.project_short_form+"--    "+self.project_description)
+        return str(self.project_short_form + "--    " + self.project_description)
+
     pass
 
 
@@ -29,6 +31,7 @@ class Phase(models.Model):
     class Meta:
         verbose_name = 'Phase'
         verbose_name_plural = 'Phases'
+
     project_id = models.ForeignKey(Project, verbose_name="Project", on_delete=models.CASCADE)
     phase_description = models.CharField(max_length=50)
     phase_short_form = models.CharField(max_length=10)
@@ -42,7 +45,7 @@ class Phase(models.Model):
     delete_user_id = models.CharField(max_length=50)
 
     def __str__(self):
-        return str(self.project_id.project_description+"--  "+self.phase_description)
+        return str(self.project_id.project_description + "--  " + self.phase_description)
 
     pass
 
@@ -110,6 +113,7 @@ class Element(models.Model):
     is_deleted = models.BooleanField(default=False)
     deletion_time = models.DateTimeField(default=datetime.now, blank=True)
     delete_user_id = models.CharField(max_length=50, blank=True)
+
     def __str__(self):
         return str(self.element)
 
@@ -129,19 +133,22 @@ class Group(models.Model):
     creator_user_id = models.CharField(max_length=50, blank=True)
     last_modification_time = models.DateTimeField(default=datetime.now, blank=True)
     last_modifier_user_id = models.CharField(max_length=50, blank=True)
-    is_deleted = models.BooleanField( default=False)
+    is_deleted = models.BooleanField(default=False)
     deletion_time = models.DateTimeField(default=datetime.now, blank=True)
     delete_user_id = models.CharField(max_length=50, blank=True)
+
     def __str__(self):
         return str(self.defect_group)
 
     pass
 
-#=========InspectionForm================================
+
+# =========InspectionForm================================
 class NumberSeries(models.Model):
     class Meta:
         verbose_name = 'NumberSeries'
         verbose_name_plural = 'Number_Series'
+
     series = models.IntegerField()
     current = models.IntegerField()
     is_active = models.BooleanField()
