@@ -204,6 +204,7 @@ def editUnit(request, id):
 
 
 
+
 def editProject(request,id):
     project = Project.objects.get(pk=id)
     form = ProjectForm(instance=project)
@@ -224,5 +225,6 @@ def editPhase(request,id):
             form.save()
             return redirect('phaseList')
     return render(request, 'inspectionForm/editPhase.html', {'form': form})
+
 
 
