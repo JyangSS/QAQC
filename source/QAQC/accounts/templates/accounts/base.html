@@ -64,6 +64,17 @@
             <li><a href="/view_all" onclick="toggleSidebar()">Element,Defect Group, Question</a></li>
             {% endif %}
         </ul>
+
+         <ul class="list-unstyled components">
+            {% if user.is_superuser %}
+            <li><a href="/inspectionform/elements" onclick="toggleSidebar()">yj</a></li>
+            {% endif %}
+        </ul>
+          <ul class="list-unstyled components">
+            {% if user.is_superuser %}
+            <li><a href="/inspectionform/unitlist" onclick="toggleSidebar()">Kent</a></li>
+            {% endif %}
+        </ul>
     </div>
 
     <div id="overlay" onclick="off()"></div>

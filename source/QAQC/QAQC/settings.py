@@ -133,7 +133,6 @@ CKEDITOR_JQUERY_URL = 'https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery
 CKEDITOR_UPLOAD_PATH = 'uploads/'
 CKEDITOR_IMAGE_BACKEND = 'pillow'
 
-
 AUTH_USER_MODEL = 'accounts.Profile'
 LOGIN_URL = 'accounts:login'
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
