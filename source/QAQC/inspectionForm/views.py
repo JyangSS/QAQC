@@ -4,8 +4,10 @@ from .forms import *
 from django.http import JsonResponse
 from django.template.loader import render_to_string
 from django.shortcuts import render, redirect
+import datetime
 
 
+# show all objects in table
 def element_list(request):
     elements = Element.objects.filter(is_active=True)
     groups = Group.objects.filter(is_active=True)
@@ -17,11 +19,17 @@ def element_list(request):
     return render(request, 'elements/element_list.html', context)
 
 
+# save created object and updated object
 def save_all(request, form, template_name):
     data = dict()
     if request.method == 'POST':
         if form.is_valid():
             form.save()
+            obj = Element.objects.order_by('-pk')[0]
+            if obj.creator_user_id == '':
+                obj.creator_user_id = request.user.username
+                obj.creation_time = datetime.datetime.now().replace(microsecond=0)
+                obj.save()
             data['form_is_valid'] = True
             elements = Element.objects.filter(is_active=True)
             data['element_list'] = render_to_string('elements/element_list_2.html',
@@ -40,6 +48,11 @@ def save_all_2(request, form, template_name):
     if request.method == 'POST':
         if form.is_valid():
             form.save()
+            obj = Group.objects.order_by('-pk')[0]
+            if obj.creator_user_id == '':
+                obj.creator_user_id = request.user.username
+                obj.creation_time = datetime.datetime.now().replace(microsecond=0)
+                obj.save()
             data['form_is_valid'] = True
             groups = Group.objects.filter(is_active=True)
             data['group_list'] = render_to_string('elements/group_list_2.html',
@@ -53,10 +66,10 @@ def save_all_2(request, form, template_name):
     return JsonResponse(data)
 
 
+# create
 def element_create(request):
     if request.method == 'POST':
         form = ElementForm(request.POST)
-
     else:
         form = ElementForm()
     return save_all(request, form, 'elements/element_create.html')
@@ -64,16 +77,19 @@ def element_create(request):
 
 def group_create(request):
     if request.method == 'POST':
-        form = GroupForm(request.POST)
+        form = GroupForm(request.POST, request.user)
     else:
         form = GroupForm()
     return save_all_2(request, form, 'elements/group_create.html')
 
 
+# update
 def element_update(request, id):
     element = get_object_or_404(Element, id=id)
     if request.method == 'POST':
         form = ElementForm(request.POST, instance=element)
+        element.last_modifier_user_id = request.user.username
+        element.last_modification_time = datetime.datetime.now().replace(microsecond=0)
 
     else:
         form = ElementForm(instance=element)
@@ -84,13 +100,15 @@ def group_update(request, id):
     group = get_object_or_404(Group, id=id)
     if request.method == 'POST':
         form = GroupForm(request.POST, instance=group)
-
+        group.last_modifier_user_id = request.user.username
+        group.last_modification_time = datetime.datetime.now().replace(microsecond=0)
 
     else:
         form = GroupForm(instance=group)
     return save_all_2(request, form, 'elements/group_update.html')
 
 
+# delete
 def element_delete(request, id):
     data = dict()
     element = get_object_or_404(Element, id=id)
@@ -98,6 +116,7 @@ def element_delete(request, id):
         element.is_deleted = True
         element.is_active = False
         element.delete_user_id = request.user.username
+        element.deletion_time = datetime.datetime.now().replace(microsecond=0)
         element.save()
         data['form_is_valid'] = True
         elements = Element.objects.filter(is_active=True)
@@ -116,6 +135,7 @@ def group_delete(request, id):
         group.is_deleted = True
         group.is_active = False
         group.delete_user_id = request.user.username
+        group.deletion_time = datetime.datetime.now().replace(microsecond=0)
         group.save()
         data['form_is_valid'] = True
         groups = Group.objects.filter(is_active=True)
@@ -128,60 +148,81 @@ def group_delete(request, id):
 
 
 # Create your views here. (KENT)
-def createObject(request):
+
+
+def unitList(request):
+    unit = UnitNumber.objects.all()
     if request.method == 'POST':
         unit_number = UnitNumberForm(request.POST)
         project = ProjectForm(request.POST)
         if project.is_valid():
             project.save()
-            return redirect('createObject')
+            return redirect('unitList')
         elif unit_number.is_valid():
             unit_number.save()
-            return redirect('createObject')
+            
     else:
         unit_number = UnitNumberForm()
         project = ProjectForm()
-    return render(request, 'inspectionForm/createObject.html', {'unit_number': unit_number, 'project': project})
-
-
-def createProject(request):
-    if request.method == 'POST':
-        project = ProjectForm(request.POST)
-        if project.is_valid():
-            project.save()
-            return redirect('createObject')
-    else:
-        project = ProjectForm()
-    return render(request, 'inspectionForm/createProject.html', {'project': project})
-
-
-def createPhase(request):
-    if request.method == 'POST':
-        phase = PhaseForm(request.POST)
-        project = ProjectForm(request.POST)
-        if project.is_valid():
-            project.save()
-            if phase.is_valid():
-                phase.save()
-            return redirect('createObject')
-    else:
-        phase = PhaseForm()
-        project = ProjectForm()
-    return render(request, 'inspectionForm/createPhase.html', {'phase': phase, 'project': project})
-
-
-def unitList(request):
-    unit = UnitNumber.objects.all()
-    return render(request, 'inspectionForm/unitList.html', {'unit': unit})
+    return render(request, 'inspectionForm/unitList.html', {'unit': unit, 'unit_number': unit_number, 'project': project})
 
 def projectList(request):
     project = Project.objects.all()
-    return render(request,'inspectionForm/projectList.html', {'project': project})
+    if request.method == 'POST':
+        add_project = ProjectForm(request.POST)
+        if add_project.is_valid():
+            add_project.save()
+            return redirect('projectList')
+    else:
+        add_project = ProjectForm()
+    return render(request,'inspectionForm/projectList.html', {'project': project,'add_project':add_project})
 
 def phaseList(request):
     phase = Phase.objects.all()
-    return render(request,'inspectionForm/phaseList.html', {'phase': phase})
+    if request.method == 'POST':
+        add_phase = PhaseForm(request.POST)
+        project = ProjectForm(request.POST)
+        if project.is_valid():
+            project.save()
+            if add_phase.is_valid():
+                add_phase.save()
+            return redirect('phaseList')
+    else:
+        add_phase = PhaseForm()
+        project = ProjectForm()
+    return render(request,'inspectionForm/phaseList.html', {'phase': phase, 'add_phase':add_phase,'project':project})
 
-def test(request):
-    return render(request, 'inspectionForm/test.html')
+def editUnit(request, id):
+    unit = UnitNumber.objects.get(pk=id)
+    form = UnitNumberForm(instance=unit)
+    if request.method == 'POST':
+        form=UnitNumberForm(request.POST,instance=unit)
+        if form.is_valid():
+            form.save()
+            return redirect('unitList')
+    return render(request, 'inspectionForm/editUnit.html',{'form': form})
+
+
+
+def editProject(request,id):
+    project = Project.objects.get(pk=id)
+    form = ProjectForm(instance=project)
+    if request.method == 'POST':
+        form = ProjectForm(request.POST, instance=project)
+        if form.is_valid():
+            form.save()
+            return redirect('projectList')
+    return render(request, 'inspectionForm/editProject.html',{'form': form} )
+
+
+def editPhase(request,id):
+    phase = Phase.objects.get(pk=id)
+    form = PhaseForm(instance=phase)
+    if request.method == 'POST':
+        form = PhaseForm(request.POST, instance=phase)
+        if form.is_valid():
+            form.save()
+            return redirect('phaseList')
+    return render(request, 'inspectionForm/editPhase.html', {'form': form})
+
 

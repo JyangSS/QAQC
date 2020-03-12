@@ -2,18 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="93c6f6a3-dc02-4e25-b928-470c71be76f4" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/QAQC/inspectionForm/forms.py" beforeDir="false" afterPath="$PROJECT_DIR$/source/QAQC/inspectionForm/forms.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/QAQC/inspectionForm/migrations/0001_initial.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/QAQC/inspectionForm/migrations/0002_auto_20200309_1005.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/QAQC/inspectionForm/migrations/0003_auto_20200309_1120.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/QAQC/inspectionForm/migrations/0004_auto_20200309_1609.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/QAQC/inspectionForm/migrations/0005_auto_20200309_1611.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/QAQC/inspectionForm/migrations/0006_auto_20200309_1612.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/QAQC/inspectionForm/migrations/0007_auto_20200310_1138.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/QAQC/inspectionForm/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/source/QAQC/inspectionForm/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/QAQC/inspectionForm/templates/elements/element_delete.html" beforeDir="false" afterPath="$PROJECT_DIR$/source/QAQC/inspectionForm/templates/elements/element_delete.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/QAQC/inspectionForm/templates/elements/element_list_2.html" beforeDir="false" afterPath="$PROJECT_DIR$/source/QAQC/inspectionForm/templates/elements/element_list_2.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/QAQC/inspectionForm/migrations/0002_auto_20200312_1517.py" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -54,7 +43,7 @@
   <component name="PropertiesComponent">
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../sales_form" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RecentsManager">
@@ -102,10 +91,11 @@
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="275" y="22" key="#Notifications/0.0.1366.728@0.0.1366.728" timestamp="1582273930931" />
-    <state x="137" y="18" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1583915337883">
-      <screen x="0" y="0" width="1366" height="728" />
+    <state x="137" y="19" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1584000961049">
+      <screen x="0" y="0" width="1366" height="768" />
     </state>
     <state x="137" y="18" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1366.728@0.0.1366.728" timestamp="1583915337883" />
+    <state x="137" y="19" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1366.768@0.0.1366.768" timestamp="1584000961049" />
     <state x="432" y="200" key="#com.intellij.ide.actions.ChooseComponentsToExportDialog" timestamp="1582273180157">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
@@ -129,12 +119,13 @@
     </state>
     <state x="-813" y="257" key="Github.ShareDialog/0.0.1366.728/-1366.0.1366.728@-1366.0.1366.728" timestamp="1582858726018" />
     <state x="553" y="257" key="Github.ShareDialog/0.0.1366.728@0.0.1366.728" timestamp="1582275766861" />
-    <state x="184" y="0" key="SettingsEditor" timestamp="1583733852770">
-      <screen x="0" y="0" width="1366" height="728" />
+    <state x="176" y="14" key="SettingsEditor" timestamp="1583997650111">
+      <screen x="0" y="0" width="1366" height="768" />
     </state>
     <state x="-1182" y="6" key="SettingsEditor/0.0.1366.728/-1366.0.1366.728@-1366.0.1366.728" timestamp="1582854709559" />
     <state x="184" y="6" key="SettingsEditor/0.0.1366.728/-1366.0.1366.728@0.0.1366.728" timestamp="1582254497195" />
-    <state x="184" y="0" key="SettingsEditor/0.0.1366.728@0.0.1366.728" timestamp="1583733852770" />
+    <state x="176" y="13" key="SettingsEditor/0.0.1366.728@0.0.1366.728" timestamp="1583982470097" />
+    <state x="176" y="14" key="SettingsEditor/0.0.1366.768@0.0.1366.768" timestamp="1583997650111" />
     <state x="-917" y="68" key="VCS.ChangeListViewerDialog" timestamp="1582858022613">
       <screen x="-1366" y="0" width="1366" height="728" />
     </state>

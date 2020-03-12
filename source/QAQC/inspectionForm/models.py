@@ -71,7 +71,6 @@ class UnitNumber(models.Model):
 
     def __str__(self):
         return str(self.block + "-" + self.level + "-" + self.unit_number)
-
     pass
 
 
@@ -106,17 +105,16 @@ class Element(models.Model):
     element = models.CharField(max_length=50)
     description = models.CharField(max_length=200)
     is_active = models.BooleanField(default=True)
-    creation_time = models.DateTimeField(default=datetime.now, blank=True)
+    creation_time = models.DateTimeField(null=True, blank=True)
     creator_user_id = models.CharField(max_length=50, blank=True)
-    last_modification_time = models.DateTimeField(default=datetime.now, blank=True)
+    last_modification_time = models.DateTimeField(null=True, blank=True)
     last_modifier_user_id = models.CharField(max_length=50, blank=True)
     is_deleted = models.BooleanField(default=False)
-    deletion_time = models.DateTimeField(default=datetime.now, blank=True)
+    deletion_time = models.DateTimeField(null=True, blank=True)
     delete_user_id = models.CharField(max_length=50, blank=True)
 
     def __str__(self):
         return str(self.element)
-
     pass
 
 
@@ -129,12 +127,12 @@ class Group(models.Model):
     defect_group = models.CharField(max_length=100)
     description = models.CharField(max_length=200)
     is_active = models.BooleanField(default=True)
-    creation_time = models.DateTimeField(default=datetime.now, blank=True)
+    creation_time = models.DateTimeField(null=True, blank=True)
     creator_user_id = models.CharField(max_length=50, blank=True)
-    last_modification_time = models.DateTimeField(default=datetime.now, blank=True)
+    last_modification_time = models.DateTimeField(null=True, blank=True)
     last_modifier_user_id = models.CharField(max_length=50, blank=True)
     is_deleted = models.BooleanField(default=False)
-    deletion_time = models.DateTimeField(default=datetime.now, blank=True)
+    deletion_time = models.DateTimeField(null=True, blank=True)
     delete_user_id = models.CharField(max_length=50, blank=True)
 
     def __str__(self):
