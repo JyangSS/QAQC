@@ -3,17 +3,32 @@
   <component name="ChangeListManager">
     <list default="true" id="93c6f6a3-dc02-4e25-b928-470c71be76f4" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/QAQC/inspectionForm/forms.py" beforeDir="false" afterPath="$PROJECT_DIR$/source/QAQC/inspectionForm/forms.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/QAQC/inspectionForm/migrations/0001_initial.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/QAQC/inspectionForm/migrations/0002_auto_20200309_1005.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/QAQC/inspectionForm/migrations/0003_auto_20200309_1120.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/QAQC/inspectionForm/migrations/0004_auto_20200309_1609.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/QAQC/inspectionForm/migrations/0005_auto_20200309_1611.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/QAQC/inspectionForm/migrations/0006_auto_20200309_1612.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/QAQC/inspectionForm/migrations/0007_auto_20200310_1138.py" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/source/QAQC/inspectionForm/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/source/QAQC/inspectionForm/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/QAQC/inspectionForm/static/css/bootstrap-theme.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/QAQC/inspectionForm/static/css/bootstrap-theme.css.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/QAQC/inspectionForm/static/css/bootstrap-theme.min.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/QAQC/inspectionForm/static/css/bootstrap-theme.min.css.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/QAQC/inspectionForm/static/css/bootstrap.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/QAQC/inspectionForm/static/css/bootstrap.css.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/QAQC/inspectionForm/static/css/bootstrap.min.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/QAQC/inspectionForm/static/css/bootstrap.min.css.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/QAQC/inspectionForm/static/fonts/FontAwesome.otf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/QAQC/inspectionForm/static/fonts/fontawesome-webfont.eot" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/QAQC/inspectionForm/static/fonts/fontawesome-webfont.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/QAQC/inspectionForm/static/fonts/fontawesome-webfont.ttf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/QAQC/inspectionForm/static/fonts/fontawesome-webfont.woff" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/QAQC/inspectionForm/static/fonts/fontawesome-webfont.woff2" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/QAQC/inspectionForm/static/fonts/glyphicons-halflings-regular.eot" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/QAQC/inspectionForm/static/fonts/glyphicons-halflings-regular.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/QAQC/inspectionForm/static/fonts/glyphicons-halflings-regular.ttf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/QAQC/inspectionForm/static/fonts/glyphicons-halflings-regular.woff" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/QAQC/inspectionForm/static/fonts/glyphicons-halflings-regular.woff2" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/QAQC/inspectionForm/templates/elements/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/source/QAQC/inspectionForm/templates/elements/base.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/source/QAQC/inspectionForm/templates/elements/element_delete.html" beforeDir="false" afterPath="$PROJECT_DIR$/source/QAQC/inspectionForm/templates/elements/element_delete.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/QAQC/inspectionForm/templates/elements/element_list.html" beforeDir="false" afterPath="$PROJECT_DIR$/source/QAQC/inspectionForm/templates/elements/element_list.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/source/QAQC/inspectionForm/templates/elements/element_list_2.html" beforeDir="false" afterPath="$PROJECT_DIR$/source/QAQC/inspectionForm/templates/elements/element_list_2.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/QAQC/inspectionForm/templates/elements/group_list_2.html" beforeDir="false" afterPath="$PROJECT_DIR$/source/QAQC/inspectionForm/templates/elements/group_list_2.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/QAQC/inspectionForm/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/source/QAQC/inspectionForm/views.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -58,11 +73,11 @@
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\wong_jy\Dev\QAQC" />
-    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\wong_jy\Dev\QAQC\source\QAQC" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\wong_jy\Dev\QAQC" />
     </key>
   </component>
   <component name="SvnConfiguration">
@@ -119,22 +134,22 @@
     </state>
     <state x="-1029" y="0" key="CommitChangelistDialog2/0.0.1366.728/-1366.0.1366.728@-1366.0.1366.728" timestamp="1582858606341" />
     <state x="337" y="0" key="CommitChangelistDialog2/0.0.1366.728@0.0.1366.728" timestamp="1582273815919" />
-    <state x="85" y="138" key="FileChooserDialogImpl" timestamp="1583476158299">
+    <state x="85" y="138" key="FileChooserDialogImpl" timestamp="1583980492653">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="463" y="119" key="FileChooserDialogImpl/0.0.1366.728/-1366.0.1366.728@0.0.1366.728" timestamp="1582265466335" />
-    <state x="85" y="138" key="FileChooserDialogImpl/0.0.1366.728@0.0.1366.728" timestamp="1583476158299" />
+    <state x="85" y="138" key="FileChooserDialogImpl/0.0.1366.728@0.0.1366.728" timestamp="1583980492653" />
     <state x="-813" y="257" key="Github.ShareDialog" timestamp="1582858726018">
       <screen x="-1366" y="0" width="1366" height="728" />
     </state>
     <state x="-813" y="257" key="Github.ShareDialog/0.0.1366.728/-1366.0.1366.728@-1366.0.1366.728" timestamp="1582858726018" />
     <state x="553" y="257" key="Github.ShareDialog/0.0.1366.728@0.0.1366.728" timestamp="1582275766861" />
-    <state x="184" y="0" key="SettingsEditor" timestamp="1583733852770">
+    <state x="184" y="0" key="SettingsEditor" timestamp="1583980509864">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="-1182" y="6" key="SettingsEditor/0.0.1366.728/-1366.0.1366.728@-1366.0.1366.728" timestamp="1582854709559" />
     <state x="184" y="6" key="SettingsEditor/0.0.1366.728/-1366.0.1366.728@0.0.1366.728" timestamp="1582254497195" />
-    <state x="184" y="0" key="SettingsEditor/0.0.1366.728@0.0.1366.728" timestamp="1583733852770" />
+    <state x="184" y="0" key="SettingsEditor/0.0.1366.728@0.0.1366.728" timestamp="1583980509864" />
     <state x="-917" y="68" key="VCS.ChangeListViewerDialog" timestamp="1582858022613">
       <screen x="-1366" y="0" width="1366" height="728" />
     </state>

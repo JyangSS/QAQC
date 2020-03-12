@@ -5,12 +5,12 @@
     <td>{{ group.description }}</td>
     <td>{{ group.element_id }} </td>
 
-    <td style='white-space: nowrap;' >
-      <button style="display:inline;width:50%;float:center" class="btn btn-block btn-warning btn-xs show-form-update" data-url="{% url 'group_update' group.id %}">
+    <td style="white-space:nowrap;">
+      <button style="display:inline;width:50%" class="btn btn-block btn-warning btn-xs show-form-update" data-url="{% url 'group_update' group.id %}">
       <span class="glyphicon glyphicon-pencil"></span>
       Edit
       </button>
-       <button style="display:inline;width:50%;" class="btn btn-block btn-danger btn-xs show-form-delete" data-url="{% url 'group_delete' group.id %}">
+       <button style="display:inline;width:50%;margin-bottom:5px" class="btn btn-block btn-danger btn-xs show-form-delete" data-url="{% url 'group_delete' group.id %}">
       <span class="glyphicon glyphicon-trash"></span>
       Delete
       </button>
