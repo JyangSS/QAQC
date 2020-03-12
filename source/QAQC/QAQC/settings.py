@@ -156,6 +156,3 @@ CKEDITOR_CONFIGS = {
 
 CRISPY_TEMPLATE_PACK = 'bootstrap3'
 STATIC_URL = '/static/'
-
-import pymysql
-pymysql.install_as_MySQLdb()
