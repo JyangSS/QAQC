@@ -11,12 +11,11 @@ urlpatterns = [
     url(r'^groups/create$', group_create, name='group_create'),
     url(r'^groups/(?P<id>\d+)/update$', group_update, name='group_update'),
     url(r'^groups/(?P<id>\d+)/delete$', group_delete, name='group_delete'),
-    path('test/', views.createObject, name='test'),
-    path('createobject/', views.createObject, name='createObject'),
-    path('createproject/', views.createProject, name='createProject'),
-    path('createphase/', views.createPhase, name='createPhase'),
-    path('test/', views.test, name='test'),
+
     path('unitlist/', views.unitList, name='unitList'),
     path('projectlist/', views.projectList, name='projectList'),
     path('phaselist/', views.phaseList, name='phaseList'),
+    path('unitlist/<int:id>', views.editUnit, name='editUnit'),
+    path('projectlist/<int:id>', views.editProject, name='editProject'),
+    path('phaselist/<int:id>', views.editPhase, name='editPhase'),
 ]

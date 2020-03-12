@@ -1,47 +1,9 @@
-
+{% extends 'inspectionForm/baseKent.html' %}
 {% load static %}
-
-
+{% block content %}
 {% load crispy_forms_tags %}
-<style>
-table {
-  font-family: arial, sans-serif;
-  border-collapse: collapse;
-  width: 100%;
-}
 
-td, th {
-  border: 1px solid #dddddd;
-  text-align: left;
-  padding: 8px;
-}
-
-tr:nth-child(even) {
-  background-color: #dddddd;
-}
-</style>
-
-<head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>AdminLTE 3 | DataTables</title>
-  <!-- Tell the browser to be responsive to screen width -->
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <!-- Font Awesome -->
-  <link rel="stylesheet" href="{% static 'plugins/fontawesome-free/css/all.min.css' %}">
-  <!-- Ionicons -->
-  <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
-  <!-- DataTables -->
-  <link rel="stylesheet" href="{% static 'plugins/datatables-bs4/css/dataTables.bootstrap4.css' %}">
-  <!-- Theme style -->
-  <link rel="stylesheet" href="{% static 'dist/css/adminlte.min.css' %}">
-  <!-- Google Font: Source Sans Pro -->
-  <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
-</head>
-<body>
 <div class="content-wrapper" style="margin-left:0">
-
-
 
   <!-- Content Wrapper. Contains page content -->
 
@@ -81,6 +43,9 @@ tr:nth-child(even) {
           <div class="card">
             <div class="card-header">
               <h3 class="card-title">DataTable with default features</h3>
+                <button style="position: absolute;right: 50px; padding:3px; " type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-default" >
+                  Add Unit
+                </button>
             </div>
             <!-- /.card-header -->
             <div class="card-body">
@@ -93,18 +58,24 @@ tr:nth-child(even) {
     <th>Block</th>
     <th>Level</th>
     <th>Unit Number</th>
+                    <th></th>
                 </tr>
                 </thead>
                 <tbody>
+
                 {% for a in unit %}
   <tr>
-    <td>{{ a.id }}</td>
-    <td>{{ a.phase_id.project_id.project_description }}</td>
-    <td>{{ a.phase_id.phase_description }}</td>
+    <td class="data">{{ a.id }}</td>
+    <td class="data">{{ a.phase_id.project_id.project_description }}</td>
+    <td class="data">{{ a.phase_id.phase_description }}</td>
 
-      <td>{{ a.block }}</td>
-      <td>{{ a.level }}</td>
-       <td>{{ a.unit_number }}</td>
+      <td class="data">{{ a.block }}</td>
+      <td class="data">{{ a.level }}</td>
+       <td class="data">{{ a.unit_number }}</td>
+      <td><a href="{% url 'editUnit' a.id %}"><button type="button" class="btn btn-block btn-success">Edit</button></a>
+      <button type="button" class="btn btn-block btn-danger">Delete</button></td>
+
+
   </tr>
     {% endfor %}
                 </tbody>
@@ -135,24 +106,48 @@ tr:nth-child(even) {
     <!-- Control sidebar content goes here -->
   </aside>
   <!-- /.control-sidebar -->
+<!--Pop Up Add project -->
+ <div class="modal fade" id="modal-default" style="display: none;" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title">Default Modal</h4>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">×</span>
+              </button>
+            </div>
+            <div class="modal-body">
+<form  method = 'POST' >
+       {% csrf_token %}
+     {{ unit_number|crispy }}
+	  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+	  <input type="submit" class="btn btn-primary" value="     Add     "></input>
+</form>
+            </div>
+		  </div>
+        </div>
+      </div>
+<!--Pop Up edit project -->
+<div class="modal fade" id="modal-default" style="display: none;" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title">Default Modal</h4>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">×</span>
+              </button>
+            </div>
+            <div class="modal-body">
+<form  method = 'POST' >
+       {% csrf_token %}
+     {{ unit_number|crispy }}
+	  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+	  <input type="submit" class="btn btn-primary" value="     Add     "></input>
+</form>
+            </div>
+		  </div>
+        </div>
+      </div>
+{% endblock %}
 
 
-
-<script src="{% static 'plugins/jquery/jquery.min.js' %}"></script>
-<!-- Bootstrap 4 -->
-<script src="{% static 'plugins/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
-<!-- SweetAlert2 -->
-<script src="{% static 'plugins/datatables/jquery.dataTables.js' %}"></script>
-<!-- Toastr -->
-<script src="{% static 'plugins/datatables-bs4/js/dataTables.bootstrap4.js' %}"></script>
-<!-- AdminLTE App -->
-<script src="{% static 'dist/js/adminlte.min.js' %}"></script>
-<!-- AdminLTE for demo purposes -->
-<script src="{% static 'dist/js/demo.js' %}"></script>
-<script>
-  $(function () {
-    $("#example1").DataTable();
-    $('#example2').DataTable();
-  });
-</script>
-</body>
