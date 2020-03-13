@@ -7,18 +7,14 @@
 
     <td style="white-space:nowrap;">
       <button style="display:inline;width:50%" class="btn btn-block btn-warning btn-xs show-form-update" data-url="{% url 'group_update' group.id %}">
-      <span class="glyphicon glyphicon-pencil"></span>
+      <span class="fas fa-edit"></span>
       Edit
       </button>
-       <button style="display:inline;width:50%;margin-bottom:5px" class="btn btn-block btn-danger btn-xs show-form-delete" data-url="{% url 'group_delete' group.id %}">
-      <span class="glyphicon glyphicon-trash"></span>
-      Delete
+       <button style="display:inline;width:50%;margin-bottom:8px" class="btn btn-block btn-danger btn-xs show-form-delete" data-url="{% url 'group_delete' group.id %}">
+     <span class="fa fa-fw fa-trash"></span>Delete
       </button>
     </td>
 
   </tr>
-{% empty %}
-  <tr>
-    <td colspan="5" class="text-center bg-warning">No Defect Group</td>
-  </tr>
+
 {% endfor %}

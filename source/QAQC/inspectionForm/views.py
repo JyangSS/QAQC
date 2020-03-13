@@ -78,6 +78,7 @@ def element_create(request):
 def group_create(request):
     if request.method == 'POST':
         form = GroupForm(request.POST, request.user)
+
     else:
         form = GroupForm()
     return save_all_2(request, form, 'elements/group_create.html')
@@ -85,6 +86,7 @@ def group_create(request):
 
 # update
 def element_update(request, id):
+
     element = get_object_or_404(Element, id=id)
     if request.method == 'POST':
         form = ElementForm(request.POST, instance=element)
@@ -97,6 +99,7 @@ def element_update(request, id):
 
 
 def group_update(request, id):
+
     group = get_object_or_404(Group, id=id)
     if request.method == 'POST':
         form = GroupForm(request.POST, instance=group)

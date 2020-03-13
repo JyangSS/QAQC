@@ -13,6 +13,8 @@ class ElementForm(forms.ModelForm):
 
 
 class GroupForm(forms.ModelForm):
+    element_id = forms.ModelChoiceField(queryset=Element.objects.filter(is_active=True))
+
     class Meta:
         model = Group
         fields = (

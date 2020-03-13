@@ -7,8 +7,8 @@
 	<link rel="stylesheet" href="{% static 'plugins/datatables-bs4/css/dataTables.bootstrap4.css' %}">
 	<link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
     <br>
-    <h1 class="page-header">Elements <button class="btn btn-block btn-primary btn-sm show-form" data-url="{% url 'element_create' %}" style="width:10%;float:right;margin-right:9px;margin-top:20px" >
-   <span class="glyphicon glyphicon-plus"></span> New Element
+    <h1 class="page-header">Elements <button class="btn btn-block btn-primary btn-sm show-form" data-url="{% url 'element_create' %}" style="float:right;width:20%;">
+   <span class="fa fa-fw fa-plus"></span> New Element
   </button></h1>
   <hr>
 
@@ -34,8 +34,8 @@
   </div>
 <br><br><br><br><br><br><br>
 
- <h1 class="page-header">Defect Groups <button class="btn btn-block btn-primary btn-sm show-form2" data-url="{% url 'group_create' %}" style="width:10%;float:right;margin-right:9px;margin-top:20px" >
-   <span class="glyphicon glyphicon-plus"></span>   New Group
+ <h1 class="page-header">Defect Groups <button class="btn btn-block btn-primary btn-sm show-form2" data-url="{% url 'group_create' %}" style="float:right;width:20%;" >
+   <span class="fa fa-fw fa-plus"></span>   New Group
   </button></h1>
 <hr>
   <table class="table table-bordered table-striped dataTable" id="group-table" role="grid" >
@@ -69,12 +69,13 @@
 <script>
   $(function () {
     $('#group-table').DataTable();
-
-     $('#element-table').DataTable();
-
+  });
+    $(function () {
+    $('#element-table').DataTable();
   });
 
 
+</script>
 </script>
 {% endblock %}
 

@@ -14,8 +14,11 @@ $(document).ready(function(){
 		});
 	};
 
+
+
 	var SaveForm =  function(){
 		var form = $(this);
+
 		$.ajax({
 			url: form.attr("data-url"),
 			data: form.serialize(),
@@ -25,12 +28,19 @@ $(document).ready(function(){
 				if(data.form_is_valid){
 					$('#element-table tbody').html(data.element_list);
 					$('#modal-element').modal('hide');
+
 				} else {
 					$('#modal-element .modal-content').html(data.html_form)
 				}
 			}
+
 		})
+		$('#element-table').DataTable().ajax.reload();
 		return false;
+
+
+
+
 	}
 
 // create
@@ -76,6 +86,7 @@ $(document).ready(function(){
 			dataType: 'json',
 			success: function(data){
 				if(data.form_is_valid){
+
 					$('#group-table tbody').html(data.group_list);
 					$('#modal-group').modal('hide');
 				} else {
