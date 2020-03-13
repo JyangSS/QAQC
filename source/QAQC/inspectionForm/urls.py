@@ -3,6 +3,7 @@ from .views import *
 from . import views
 from django.urls import path
 
+
 urlpatterns = [
     url(r'^elements/$', element_list, name='element_list'),
     url(r'^elements/create$', element_create, name='element_create'),
@@ -12,10 +13,11 @@ urlpatterns = [
     url(r'^groups/(?P<id>\d+)/update$', group_update, name='group_update'),
     url(r'^groups/(?P<id>\d+)/delete$', group_delete, name='group_delete'),
 
-    path('unitlist/', views.unitList, name='unitList'),
-    path('projectlist/', views.projectList, name='projectList'),
-    path('phaselist/', views.phaseList, name='phaseList'),
-    path('unitlist/<int:id>', views.editUnit, name='editUnit'),
-    path('projectlist/<int:id>', views.editProject, name='editProject'),
-    path('phaselist/<int:id>', views.editPhase, name='editPhase'),
+    path('unitlist/', views.unit_list, name='unit_list'),
+    path('projectlist/', views.project_list, name='project_list'),
+    path('phaselist/', views.phase_list, name='phase_list'),
+    path('unitlist/<int:id>', views.edit_unit, name='edit_unit'),
+    path('projectlist/<int:id>', views.edit_project, name='edit_project'),
+    path('phaselist/<int:id>', views.edit_phase, name='edit_phase'),
+   #path('deleteproject/<int:id>', views.Delete_project, name='delete_project'),
 ]

@@ -1,10 +1,14 @@
+from typing import Dict
+
 from django.shortcuts import render, get_object_or_404
 from .models import *
 from .forms import *
-from django.http import JsonResponse
 from django.template.loader import render_to_string
 from django.shortcuts import render, redirect
 import datetime
+from django.http import JsonResponse
+from django.views.generic import View
+
 
 
 # show all objects in table
@@ -153,81 +157,83 @@ def group_delete(request, id):
 # Create your views here. (KENT)
 
 
-def unitList(request):
+def unit_list(request):
     unit = UnitNumber.objects.all()
     if request.method == 'POST':
         unit_number = UnitNumberForm(request.POST)
         project = ProjectForm(request.POST)
         if project.is_valid():
             project.save()
-            return redirect('unitList')
+            return redirect('unit_list')
         elif unit_number.is_valid():
             unit_number.save()
-            
+
     else:
         unit_number = UnitNumberForm()
         project = ProjectForm()
-    return render(request, 'inspectionForm/unitList.html', {'unit': unit, 'unit_number': unit_number, 'project': project})
+    return render(request, 'inspectionForm/unitList.html',
+                  {'unit': unit, 'unit_number': unit_number, 'project': project})
 
-def projectList(request):
+
+def project_list(request):
     project = Project.objects.all()
     if request.method == 'POST':
         add_project = ProjectForm(request.POST)
         if add_project.is_valid():
             add_project.save()
-            return redirect('projectList')
+            return redirect('project_list')
     else:
         add_project = ProjectForm()
-    return render(request,'inspectionForm/projectList.html', {'project': project,'add_project':add_project})
+    return render(request, 'inspectionForm/projectList.html', {'project': project, 'add_project': add_project})
 
-def phaseList(request):
+
+def phase_list(request):
     phase = Phase.objects.all()
     if request.method == 'POST':
         add_phase = PhaseForm(request.POST)
         project = ProjectForm(request.POST)
         if project.is_valid():
             project.save()
-            if add_phase.is_valid():
-                add_phase.save()
-            return redirect('phaseList')
+        elif add_phase.is_valid():
+            add_phase.save()
+            return redirect('phase_list')
     else:
         add_phase = PhaseForm()
         project = ProjectForm()
-    return render(request,'inspectionForm/phaseList.html', {'phase': phase, 'add_phase':add_phase,'project':project})
+    return render(request, 'inspectionForm/phaseList.html',
+                  {'phase': phase, 'add_phase': add_phase, 'project': project})
 
-def editUnit(request, id):
+
+def edit_unit(request, id):
     unit = UnitNumber.objects.get(pk=id)
     form = UnitNumberForm(instance=unit)
     if request.method == 'POST':
-        form=UnitNumberForm(request.POST,instance=unit)
+        form = UnitNumberForm(request.POST, instance=unit)
         if form.is_valid():
             form.save()
-            return redirect('unitList')
-    return render(request, 'inspectionForm/editUnit.html',{'form': form})
+            return redirect('unit_list')
+    return render(request, 'inspectionForm/editUnit.html', {'form': form})
 
 
-
-
-def editProject(request,id):
+def edit_project(request, id):
     project = Project.objects.get(pk=id)
     form = ProjectForm(instance=project)
     if request.method == 'POST':
         form = ProjectForm(request.POST, instance=project)
         if form.is_valid():
             form.save()
-            return redirect('projectList')
-    return render(request, 'inspectionForm/editProject.html',{'form': form} )
+            return redirect('project_list')
+    return render(request, 'inspectionForm/editProject.html', {'form': form})
 
 
-def editPhase(request,id):
+def edit_phase(request, id):
     phase = Phase.objects.get(pk=id)
     form = PhaseForm(instance=phase)
     if request.method == 'POST':
         form = PhaseForm(request.POST, instance=phase)
         if form.is_valid():
             form.save()
-            return redirect('phaseList')
+            return redirect('phase_list')
     return render(request, 'inspectionForm/editPhase.html', {'form': form})
-
 
 
