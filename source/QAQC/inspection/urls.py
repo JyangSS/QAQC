@@ -13,10 +13,5 @@ urlpatterns = [
     url(r'^groups/(?P<id>\d+)/update$', group_update, name='group_update'),
     url(r'^groups/(?P<id>\d+)/delete$', group_delete, name='group_delete'),
 
-    path('unitlist/', views.unit_list, name='unit_list'),
-    path('projectlist/', views.project_list, name='project_list'),
-    path('phaselist/', views.phase_list, name='phase_list'),
-    path('unitlist/<int:id>', views.edit_unit, name='edit_unit'),
-    path('projectlist/<int:id>', views.edit_project, name='edit_project'),
-    path('phaselist/<int:id>', views.edit_phase, name='edit_phase'),
+
 ]
