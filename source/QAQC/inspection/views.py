@@ -10,7 +10,6 @@ from django.http import JsonResponse
 from django.views.generic import View
 
 
-
 # show all objects in table
 def element_list(request):
     elements = Element.objects.filter(is_active=True)
@@ -90,7 +89,6 @@ def group_create(request):
 
 # update
 def element_update(request, id):
-
     element = get_object_or_404(Element, id=id)
     if request.method == 'POST':
         form = ElementForm(request.POST, instance=element)
@@ -103,7 +101,6 @@ def element_update(request, id):
 
 
 def group_update(request, id):
-
     group = get_object_or_404(Group, id=id)
     if request.method == 'POST':
         form = GroupForm(request.POST, instance=group)
@@ -152,7 +149,3 @@ def group_delete(request, id):
         data['html_form'] = render_to_string('elements/group_delete.html', context, request=request)
 
     return JsonResponse(data)
-
-
-
-
