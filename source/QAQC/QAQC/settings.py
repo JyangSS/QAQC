@@ -29,7 +29,7 @@ ALLOWED_HOSTS = ['*']
 # Application definition
 
 INSTALLED_APPS = [
-    'inspectionForm',
+    'inspection',
     'adminlte3',
     'adminlte3_theme',
     'django.contrib.admin',
@@ -43,8 +43,7 @@ INSTALLED_APPS = [
     'crispy_forms',
     'ckeditor',
     'ckeditor_uploader',
-    "django_static_ionicons",
-
+    'object',
 ]
 
 MIDDLEWARE = [
