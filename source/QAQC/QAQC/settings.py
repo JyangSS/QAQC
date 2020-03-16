@@ -43,7 +43,9 @@ INSTALLED_APPS = [
     'crispy_forms',
     'ckeditor',
     'ckeditor_uploader',
-    'object',
+    'objects',
+    'django_elasticsearch_dsl',
+
 ]
 
 MIDDLEWARE = [
@@ -155,3 +157,9 @@ CKEDITOR_CONFIGS = {
 
 CRISPY_TEMPLATE_PACK = 'bootstrap3'
 STATIC_URL = '/static/'
+
+ELASTICSEARCH_DSL = {
+    'default': {
+        'hosts': 'localhost:9200'
+    },
+}
