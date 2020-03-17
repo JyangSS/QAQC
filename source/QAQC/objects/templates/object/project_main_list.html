@@ -43,7 +43,7 @@ bottom: .5em;
                                     {% for b in project %}
                                     <li class="dropdown-submenu">
                                         <a class="dropdown-item" tabindex="-1" href="#">
-                                           {{ <b class="company_id"></b>.company }}
+                                           {{ b.company_id.company }}
                                         </a>
                                         <ul class="dropdown-menu">
                                             <li><a class="dropdown-item" tabindex="-1" href="{% url 'project_main_list' b.id %}">{{ b.project_description }}</a></li>
