@@ -4,13 +4,22 @@ from datetime import *
 
 
 # =========PROJECT============================
+class Company(models.Model):
+
+    company = models.CharField(default=True, max_length=55, null=True)
+
+    def __str__(self):
+        return str(self.company)
+
+    pass
+
+
 class Project(models.Model):
     class Meta:
         verbose_name = 'Project'
         verbose_name_plural = 'Projects'
 
-    company_choice=[('Johor', 'Johor'), ('Kuala Lumpur', 'Kuala Lumpur'), ('Penang', 'Penang')]
-    company = models.CharField(choices=company_choice, default=True, max_length=55,null=True)
+    company_id = models.ForeignKey(Company, verbose_name="Company", on_delete=models.CASCADE)
     project_description = models.CharField(max_length=100)
     project_short_form = models.CharField(max_length=10)
     location = models.CharField(max_length=100)
@@ -24,7 +33,7 @@ class Project(models.Model):
     delete_user_id = models.CharField(max_length=50)
 
     def __str__(self):
-        return str(self.company + "--    " + self.project_description)
+        return str(self.project_description)
 
     pass
 
@@ -73,5 +82,5 @@ class UnitNumber(models.Model):
 
     def __str__(self):
         return str(self.block + "-" + str(self.level) + "-" + self.unit_number)
-    pass
 
+    pass

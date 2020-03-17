@@ -2,12 +2,18 @@ from django import forms
 from .models import *
 from crispy_forms.helper import FormHelper
 
+class CompanyForm(forms.ModelForm):
+    class Meta:
+        model = Company
+        fields = [
+            'company',
 
+        ]
 class ProjectForm(forms.ModelForm):
     class Meta:
         model = Project
         fields = [
-            'company',
+            'company_id',
             'project_description',
             'project_short_form',
         ]

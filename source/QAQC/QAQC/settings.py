@@ -88,7 +88,7 @@ DATABASES = {
         'PASSWORD': '',
         'HOST': '',
         'PORT': '',
-        'OPTIONS': {'autocommit': True}
+        'OPTIONS': {'autocommit': True,'sql_mode': 'traditional','init_command': "SET sql_mode='STRICT_TRANS_TABLES'",}
     },
 }
 

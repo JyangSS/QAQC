@@ -41,44 +41,24 @@ def add_phase(request):
         project = ProjectForm()
     return render(request, 'object/phase_list.html',
                   {'phase': phase, 'add_phase': add_phase, 'project': project})
+'''
 
-def add_project(request):
+
+def project_main_list(request, id):
+    unit = UnitNumber.objects.filter(phase_id__project_id=id)
     project = Project.objects.all()
+    page_title_project = Project.objects.get(pk=id)
     if request.method == 'POST':
         add_project = ProjectForm(request.POST)
         if add_project.is_valid():
             add_project.save()
-            return redirect('project_list')
+            return redirect('project_main_list',id)
     else:
         add_project = ProjectForm()
-    return render(request, 'object/project_list.html', {'project': project, 'add_project': add_project})'''
+    return render(request, 'object/project_main_list.html',
+                  {'unit': unit, 'add_project': add_project, 'project': project,
+                   'page_title_project': page_title_project})
 
-'''def project_main_list(request):
-    unit = UnitNumber.objects.all()
-
-    return render(request, 'object/project_main_list.html', {'unit': unit})'''
-
-'''
-def project_main_list(request):
-    unit = UnitNumber.objects.all()
-    q = request.GET.get('q')
-    if q:
-        posts = Pos
-    if request.method == 'POST':
-        unit_number = UnitNumberForm(request.POST)
-        project = ProjectForm(request.POST)
-        if project.is_valid():
-            project.save()
-            return redirect('unit_list')
-        elif unit_number.is_valid():
-            unit_number.save()
-
-    else:
-        unit_number = UnitNumberForm()
-        project = ProjectForm()
-    return render(request, 'object/unit_list.html',
-                  {'unit': unit, 'unit_number': unit_number, 'project': project})
-'''
 
 def unit_list(request):
     unit = UnitNumber.objects.all()
@@ -159,17 +139,8 @@ def phase_edit(request, id):
             return redirect('phase_list')
     return render(request, 'object/phase_edit.html', {'form': form})
 
+
 '''
-def search(request):
-    q = request.GET.get('q')
-    if q:
-        posts = ProjectDocument.search().queryset("match", project_description=q)
-    else:
-        posts = ''
-    return render(request, 'object/project_main_list.html', {'posts': posts})
-
-
-
 def unit_delete(request, id):
     data = dict()
     group = get_object_or_404(Group, id=id)
