@@ -11,7 +11,6 @@ urlpatterns = [
     path('unitlist/<int:id>', views.unit_edit, name='unit_edit'),
     path('projectlist/<int:id>', views.project_edit, name='project_edit'),
     path('phaselist/<int:id>', views.phase_edit, name='phase_edit'),
-    # path('projectmainlist/', views.project_main_list, name='project_main_list'),
-    path('search/', views.search, name='project_main_list'),
+#    path('projectmainlist/', views.project_main_list, name='project_main_list'),
 
 ]

@@ -8,7 +8,6 @@ from django.shortcuts import render, redirect
 import datetime
 from django.http import JsonResponse
 from django.views.generic import View
-from .documents import ProjectDocument
 
 # Create your views here. (KENT)
 '''def add_unit(request):
@@ -59,8 +58,8 @@ def add_project(request):
 
     return render(request, 'object/project_main_list.html', {'unit': unit})'''
 
-
-def unit_list(request):
+'''
+def project_main_list(request):
     unit = UnitNumber.objects.all()
     q = request.GET.get('q')
     if q:
@@ -79,7 +78,7 @@ def unit_list(request):
         project = ProjectForm()
     return render(request, 'object/unit_list.html',
                   {'unit': unit, 'unit_number': unit_number, 'project': project})
-
+'''
 
 def unit_list(request):
     unit = UnitNumber.objects.all()
@@ -160,7 +159,7 @@ def phase_edit(request, id):
             return redirect('phase_list')
     return render(request, 'object/phase_edit.html', {'form': form})
 
-
+'''
 def search(request):
     q = request.GET.get('q')
     if q:
@@ -170,7 +169,7 @@ def search(request):
     return render(request, 'object/project_main_list.html', {'posts': posts})
 
 
-'''
+
 def unit_delete(request, id):
     data = dict()
     group = get_object_or_404(Group, id=id)

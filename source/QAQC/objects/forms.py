@@ -2,6 +2,7 @@ from django import forms
 from .models import *
 from crispy_forms.helper import FormHelper
 
+
 class ProjectForm(forms.ModelForm):
     class Meta:
         model = Project

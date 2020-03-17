@@ -115,12 +115,12 @@
               </button>
             </div>
             <div class="modal-body">
-<form  method = 'POST' >
+<form  method="post" >
         {% csrf_token %}
-
-      {{ add_project.as_p  }}
+      {{add_project.as_p}}
 	  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-	  <input type="submit" class="btn btn-primary" value="     Add     " ></input>
+    <button type="submit" class="btn btn-primary" >Add</button>
+
 </form>
             </div>
 		  </div>

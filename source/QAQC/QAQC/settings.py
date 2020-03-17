@@ -44,8 +44,7 @@ INSTALLED_APPS = [
     'ckeditor',
     'ckeditor_uploader',
     'objects',
-    'django_elasticsearch_dsl',
-    'django_elasticsearch_dsl_drf',
+
 
 ]
 MIDDLEWARE = [
@@ -158,8 +157,3 @@ CKEDITOR_CONFIGS = {
 CRISPY_TEMPLATE_PACK = 'bootstrap3'
 STATIC_URL = '/static/'
 
-ELASTICSEARCH_DSL = {
-    'default': {
-        'hosts': 'localhost:9200'
-    },
-}

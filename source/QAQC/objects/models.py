@@ -10,7 +10,7 @@ class Project(models.Model):
         verbose_name_plural = 'Projects'
 
     company_choice=[('Johor', 'Johor'), ('Kuala Lumpur', 'Kuala Lumpur'), ('Penang', 'Penang')]
-    company = models.CharField(choices=company_choice, default=True, max_length=55)
+    company = models.CharField(choices=company_choice, default=True, max_length=55,null=True)
     project_description = models.CharField(max_length=100)
     project_short_form = models.CharField(max_length=10)
     location = models.CharField(max_length=100)
