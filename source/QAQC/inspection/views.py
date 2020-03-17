@@ -16,10 +16,18 @@ def element_list(request):
     groups = Group.objects.filter(is_active=True)
     context = {
         'elements': elements,
-        'groups': groups,
-
     }
     return render(request, 'elements/element_list.html', context)
+
+
+def group_list(request, id):
+    element = get_object_or_404(Element, id=id)
+    groups = Group.objects.filter(element_id=id)
+    context = {
+        'element': element,
+        'groups': groups,
+    }
+    return render(request, 'elements/group_list.html', context)
 
 
 # save created object and updated object
@@ -46,7 +54,7 @@ def save_all(request, form, template_name):
     return JsonResponse(data)
 
 
-def save_all_2(request, form, template_name):
+def save_all2(request, form, template_name):
     data = dict()
     if request.method == 'POST':
         if form.is_valid():
@@ -80,11 +88,10 @@ def element_create(request):
 
 def group_create(request):
     if request.method == 'POST':
-        form = GroupForm(request.POST, request.user)
-
+        form = GroupForm(request.POST)
     else:
         form = GroupForm()
-    return save_all_2(request, form, 'elements/group_create.html')
+    return save_all(request, form, 'elements/group_create.html')
 
 
 # update
@@ -109,7 +116,7 @@ def group_update(request, id):
 
     else:
         form = GroupForm(instance=group)
-    return save_all_2(request, form, 'elements/group_update.html')
+    return save_all(request, form, 'elements/group_create.html')
 
 
 # delete
@@ -149,3 +156,4 @@ def group_delete(request, id):
         data['html_form'] = render_to_string('elements/group_delete.html', context, request=request)
 
     return JsonResponse(data)
+
