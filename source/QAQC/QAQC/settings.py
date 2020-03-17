@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'ckeditor_uploader',
     'objects',
     'django_elasticsearch_dsl',
+    'django_elasticsearch_dsl_drf',
 
 ]
 
