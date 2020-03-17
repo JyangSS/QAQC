@@ -32,7 +32,7 @@ class Element(models.Model):
         verbose_name_plural = 'Elements'
 
     element = models.CharField(max_length=50)
-    description = models.CharField(max_length=200)
+    description = models.CharField(max_length=200, blank=True)
     is_active = models.BooleanField(default=True)
     creation_time = models.DateTimeField(null=True, blank=True)
     creator_user_id = models.CharField(max_length=50, blank=True)
@@ -44,6 +44,7 @@ class Element(models.Model):
 
     def __str__(self):
         return str(self.element)
+
     pass
 
 
@@ -54,7 +55,7 @@ class Group(models.Model):
 
     element_id = models.ForeignKey(Element, on_delete=models.CASCADE)
     defect_group = models.CharField(max_length=100)
-    description = models.CharField(max_length=200)
+    description = models.CharField(max_length=200, blank=True)
     is_active = models.BooleanField(default=True)
     creation_time = models.DateTimeField(null=True, blank=True)
     creator_user_id = models.CharField(max_length=50, blank=True)
