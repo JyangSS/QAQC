@@ -1,4 +1,4 @@
-{% extends 'inspectionForm/baseKent.html' %}
+{% extends 'object/base_kent.html' %}
 {% load static %}
 {% block content %}
 {% load crispy_forms_tags %}
@@ -55,6 +55,7 @@
                 <tr>
                   <th>No</th>
     <th>Project Name</th>
+     <th>Company</th>
     <th>Phase</th>
     <th>Block</th>
     <th>Level</th>
@@ -66,12 +67,13 @@
   <tr>
     <td>{{ a.id }}</td>
     <td>{{ a.project_id.project_description }}</td>
+        <td>{{a.company}}</td>
     <td>{{ a.phase_description }}</td>
 
       <td></td>
       <td></td>
       <td></td>
-<td><a href="{% url 'edit_phase' a.id %}"><button type="button" class="btn btn-block btn-success">Edit</button></a>
+<td><a href="{% url 'phase_edit' a.id %}"><button type="button" class="btn btn-block btn-success">Edit</button></a>
       <button type="button" class="btn btn-block btn-danger">Delete</button></td>
   </tr>
 {% endfor %}

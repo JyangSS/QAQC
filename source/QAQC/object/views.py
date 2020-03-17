@@ -1,14 +1,5 @@
-from typing import Dict
-
-from django.shortcuts import render, get_object_or_404
-from .models import *
-from .forms import *
-from django.template.loader import render_to_string
+from source.QAQC.objects.forms import *
 from django.shortcuts import render, redirect
-import datetime
-from django.http import JsonResponse
-from django.views.generic import View
-
 
 
 # Create your views here. (KENT)
@@ -28,7 +19,7 @@ def unit_list(request):
     else:
         unit_number = UnitNumberForm()
         project = ProjectForm()
-    return render(request, 'inspection/unitList.html',
+    return render(request, 'inspection/unit_list.html',
                   {'unit': unit, 'unit_number': unit_number, 'project': project})
 
 
@@ -41,7 +32,7 @@ def project_list(request):
             return redirect('project_list')
     else:
         add_project = ProjectForm()
-    return render(request, 'inspection/projectList.html', {'project': project, 'add_project': add_project})
+    return render(request, 'inspection/project_list.html', {'project': project, 'add_project': add_project})
 
 
 def phase_list(request):
@@ -57,7 +48,7 @@ def phase_list(request):
     else:
         add_phase = PhaseForm()
         project = ProjectForm()
-    return render(request, 'inspection/phaseList.html',
+    return render(request, 'inspection/phase_list.html',
                   {'phase': phase, 'add_phase': add_phase, 'project': project})
 
 
@@ -69,7 +60,7 @@ def edit_unit(request, id):
         if form.is_valid():
             form.save()
             return redirect('unit_list')
-    return render(request, 'inspection/editUnit.html', {'form': form})
+    return render(request, 'inspection/unit_edit.html', {'form': form})
 
 
 def edit_project(request, id):
@@ -80,7 +71,7 @@ def edit_project(request, id):
         if form.is_valid():
             form.save()
             return redirect('project_list')
-    return render(request, 'inspection/editProject.html', {'form': form})
+    return render(request, 'inspection/project_edit.html', {'form': form})
 
 
 def edit_phase(request, id):
@@ -91,4 +82,4 @@ def edit_phase(request, id):
         if form.is_valid():
             form.save()
             return redirect('phase_list')
-    return render(request, 'inspection/editPhase.html', {'form': form})
+    return render(request, 'inspection/phase_edit.html', {'form': form})

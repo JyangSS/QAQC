@@ -172,7 +172,7 @@ class Inspection01(models.Model):
         verbose_name_plural = 'Inspections1'
 
     template_detail_id = models.ForeignKey(TemplateDetail, on_delete=models.CASCADE)
-    unit_number_id = models.ForeignKey('object.UnitNumber', on_delete=models.CASCADE)
+    unit_number_id = models.ForeignKey('objects.UnitNumber', on_delete=models.CASCADE)
     rev = models.IntegerField()
     draw_ref = models.CharField(max_length=15)
     is_active = models.BooleanField()

@@ -1,7 +1,8 @@
-{% extends 'inspectionForm/baseKent.html' %}
+{% extends 'object/base_kent.html' %}
 {% load static %}
 {% block content %}
 {% load crispy_forms_tags %}
+
 
 <div class="content-wrapper" style="margin-left:0">
 
@@ -13,13 +14,12 @@
         <div class="row mb-2">
           <div class="col-sm-6">
             <h1>Project List</h1>
-            <button class="1" ><a href="{% url 'unit_list' %}">Show Unit</a></button>
+              <button class="1" ><a href="{% url 'unit_list' %}">Show Unit</a></button>
 <button class="2"><a href="{% url 'phase_list' %}">Show Phase</a></button>
 <button class="3"><a href="{% url 'project_list' %}">Show Project</a></button>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
-               <li class="breadcrumb-item"><a href="#">Back</a></li>
               <li class="breadcrumb-item"><a href="#">Home</a></li>
               <li class="breadcrumb-item active">DataTables</li>
             </ol>
@@ -43,10 +43,11 @@
           <div class="card">
             <div class="card-header">
               <h3 class="card-title">DataTable with default features</h3>
-                <button style="position: absolute;right: 50px; padding:3px; " type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-default" >
-                  Add Unit
+<button style="position: absolute;right: 50px; padding:3px; " type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-default" >
+                  Add New Project
                 </button>
             </div>
+
             <!-- /.card-header -->
             <div class="card-body">
               <table id="example1" class="table table-bordered table-striped">
@@ -54,30 +55,27 @@
                 <tr>
                   <th>No</th>
     <th>Project Name</th>
+    <th>Company</th>
     <th>Phase</th>
     <th>Block</th>
     <th>Level</th>
     <th>Unit Number</th>
-     <th></th>
                 </tr>
                 </thead>
                 <tbody>
-
-                {% for a in unit %}
+                 {% for a in project %}
   <tr>
-    <td class="data">{{ a.id }}</td>
-    <td class="data">{{ a.phase_id.project_id.project_description }}</td>
-    <td class="data">{{ a.phase_id.phase_description }}</td>
-
-      <td class="data">{{ a.block }}</td>
-      <td class="data">{{ a.level }}</td>
-       <td class="data">{{ a.unit_number }}</td>
-      <td><a href="{% url 'edit_unit' a.id %}"><button type="button" class="btn btn-block btn-success">Edit</button></a>
-      <button type="button" class="btn btn-block btn-danger">Delete</button></td>
-
+    <td>{{ a.id }}</td>
+    <td>{{ a.project_description }}</td>
+      <td>{{a.company}}</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td><a href="{% url 'project_edit' a.id %}"><button type="button" class="btn btn-block btn-success">Edit</button></a>
+  <button class="btn btn-danger form-control" >DELETE</button>
 
   </tr>
-    {% endfor %}
+{% endfor %}
                 </tbody>
 
               </table>
@@ -92,6 +90,7 @@
     </section>
     <!-- /.content -->
   </div>
+
   <!-- /.content-wrapper -->
   <footer class="main-footer">
     <div class="float-right d-none d-sm-block">
@@ -105,7 +104,6 @@
   <aside class="control-sidebar control-sidebar-dark">
     <!-- Control sidebar content goes here -->
   </aside>
-  <!-- /.control-sidebar -->
 <!--Pop Up Add project -->
  <div class="modal fade" id="modal-default" style="display: none;" aria-hidden="true">
         <div class="modal-dialog">
@@ -118,16 +116,21 @@
             </div>
             <div class="modal-body">
 <form  method = 'POST' >
-       {% csrf_token %}
-     {{ unit_number|crispy }}
+        {% csrf_token %}
+
+      {{ add_project.as_p  }}
 	  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-	  <input type="submit" class="btn btn-primary" value="     Add     "></input>
+	  <input type="submit" class="btn btn-primary" value="     Add     " ></input>
 </form>
             </div>
 		  </div>
         </div>
       </div>
-<!--Pop Up edit project -->
+<!--Pop Up delete project -->
+
+
+<script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
+    <script src='https://code.jquery.com/jquery-3.2.1.min.js'></script>
+    <script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js'></script>
+
 {% endblock %}
-
-
