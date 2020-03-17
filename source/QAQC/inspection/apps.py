@@ -1,5 +1,5 @@
 from django.apps import AppConfig
 
 
-class InspectionformConfig(AppConfig):
+class InspectionConfig(AppConfig):
     name = 'inspection'
