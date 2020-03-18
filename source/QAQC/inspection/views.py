@@ -89,9 +89,10 @@ def element_create(request):
 def group_create(request):
     if request.method == 'POST':
         form = GroupForm(request.POST)
+
     else:
         form = GroupForm()
-    return save_all(request, form, 'elements/group_create.html')
+    return save_all2(request, form, 'elements/group_create.html')
 
 
 # update
@@ -116,7 +117,7 @@ def group_update(request, id):
 
     else:
         form = GroupForm(instance=group)
-    return save_all(request, form, 'elements/group_create.html')
+    return save_all2(request, form, 'elements/group_create.html')
 
 
 # delete
@@ -156,4 +157,3 @@ def group_delete(request, id):
         data['html_form'] = render_to_string('elements/group_delete.html', context, request=request)
 
     return JsonResponse(data)
-

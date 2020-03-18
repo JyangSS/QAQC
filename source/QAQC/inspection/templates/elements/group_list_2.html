@@ -1,8 +1,8 @@
-{% for element in elements %}
+{% for group in groups %}
   <tr>
     <td style="overflow:hidden;text-align:center;">{{ forloop.counter }}</td>
-    <td style="overflow:hidden;">{{ element.element }}</td>
-    <td style="overflow:hidden;">{{ element.description }}</td>
+    <td style="overflow:hidden;">{{ group.defect_group }}</td>
+    <td style="overflow:hidden;">{{ group.description }}</td>
 
     <td style="white-space:nowrap;">
       <button  style="display:inline;width:32%;color:black;" class="btn btn-block btn-info btn-xs"  onclick="window.location.href='{% url 'group_list' element.id %}'">

@@ -47,3 +47,53 @@ $('#modal-element').on("submit",".update-form",SaveForm)
 $('#element-table').on("click",".show-form-delete",ShowForm);
 $('#modal-element').on("submit",".delete-form",SaveForm)
 });
+
+$(document).ready(function(){
+	var ShowForm2 = function(){
+		var btn = $(this);
+		$.ajax({
+			url: btn.attr("data-url"),
+			type: 'get',
+			dataType:'json',
+			beforeSend: function(){
+				$('#modal-group').modal('show');
+			},
+			success: function(data){
+				$('#modal-group .modal-content').html(data.html_form);
+			}
+		});
+	};
+
+	var SaveForm2 =  function(){
+		var form = $(this);
+		$.ajax({
+			url: form.attr('data-url'),
+			data: form.serialize(),
+			type: form.attr('method'),
+			dataType: 'json',
+			success: function(data){
+				if(data.form_is_valid){
+
+					$('#group-table tbody').html(data.group_list);
+					$('#modal-group').modal('hide');
+
+				} else {
+					$('#modal-group .modal-content').html(data.html_form)
+				}
+			}
+		})
+		return false;
+	}
+
+// create
+$(".show-form").click(ShowForm2);
+$("#modal-group").on("submit",".create-form",SaveForm2);
+
+//update
+$('#group-table').on("click",".show-form-update",ShowForm2);
+$('#modal-group').on("submit",".update-form",SaveForm2)
+
+//delete
+$('#group-table').on("click",".show-form-delete",ShowForm2);
+$('#modal-group').on("submit",".delete-form",SaveForm2)
+});
