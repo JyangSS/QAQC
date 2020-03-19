@@ -1,5 +1,5 @@
 from typing import Dict
-
+from django.urls import reverse
 from django.shortcuts import render, get_object_or_404
 from .models import *
 from .forms import *
@@ -10,56 +10,21 @@ from django.http import JsonResponse
 from django.views.generic import View
 
 # Create your views here. (KENT)
-'''def add_unit(request):
-    unit = UnitNumber.objects.all()
-    if request.method == 'POST':
-        unit_number = UnitNumberForm(request.POST)
-        project = ProjectForm(request.POST)
-        if project.is_valid():
-            project.save()
-            return redirect('unit_list')
-        elif unit_number.is_valid():
-            unit_number.save()
-
-    else:
-        unit_number = UnitNumberForm()
-        project = ProjectForm()
-    return render(request, 'object/unit_list.html',
-                  {'unit': unit, 'unit_number': unit_number, 'project': project})
-
-def add_phase(request):
-    if request.method == 'POST':
-        add_phase = PhaseForm(request.POST)
-        project = ProjectForm(request.POST)
-        if project.is_valid():
-            project.save()
-        elif add_phase.is_valid():
-            add_phase.save()
-            return redirect('phase_list')
-    else:
-        add_phase = PhaseForm()
-        project = ProjectForm()
-    return render(request, 'object/phase_list.html',
-                  {'phase': phase, 'add_phase': add_phase, 'project': project})
-'''
-
-
 def project_main_list(request, id):
     unit = UnitNumber.objects.filter(phase_id__project_id=id)
-    project = Project.objects.all()
+    c = Company.objects.all()
     page_title_project = Project.objects.get(pk=id)
     if request.method == 'POST':
         add_project = ProjectForm(request.POST)
         if add_project.is_valid():
-            add_project.save()
-            return redirect('project_main_list',id)
+            n=add_project.save()
+            n.pk
+            return redirect(reverse('project_main_list', kwargs={'id':n.pk}) )
     else:
         add_project = ProjectForm()
-    return render(request, 'object/project_main_list.html',
-                  {'unit': unit, 'add_project': add_project, 'project': project,
-                   'page_title_project': page_title_project})
+    return render(request, 'object/project_main_list.html', {'unit': unit, 'add_project': add_project, 'c': c, 'page_title_project': page_title_project})
 
-
+# table list
 def unit_list(request):
     unit = UnitNumber.objects.all()
     if request.method == 'POST':
@@ -78,16 +43,24 @@ def unit_list(request):
                   {'unit': unit, 'unit_number': unit_number, 'project': project})
 
 
-def project_list(request):
-    project = Project.objects.all()
+def project_delete(request, id):
+    data = dict()
+    project = get_object_or_404(Project, id=id)
     if request.method == 'POST':
-        add_project = ProjectForm(request.POST)
-        if add_project.is_valid():
-            add_project.save()
-            return redirect('project_list')
+        project.is_deleted = True
+        project.is_active = False
+        project.delete_user_id = request.user.username
+        project.deletion_time = datetime.datetime.now().replace(microsecond=0)
+        project.save()
+        data['form_is_valid'] = True
+        projects = Project.objects.filter(is_active=True)
+        data['project_main_list'] = render_to_string('object/project_main_list.html', {'page_title_project': projects})
     else:
-        add_project = ProjectForm()
-    return render(request, 'object/project_list.html', {'project': project, 'add_project': add_project})
+        context = {'project': project}
+        data['html_form'] = render_to_string('object/project_delete.html', context, request=request)
+
+    return JsonResponse(data)
+
 
 
 def phase_list(request):
@@ -175,20 +148,5 @@ def phase_delete(request, id):
         data['html_form'] = render_to_string('elements/group_delete.html', context, request=request)
 
     return JsonResponse(data)
-def project_delete(request, id):
-    data = dict()
-    group = get_object_or_404(Group, id=id)
-    if request.method == 'POST':
-        group.is_deleted = True
-        group.is_active = False
-        group.delete_user_id = request.user.username
-        group.deletion_time = datetime.datetime.now().replace(microsecond=0)
-        group.save()
-        data['form_is_valid'] = True
-        groups = Group.objects.filter(is_active=True)
-        data['group_list'] = render_to_string('elements/group_list_2.html', {'groups': groups})
-    else:
-        context = {'group': group}
-        data['html_form'] = render_to_string('elements/group_delete.html', context, request=request)
+    '''
 
-    return JsonResponse(data)'''
