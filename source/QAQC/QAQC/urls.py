@@ -23,6 +23,6 @@ urlpatterns = [
     path('inspection/', include('inspection.urls')),
     path('admin/', admin.site.urls, name='admin'),
     path('', include('django.contrib.auth.urls')),
-    path('objects/',include('objects.urls'))
+    path('objects/', include('objects.urls'))
 ]
 urlpatterns += staticfiles_urlpatterns()
