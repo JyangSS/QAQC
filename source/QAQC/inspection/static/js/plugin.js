@@ -23,7 +23,6 @@ $(document).ready(function(){
 			dataType: 'json',
 			success: function(data){
 				if(data.form_is_valid){
-
 					$('#element-table tbody').html(data.element_list);
 					$('#modal-element').modal('hide');
 
@@ -36,8 +35,8 @@ $(document).ready(function(){
 	}
 
 // create
-$(".show-form").click(ShowForm);
-$("#modal-element").on("submit",".create-form",SaveForm);
+$("#element_form").click(ShowForm);
+$("#modal-element").on("submit","#form",SaveForm);
 
 //update
 $('#element-table').on("click",".show-form-update",ShowForm);
@@ -46,7 +45,7 @@ $('#modal-element').on("submit",".update-form",SaveForm)
 //delete
 $('#element-table').on("click",".show-form-delete",ShowForm);
 $('#modal-element').on("submit",".delete-form",SaveForm)
-});
+} );
 
 $(document).ready(function(){
 	var ShowForm2 = function(){
@@ -73,7 +72,6 @@ $(document).ready(function(){
 			dataType: 'json',
 			success: function(data){
 				if(data.form_is_valid){
-
 					$('#group-table tbody').html(data.group_list);
 					$('#modal-group').modal('hide');
 
@@ -86,8 +84,8 @@ $(document).ready(function(){
 	}
 
 // create
-$(".show-form").click(ShowForm2);
-$("#modal-group").on("submit",".create-form",SaveForm2);
+$("#group_form").click(ShowForm2);
+$("#modal-group").on("submit","#form2",SaveForm2);
 
 //update
 $('#group-table').on("click",".show-form-update",ShowForm2);

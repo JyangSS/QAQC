@@ -1,4 +1,4 @@
-ar elm = document.getElementById('delete-object');
+var elm = document.getElementById('delete-object');
 var objectID = elm.getAttribute('data-object-id');
 var resultDiv = document.getElementById('result');
 elm.addEventListener('click', function() {

@@ -28,45 +28,55 @@ bottom: .5em;
             }
 
 
-            .dropdown-submenu:hover>.dropdown-menu {xxxx
+            .dropdown-submenu:hover>.dropdown-menu {
                 display: block;
             }
+             .scrollable-menu {
+      height: auto;
+      max-height: 200px;
+      overflow-x: hidden;
+    }
 </style>
     <br>
-    <h1 class="page-header">Project Manage List
-        <!-- drop down project --><br>
+<!-- drop down project -->
+<h1 class="page-header">Project Manage List <br>
     <div class="btn-group" >
-                                <a id="dLabel" role="button" data-toggle="dropdown" class="btn btn-primary dropdown-toggle" href="">
-                                    Choose Project
-                                </a>
-                                <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
-                                    {% for b in project %}
-                                    <li class="dropdown-submenu">
-                                        <a class="dropdown-item" tabindex="-1" href="#">
-                                           {{ b.company_id.company }}
-                                        </a>
-                                        <ul class="dropdown-menu">
-                                            <li><a class="dropdown-item" tabindex="-1" href="{% url 'project_main_list' b.id %}">{{ b.project_description }}</a></li>
-
-                                        </ul>
-                                    </li>
-                                    <li class="dropdown-divider"></li>
-                                   {% endfor %}
-                                </ul>
-                            </div>
-          <!-- add project -->
+        <a id="dLabel" role="button" data-toggle="dropdown" class="btn btn-primary dropdown-toggle" href="">
+            Choose Project
+        </a>
+        <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
+            {% for b in c %}
+            <li class="dropdown-submenu">
+                <a class="dropdown-item" tabindex="-1" href="#">
+                    {{ b.company }}
+                </a>
+                <ul class="dropdown-menu scrollable-menu">
+                    {% for e in b.project_set.all %}
+                    <li><a class="dropdown-item" tabindex="-1" href="{% url 'project_main_list' e.id %}">{{ e.project_description }}</a></li>
+                    {% endfor %}
+                </ul>
+            </li>
+            <li class="dropdown-divider"></li>
+            {% endfor %}
+        </ul>
+    </div>
+          <!-- add project button -->
         <button class="btn btn-block btn-primary btn-sm show-form" data-toggle="modal" data-target="#modal-default" style="float:right;width:20%;">
     <span class="fa fa-fw fa-plus"></span> New Project
   </button></h1>
+<!-- display current web which project -->
 <hr>
     <p style="width:34.5%;margin:0;display:inline;float:left"><strong>COMPANY</strong></p>
     <p style="margin:0;display:inline:float:right"><strong>:</strong>{{ page_title_project.company_id.company }}</p>
     <p style="width:34.5%;margin0;display:inline;float:left"><strong>PROJECT NAME</strong></p>
     <p style="margin:0;display:inline:float:right"><strong>:</strong>{{ page_title_project.project_description }}</p>
- <hr>
+ </hr><p>&emsp;</p>
+  <button  style="display:inline;width:10%;margin-bottom:8px;" class="btn btn-block btn-danger btn-xs show-form-delete" data-url="{% url 'project_delete' page_title_project.id %}" >
+      <span class="fa fa-fw fa-trash"></span>Delete
+      </button>
 
-
-  <table class="table table-striped table-bordered table-sm" id="element-table" >
+<!-- List table -->
+<table class="table table-striped table-bordered table-sm" id="element-table" >
 
     <thead>
       <tr>
@@ -96,12 +106,6 @@ bottom: .5em;
       </tr>
     </tfoot>
   </table>
-
-  <div class="modal fade in" id="modal-element">
-    <div class="modal-dialog">
-      <div class="modal-content"></div>
-    </div>
-  </div>
 <br><br><br><br><br><br><br>
 <!----POP UP ADD PROJECT-->
  <div class="modal fade" id="modal-default" style="display: none;" aria-hidden="true">
@@ -126,14 +130,7 @@ bottom: .5em;
         </div>
       </div>
 
-
-
-  <div class="modal fade in" id="modal-group">
-    <div class="modal-dialog">
-      <div class="modal-content"></div>
-    </div>
-  </div>
-<!-- drop down menu -->
+<!-- drop down menu script -->
 <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
