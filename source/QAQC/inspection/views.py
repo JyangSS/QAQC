@@ -1,5 +1,6 @@
 from typing import Dict
 
+from django.forms import modelformset_factory
 from django.shortcuts import render, get_object_or_404
 from .models import *
 from .forms import *
@@ -13,7 +14,6 @@ from django.views.generic import View
 # show all objects in table
 def element_list(request):
     elements = Element.objects.filter(is_active=True)
-    groups = Group.objects.filter(is_active=True)
     context = {
         'elements': elements,
     }
@@ -22,7 +22,7 @@ def element_list(request):
 
 def group_list(request, id):
     element = get_object_or_404(Element, id=id)
-    groups = Group.objects.filter(element_id=id)
+    groups = Group.objects.filter(element_id=element.id)
     context = {
         'element': element,
         'groups': groups,
@@ -91,7 +91,7 @@ def group_create(request):
         form = GroupForm(request.POST)
     else:
         form = GroupForm()
-    return save_all(request, form, 'elements/group_create.html')
+    return save_all2(request, form, 'elements/group_create.html')
 
 
 # update
@@ -116,7 +116,7 @@ def group_update(request, id):
 
     else:
         form = GroupForm(instance=group)
-    return save_all(request, form, 'elements/group_create.html')
+    return save_all2(request, form, 'elements/group_update.html')
 
 
 # delete
@@ -157,3 +157,11 @@ def group_delete(request, id):
 
     return JsonResponse(data)
 
+
+def group(request, id):
+    element = Element.objects.get(pk=id)
+    GroupFormset = modelformset_factory(Group, fields=('defect_group', 'description',))
+
+    formset = GroupFormset(queryset=Group.objects.filter(element_id=element.id))
+
+    return render(request, 'group_list.html', {'formset': formset})
