@@ -1,129 +1,27 @@
-{% extends 'object/base_kent.html' %}
-{% load static %}
-{% block content %}
-{% load crispy_forms_tags %}
-
-<div class="content-wrapper" style="margin-left:0">
-
-
-
-  <!-- Content Wrapper. Contains page content -->
-
-    <!-- Content Header (Page header) -->
-    <section class="content-header">
-      <div class="container-fluid">
-        <div class="row mb-2">
-          <div class="col-sm-6">
-            <h1>Project List</h1>
-              <button class="1" ><a href="{% url 'unit_list' %}">Show Unit</a></button>
-<button class="2"><a href="{% url 'phase_list' %}">Show Phase</a></button>
-<button class="3"><a href="{% url 'project_list' %}">Show Project</a></button>
-          </div>
-          <div class="col-sm-6">
-            <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">DataTables</li>
-            </ol>
-          </div>
-        </div>
-      </div><!-- /.container-fluid -->
-    </section>
-
-    <!-- Main content -->
-    <section class="content">
-      <div class="row">
-        <div class="col-12">
-          <div class="card">
-
-            <!-- /.card-header -->
-
-            <!-- /.card-body -->
-          </div>
-          <!-- /.card -->
-
-          <div class="card">
-            <div class="card-header">
-              <h3 class="card-title">DataTable with default features</h3>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
-<button style="position: absolute;right: 50px; padding:3px; " type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-default" >
-                  Add New Phase
-                </button>
-            </div>
-            <!-- /.card-header -->
-            <div class="card-body">
-              <table id="example1" class="table table-bordered table-striped">
-                <thead>
-                <tr>
-                  <th>No</th>
-    <th>Project Name</th>
-     <th>Company</th>
-    <th>Phase</th>
-    <th>Block</th>
-    <th>Level</th>
-    <th>Unit Number</th>
-                </tr>
-                </thead>
-                <tbody>
-                {% for a in phase %}
+{% for a in phase %}
   <tr>
-    <td>{{ a.id }}</td>
-    <td>{{ a.project_id.project_description }}</td>
-        <td>{{a.project_id.company_id.company}}</td>
-    <td>{{ a.phase_description }}</td>
+    <td class="data">{{ forloop.counter }}</td>
+    <td class="data">{{ a.phase_short_form }}</td>
+    <td class="data">{{ a.phase_description }}</td>
 
-      <td></td>
-      <td></td>
-      <td></td>
-<td><a href="{% url 'phase_edit' a.id %}"><button type="button" class="btn btn-block btn-success">Edit</button></a>
-      <button type="button" class="btn btn-block btn-danger">Delete</button></td>
+    <td style="white-space:nowrap;">
+        <button style="display:inline;width:33%;color:black;margin-top:3%;" class="btn btn-block btn-info btn-xs" onclick="window.location.href='{% url 'unit_main_list' a.id %}'">
+      <span class="fa fa-eye"></span>View
+      </button>
+       <button  style="display:inline;width:33%" class="btn btn-block btn-warning btn-xs show-form-update" data-url="#" >
+        <span class="fa fa-edit"></span>Edit
+      </button>
+        <button  style="display:inline;width:33%;" class="btn btn-block btn-danger btn-xs show-form-delete" data-url="{% url 'phase_delete' a.id %}" >
+                <span class="fa fa-fw fa-trash"></span>Delete
+      </button>
+      </button></td>
+
+
   </tr>
-{% endfor %}
-                </tbody>
+  {% empty %}
+        <tr><td colspan="5">Currently no Data Available</td></tr>
 
-              </table>
-            </div>
-            <!-- /.card-body -->
-          </div>
-          <!-- /.card -->
-        </div>
-        <!-- /.col -->
-      </div>
-      <!-- /.row -->
-    </section>
-    <!-- /.content -->
-  </div>
-  <!-- /.content-wrapper -->
-  <footer class="main-footer">
-    <div class="float-right d-none d-sm-block">
-      <b>Version</b> 3.0.2
-    </div>
-    <strong>Copyright &copy; 2014-2019 <a href="http://huayang.com.my/main/">HuaYang</a>.</strong> All rights
-    reserved.
-  </footer>
 
-  <!-- Control Sidebar -->
-  <aside class="control-sidebar control-sidebar-dark">
-    <!-- Control sidebar content goes here -->
-  </aside>
-<!--Pop Up Add phase -->
- <div class="modal fade" id="modal-default" style="display: none;" aria-hidden="true">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h4 class="modal-title">Default Modal</h4>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">×</span>
-              </button>
-            </div>
-            <div class="modal-body">
-<form  method = 'POST' >
-        {% csrf_token %}
-      {{ add_phase.as_p  }}
-	  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-	  <input type="submit" class="btn btn-primary" value="     Add     " ></input>
-</form>
-            </div>
-		  </div>
-        </div>
-      </div>
 
-{% endblock %}
+    {% endfor %}
+

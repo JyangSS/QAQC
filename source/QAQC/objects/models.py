@@ -33,7 +33,7 @@ class Project(models.Model):
     delete_user_id = models.CharField(max_length=50)
 
     def __str__(self):
-        return str(self.project_description)
+        return str(self.company_id.company+"--  "+self.project_description)
 
     pass
 
