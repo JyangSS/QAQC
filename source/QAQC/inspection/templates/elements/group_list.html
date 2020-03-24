@@ -25,38 +25,22 @@ bottom: .5em;
     <br>
 <h1 class="page-header"><a href="{% url 'element_list' %}"><span class="fa fa-angle-double-left" ></span></a> DEFECT GROUPS</h1>
 <hr>
-     <button class="btn btn-block btn-primary btn-sm show-form" id="group_form" data-url="{% url 'group_create' %}" style="float:right;width:20%;">
-   <span class="fa fa-fw fa-plus"></span> New_Group </button>
+
     <p style="width:34.5%;margin:0;display:inline;float:left"><strong>ELEMENT</strong></p>
     <p style="margin:0;display:inline:float:right" ><strong>:</strong>{{ element.element}}</p>
     <p style="width:34.5%;margin:0;display:inline;float:left"><strong>ELEMENT DESCRIPTION</strong></p>
     <p style="margin:0;display:inline:float:right" ><strong>:</strong>{{ element.description}}</p>
   <hr>
+<form method="post">
+    {% csrf_token %}
+{% load crispy_forms_tags %}
+<table>
+{{ formset.management_form }}
+ {{ formset.as_table }}
 
-
-  <table class="table table-striped table-bordered table-sm" id="element-table" >
-    <thead>
-      <tr>
-        <th width="5%" style="text-align:center;" id="no-sort">#</th>
-        <th width="37.5%" >Defect Group</th>
-        <th width="37.5%" >Description</th>
-        <th class="th-sm" style="text-align:center;" width="35%">Action
-          </th>
-      </tr>
-    </thead>
-    <tbody>
-      {% include "elements/group_list_2.html" %}
-    </tbody>
-
-  </table>
-
-  <div class="modal fade in" id="modal-element">
-    <div class="modal-dialog">
-      <div class="modal-content"></div>
-    </div>
-  </div>
-<br><br><br><br><br><br><br>
-
+</table>
+    <button type="submit">Save</button>
+    </form>
 
   <div class="modal fade in" id="modal-group">
     <div class="modal-dialog">
