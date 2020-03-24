@@ -1,17 +1,27 @@
-{% load crispy_forms_tags %}
-<form method="post" data-url="{% url 'project_delete' page_title_project.id %}" class="delete-form ">
-	{% csrf_token %}
-		<div class="modal-header ">
-		<h5 class="modal-title" >Delete Element</h5>
-		<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-		<span aria-hidden="true">&times;</span>
-		</button>
-		</div>
-		<div class="modal-body">
-		<p class="lead"> Are you sure you want to delete  <strong>{{ page_title_project.project_description }}</strong> ?</p>
-		</div>
-		<div class="modal-footer">
-		<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-		<button type="submit" class="btn btn-danger"><i class="fa fa-fw fa-exclamation-circle"></i>Delete</button>
-		</div>
-</form>
+
+{% for a in unit %}
+  <tr>
+    <td class="data">{{ forloop.counter }}</td>
+
+    <td class="data">{{ a.phase_id.phase_description }}</td>
+
+      <td class="data">{{ a.block }}</td>
+      <td class="data">{{ a.level }}</td>
+       <td class="data">{{ a.unit_number }}</td>
+    <td style="white-space:nowrap;">
+       <button  style="display:inline;width:50%" class="btn btn-block btn-warning btn-xs show-form-update" data-url="#" >
+        <span class="fas fa-edit"></span>Edit
+      </button>
+        <button  style="display:inline;width:50%;margin-bottom:8px" class="btn btn-block btn-danger btn-xs show-form-delete" data-url="#" >
+      <span class="fa fa-fw fa-trash"></span>Delete
+      </button></td>
+
+
+  </tr>
+  {% empty %}
+        <tr><td colspan="5">Currently no Data Available</td></tr>
+
+
+
+    {% endfor %}
+

@@ -14,8 +14,9 @@ class ProjectForm(forms.ModelForm):
         model = Project
         fields = [
             'company_id',
-            'project_description',
             'project_short_form',
+            'project_description',
+
         ]
 
 
@@ -38,8 +39,9 @@ class PhaseForm(forms.ModelForm):
         model = Phase
         fields = [
             'project_id',
-            'phase_description',
             'phase_short_form',
+            'phase_description',
+
         ]
 
     helper = FormHelper()

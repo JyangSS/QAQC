@@ -1,0 +1,20 @@
+{% for group in groups %}
+  <tr>
+    <td style="overflow:hidden;text-align:center;">{{ forloop.counter }}</td>
+    <td style="overflow:hidden;">{{ group.defect_group }}</td>
+    <td style="overflow:hidden;">{{ group.description }}</td>
+
+    <td style="white-space:nowrap;">
+
+       <button  style="display:inline;width:32%;margin-bottom:8px" class="btn btn-block btn-warning btn-xs show-form-update" data-url="{% url 'group_update' group.id %}" >
+        <span class="fa fa-edit"></span>Edit
+      </button>
+
+        <button  style="display:inline;width:35%;margin-bottom:8px;color:black;" class="btn btn-block btn-danger btn-xs show-form-delete" data-url="{% url 'group_delete' group.id %}" >
+      <span class="fa fa-fw fa-trash"></span>Delete
+      </button></td>
+
+  </tr>
+
+
+{% endfor %}

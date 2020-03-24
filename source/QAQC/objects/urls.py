@@ -5,13 +5,10 @@ from django.urls import path
 
 urlpatterns = [
 
-    path('unitlist/', views.unit_list, name='unit_list'),
-    path('phaselist/', views.phase_list, name='phase_list'),
-    path('unitlist/<int:id>', views.unit_edit, name='unit_edit'),
-    path('projectlist/<int:id>', views.project_edit, name='project_edit'),
-    path('phaselist/<int:id>', views.phase_edit, name='phase_edit'),
+    path('projectmainlist/', views.project_main_list_empty, name='project_main_list_empty'),
+    path('projectmainlist/unitlist/<int:id>', views.unit_main_list, name='unit_main_list'),
     path('projectmainlist/<int:id>', views.project_main_list, name='project_main_list'),
     path('projectmainlist/project/delete/<int:id>', views.project_delete, name='project_delete'),
-
+    path('phaselist/delete/<int:id>', views.phase_delete, name='phase_delete'),
 
 ]
