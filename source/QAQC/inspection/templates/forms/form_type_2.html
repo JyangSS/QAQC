@@ -1,0 +1,21 @@
+{% for type in types %}
+  <tr>
+    <td style="overflow:hidden;text-align:center;">{{ forloop.counter }}</td>
+    <td style="overflow:hidden;">{{ type.form_type }}</td>
+    <td style="overflow:hidden;">{{ type.form_description }}</td>
+
+    <td style="white-space:nowrap;">
+      <button  style="display:inline;width:32%;color:black;" class="btn btn-block btn-info btn-xs"  >
+      <span class="fas fa-eye"></span>View
+      </button>
+
+       <button  style="display:inline;width:32%;margin-bottom:8px" class="btn btn-block btn-warning btn-xs show-form-update" data-url="{% url 'form_type_update' type.id %}" >
+        <span class="fas fa-edit"></span>Edit
+      </button>
+
+        <button  style="display:inline;width:35%;margin-bottom:8px;color:black;" class="btn btn-block btn-danger btn-xs show-form-delete" data-url="{% url 'form_type_delete' type.id %}" >
+      <span class="fa fa-fw fa-trash"></span>Delete
+      </button></td>
+
+  </tr>
+{% endfor %}

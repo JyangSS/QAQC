@@ -100,7 +100,7 @@ class NumberSeries(models.Model):
         verbose_name_plural = 'Number_Series'
 
     series = models.CharField(max_length=50)
-    current = models.IntegerField()
+    current = models.IntegerField(default=1)
     form_type_template_id = models.ForeignKey(FormTypeTemplate, on_delete=models.CASCADE)
     is_active = models.BooleanField(default=True)
     creation_time = models.DateTimeField(null=True, blank=True)

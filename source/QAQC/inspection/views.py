@@ -134,7 +134,6 @@ def group_delete(request, id):
     return JsonResponse(data)
 
 
-
 # form type
 def form_type(request):
     types = FormTypeTemplate.objects.filter(is_active=True)
@@ -150,16 +149,21 @@ def save_form_type(request, form, template_name):
         if form.is_valid():
             form.save()
             obj = FormTypeTemplate.objects.order_by('-pk')[0]
+            obj2 = FormTypeTemplate.objects.latest('id')
             if obj.creator_user_id == '':
                 obj.creator_user_id = request.user.username
                 obj.creation_time = datetime.datetime.now().replace(microsecond=0)
                 obj.last_modifier_user_id = request.user.username
                 obj.last_modification_time = datetime.datetime.now().replace(microsecond=0)
                 obj.save()
+                # number = NumberSeries()
+                # number.series = 'abc'
+                # number.form_type_template_id = form.id
+                # number.save()
             data['form_is_valid'] = True
             types = FormTypeTemplate.objects.filter(is_active=True)
-            data['type_list'] = render_to_string('forms/form_type.html',
-                                                 {'types': types})
+            data['form_list'] = render_to_string('forms/form_type_2.html',
+                                                 {'types': types, 'obj': obj})
         else:
             data['form_is_valid'] = False
     context = {
@@ -178,7 +182,7 @@ def form_type_create(request):
 
 
 def form_type_update(request, id):
-    type = get_object_or_404(FormTemplate, id=id)
+    type = get_object_or_404(FormTypeTemplate, id=id)
     if request.method == 'POST':
         form = FormTypeForm(request.POST, instance=type)
         type.last_modifier_user_id = request.user.username
@@ -191,7 +195,7 @@ def form_type_update(request, id):
 
 def form_type_delete(request, id):
     data = dict()
-    type = get_object_or_404(FormTemplate, id=id)
+    type = get_object_or_404(FormTypeTemplate, id=id)
     if request.method == 'POST':
         type.is_deleted = True
         type.is_active = False
@@ -200,7 +204,7 @@ def form_type_delete(request, id):
         type.save()
         data['form_is_valid'] = True
         types = FormTypeTemplate.objects.filter(is_active=True)
-        data['type-list'] = render_to_string('forms/form_type.html', {'types': types})
+        data['form_list'] = render_to_string('forms/form_type_2.html', {'types': types})
     else:
         context = {'type': type}
         data['html_form'] = render_to_string('forms/form_type_delete.html', context, request=request)

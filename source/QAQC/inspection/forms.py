@@ -27,9 +27,11 @@ class FormTypeForm(forms.ModelForm):
         }
 
 
-# class NumberSeriesForm(forms.ModelForm):
-#     class Meta:
-#         model = NumberSeries
-#         fields = (
-#             'series',
-#         )
+class NumberSeriesForm(forms.ModelForm):
+    class Meta:
+        model = NumberSeries
+        fields = (
+            'series',
+            'current',
+            'form_type_template_id',
+        )

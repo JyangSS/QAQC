@@ -7,7 +7,6 @@
     <link rel="stylesheet" href="{% static 'js/datatables.min.js' %}">
 	<link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
-    <script src="{% static 'js/plugin2.js' %}"></script>
 
     <br>
 
@@ -26,27 +25,7 @@
       </tr>
     </thead>
     <tbody>
-      {% for type in types %}
-  <tr>
-    <td style="overflow:hidden;text-align:center;">{{ forloop.counter }}</td>
-    <td style="overflow:hidden;">{{ type.form_type }}</td>
-    <td style="overflow:hidden;">{{ type.form_description }}</td>
-
-    <td style="white-space:nowrap;">
-      <button  style="display:inline;width:32%;color:black;" class="btn btn-block btn-info btn-xs"  onclick="window.location.href='{% url 'group_list' element.id %}'">
-      <span class="fas fa-eye"></span>View
-      </button>
-
-       <button  style="display:inline;width:32%;margin-bottom:8px" class="btn btn-block btn-warning btn-xs show-form-update" data-url="{% url 'element_update' element.id %}" >
-        <span class="fas fa-edit"></span>Edit
-      </button>
-
-        <button  style="display:inline;width:35%;margin-bottom:8px;color:black;" class="btn btn-block btn-danger btn-xs show-form-delete" data-url="{% url 'element_delete' element.id %}" >
-      <span class="fa fa-fw fa-trash"></span>Delete
-      </button></td>
-
-  </tr>
-{% endfor %}
+    {% include "forms/form_type_2.html" %}
     </tbody>
   </table>
 

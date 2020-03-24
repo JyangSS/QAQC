@@ -8,6 +8,7 @@
 	<link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
 <style>
 table.dataTable thead .sorting:after,
 table.dataTable thead .sorting:before,
@@ -54,24 +55,6 @@ bottom: .5em;
 <script src="{% static 'plugins/datatables-bs4/js/dataTables.bootstrap4.js' %}"></script>
 <script src="{% static 'dist/js/adminlte.min.js' %}"></script>
 <script src="{% static 'dist/js/demo.js' %}"></script>
-
-<script>
-$(document).ready(function() {
-    $('#element-table').DataTable( {
-        "scrollY":        "430px",
-        "scrollCollapse": true,
-        "paging":         false,
-        "info": false,
-        "columnDefs": [ {
-        "targets": [3],
-        "orderable": false} ]
-    });
- }
-);
-</script>
-
-
-
 
 {% endblock %}
 
