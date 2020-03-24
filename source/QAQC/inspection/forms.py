@@ -1,8 +1,5 @@
 from django import forms
-from django.forms import inlineformset_factory
-
 from .models import *
-from crispy_forms.helper import FormHelper
 
 
 class ElementForm(forms.ModelForm):
