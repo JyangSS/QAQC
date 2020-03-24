@@ -9,7 +9,9 @@ urlpatterns = [
     url(r'^elements/(?P<id>\d+)/update$', element_update, name='element_update'),
     url(r'^elements/(?P<id>\d+)/delete$', element_delete, name='element_delete'),
     url(r'^elements/(?P<id>\d+)/groups$', group_list, name='group_list'),
-    url(r'^elements/groups/create$', group_create, name='group_create'),
-    url(r'^elements/groups/(?P<id>\d+)/update$', group_update, name=' group_update'),
-    url(r'^elements/groups/(?P<id>\d+)/delete$', group_delete, name=' group_delete'),
+    url(r'^forms/type', form_type, name='form_type'),
+    url(r'^forms/create$', form_type_create, name='form_type_create'),
+    url(r'^forms/(?P<id>\d+)/update$', form_type_update, name='form_type_update'),
+    url(r'^forms/(?P<id>\d+)/delete$', form_type_delete, name='form_type_delete'),
+
 ]

@@ -1,14 +1,10 @@
-from typing import Dict
-
-from django.forms import modelformset_factory
+from django.forms import modelformset_factory, inlineformset_factory
 from django.shortcuts import render, get_object_or_404
-from .models import *
 from .forms import *
 from django.template.loader import render_to_string
 from django.shortcuts import render, redirect
 import datetime
 from django.http import JsonResponse
-from django.views.generic import View
 
 
 # show all objects in table
@@ -18,16 +14,6 @@ def element_list(request):
         'elements': elements,
     }
     return render(request, 'elements/element_list.html', context)
-
-
-def group_list(request, id):
-    element = get_object_or_404(Element, id=id)
-    groups = Group.objects.filter(element_id=element.id)
-    context = {
-        'element': element,
-        'groups': groups,
-    }
-    return render(request, 'elements/group_list.html', context)
 
 
 # save created object and updated object
@@ -40,34 +26,13 @@ def save_all(request, form, template_name):
             if obj.creator_user_id == '':
                 obj.creator_user_id = request.user.username
                 obj.creation_time = datetime.datetime.now().replace(microsecond=0)
+                obj.last_modifier_user_id = request.user.username
+                obj.last_modification_time = datetime.datetime.now().replace(microsecond=0)
                 obj.save()
             data['form_is_valid'] = True
             elements = Element.objects.filter(is_active=True)
             data['element_list'] = render_to_string('elements/element_list_2.html',
                                                     {'elements': elements})
-        else:
-            data['form_is_valid'] = False
-    context = {
-        'form': form
-    }
-    data['html_form'] = render_to_string(template_name, context, request=request)
-    return JsonResponse(data)
-
-
-def save_all2(request, form, template_name):
-    data = dict()
-    if request.method == 'POST':
-        if form.is_valid():
-            form.save()
-            obj = Group.objects.order_by('-pk')[0]
-            if obj.creator_user_id == '':
-                obj.creator_user_id = request.user.username
-                obj.creation_time = datetime.datetime.now().replace(microsecond=0)
-                obj.save()
-            data['form_is_valid'] = True
-            groups = Group.objects.filter(is_active=True)
-            data['group_list'] = render_to_string('elements/group_list_2.html',
-                                                  {'groups': groups})
         else:
             data['form_is_valid'] = False
     context = {
@@ -86,14 +51,6 @@ def element_create(request):
     return save_all(request, form, 'elements/element_create.html')
 
 
-def group_create(request):
-    if request.method == 'POST':
-        form = GroupForm(request.POST)
-    else:
-        form = GroupForm()
-    return save_all2(request, form, 'elements/group_create.html')
-
-
 # update
 def element_update(request, id):
     element = get_object_or_404(Element, id=id)
@@ -105,18 +62,6 @@ def element_update(request, id):
     else:
         form = ElementForm(instance=element)
     return save_all(request, form, 'elements/element_update.html')
-
-
-def group_update(request, id):
-    group = get_object_or_404(Group, id=id)
-    if request.method == 'POST':
-        form = GroupForm(request.POST, instance=group)
-        group.last_modifier_user_id = request.user.username
-        group.last_modification_time = datetime.datetime.now().replace(microsecond=0)
-
-    else:
-        form = GroupForm(instance=group)
-    return save_all2(request, form, 'elements/group_update.html')
 
 
 # delete
@@ -138,6 +83,37 @@ def element_delete(request, id):
 
     return JsonResponse(data)
 
+    return JsonResponse(data)
+
+
+# group
+def group_list(request, id):
+    element = get_object_or_404(Element, id=id)
+    groups = Group.objects.filter(element_id=element.id, is_active=True)
+    GroupFormset = inlineformset_factory(Element, Group, fields=('defect_group', 'description',), can_delete=True,
+                                         extra=1)
+    formset = GroupFormset(request.POST, instance=element)
+    if request.method == 'POST':
+        formset = GroupFormset(request.POST, instance=element)
+        if formset.is_valid():
+            for group in formset.save(commit=False):
+                group.last_modifier_user_id = request.user.username
+                group.last_modification_time = datetime.datetime.now().replace(microsecond=0)
+                if group.creator_user_id == '':
+                    group.creator_user_id = request.user.username
+                    group.creation_time = datetime.datetime.now().replace(microsecond=0)
+            formset.save()
+            return redirect('group_list', id=id)
+    else:
+        formset = GroupFormset()
+    formset = GroupFormset(instance=element)
+    context = {
+        'element': element,
+        'groups': groups,
+        'formset': formset,
+    }
+    return render(request, 'elements/group_list.html', context)
+
 
 def group_delete(request, id):
     data = dict()
@@ -150,18 +126,83 @@ def group_delete(request, id):
         group.save()
         data['form_is_valid'] = True
         groups = Group.objects.filter(is_active=True)
-        data['group_list'] = render_to_string('elements/group_list_2.html', {'groups': groups})
+        data['group-list'] = render_to_string('elements/element_list.html', {'groups': groups})
     else:
         context = {'group': group}
-        data['html_form'] = render_to_string('elements/group_delete.html', context, request=request)
+        data['html_form'] = render_to_string('elements/element_delete.html', context, request=request)
 
     return JsonResponse(data)
 
 
-def group(request, id):
-    element = Element.objects.get(pk=id)
-    GroupFormset = modelformset_factory(Group, fields=('defect_group', 'description',))
 
-    formset = GroupFormset(queryset=Group.objects.filter(element_id=element.id))
+# form type
+def form_type(request):
+    types = FormTypeTemplate.objects.filter(is_active=True)
+    context = {
+        'types': types,
+    }
+    return render(request, 'forms/form_type.html', context)
 
-    return render(request, 'group_list.html', {'formset': formset})
+
+def save_form_type(request, form, template_name):
+    data = dict()
+    if request.method == 'POST':
+        if form.is_valid():
+            form.save()
+            obj = FormTypeTemplate.objects.order_by('-pk')[0]
+            if obj.creator_user_id == '':
+                obj.creator_user_id = request.user.username
+                obj.creation_time = datetime.datetime.now().replace(microsecond=0)
+                obj.last_modifier_user_id = request.user.username
+                obj.last_modification_time = datetime.datetime.now().replace(microsecond=0)
+                obj.save()
+            data['form_is_valid'] = True
+            types = FormTypeTemplate.objects.filter(is_active=True)
+            data['type_list'] = render_to_string('forms/form_type.html',
+                                                 {'types': types})
+        else:
+            data['form_is_valid'] = False
+    context = {
+        'form': form
+    }
+    data['html_form'] = render_to_string(template_name, context, request=request)
+    return JsonResponse(data)
+
+
+def form_type_create(request):
+    if request.method == 'POST':
+        form = FormTypeForm(request.POST)
+    else:
+        form = FormTypeForm()
+    return save_form_type(request, form, 'forms/form_type_create.html')
+
+
+def form_type_update(request, id):
+    type = get_object_or_404(FormTemplate, id=id)
+    if request.method == 'POST':
+        form = FormTypeForm(request.POST, instance=type)
+        type.last_modifier_user_id = request.user.username
+        type.last_modification_time = datetime.datetime.now().replace(microsecond=0)
+
+    else:
+        form = FormTypeForm(instance=type)
+    return save_form_type(request, form, 'forms/form_type_update.html')
+
+
+def form_type_delete(request, id):
+    data = dict()
+    type = get_object_or_404(FormTemplate, id=id)
+    if request.method == 'POST':
+        type.is_deleted = True
+        type.is_active = False
+        type.delete_user_id = request.user.username
+        type.deletion_time = datetime.datetime.now().replace(microsecond=0)
+        type.save()
+        data['form_is_valid'] = True
+        types = FormTypeTemplate.objects.filter(is_active=True)
+        data['type-list'] = render_to_string('forms/form_type.html', {'types': types})
+    else:
+        context = {'type': type}
+        data['html_form'] = render_to_string('forms/form_type_delete.html', context, request=request)
+
+    return JsonResponse(data)

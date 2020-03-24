@@ -1,6 +1,5 @@
 from django import forms
 from .models import *
-from crispy_forms.helper import FormHelper
 
 
 class ElementForm(forms.ModelForm):
@@ -12,14 +11,25 @@ class ElementForm(forms.ModelForm):
         )
 
 
-class GroupForm(forms.ModelForm):
-    element_id = forms.ModelChoiceField(queryset=Element.objects.filter(is_active=True))
-
+class FormTypeForm(forms.ModelForm):
     class Meta:
-        model = Group
+        model = FormTypeTemplate
+        widgets = {
+            'number_series_id': forms.HiddenInput(),
+        }
         fields = (
-            'defect_group',
-            'description',
-            'element_id',
+            'form_type',
+            'form_description',
         )
+        labels = {
+            'form_type': 'Form Type Name',
+            'form_description': 'Form Short Name',
+        }
 
+
+# class NumberSeriesForm(forms.ModelForm):
+#     class Meta:
+#         model = NumberSeries
+#         fields = (
+#             'series',
+#         )
