@@ -125,7 +125,7 @@ class FormTemplate(models.Model):
     form_type_template_id = models.ForeignKey(FormTypeTemplate, on_delete=models.CASCADE)
     form_title = models.CharField(max_length=200)
     ref_no = models.CharField(max_length=20)
-    remarks = models.CharField(max_length=200)
+    remarks = models.CharField(max_length=200,blank=True)
     is_active = models.BooleanField(default=True)
     creation_time = models.DateTimeField(null=True, blank=True)
     creator_user_id = models.CharField(max_length=50, blank=True)

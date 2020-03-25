@@ -149,17 +149,21 @@ def save_form_type(request, form, template_name):
         if form.is_valid():
             form.save()
             obj = FormTypeTemplate.objects.order_by('-pk')[0]
-            obj2 = FormTypeTemplate.objects.latest('id')
             if obj.creator_user_id == '':
                 obj.creator_user_id = request.user.username
                 obj.creation_time = datetime.datetime.now().replace(microsecond=0)
                 obj.last_modifier_user_id = request.user.username
                 obj.last_modification_time = datetime.datetime.now().replace(microsecond=0)
                 obj.save()
-                # number = NumberSeries()
-                # number.series = 'abc'
-                # number.form_type_template_id = form.id
-                # number.save()
+                number = NumberSeries(series=obj.form_description,
+                                      current=1,
+                                      form_type_template_id=obj,
+                                      creator_user_id=request.user.username,
+                                      creation_time=datetime.datetime.now().replace(microsecond=0),
+                                      last_modifier_user_id=request.user.username,
+                                      last_modification_time=datetime.datetime.now().replace(microsecond=0)
+                                      )
+                number.save(force_insert=True)
             data['form_is_valid'] = True
             types = FormTypeTemplate.objects.filter(is_active=True)
             data['form_list'] = render_to_string('forms/form_type_2.html',
@@ -187,7 +191,11 @@ def form_type_update(request, id):
         form = FormTypeForm(request.POST, instance=type)
         type.last_modifier_user_id = request.user.username
         type.last_modification_time = datetime.datetime.now().replace(microsecond=0)
-
+        number = NumberSeries.objects.get(form_type_template_id=type.pk)
+        number.series = request.POST.get('form_description')
+        number.last_modifier_user_id = request.user.username
+        number.last_modification_time = datetime.datetime.now().replace(microsecond=0)
+        number.save()
     else:
         form = FormTypeForm(instance=type)
     return save_form_type(request, form, 'forms/form_type_update.html')
@@ -202,6 +210,12 @@ def form_type_delete(request, id):
         type.delete_user_id = request.user.username
         type.deletion_time = datetime.datetime.now().replace(microsecond=0)
         type.save()
+        number = NumberSeries.objects.get(form_type_template_id=type.pk)
+        number.is_deleted = True
+        number.is_active = False
+        number.delete_user_id = request.user.username
+        number.deletion_time = datetime.datetime.now().replace(microsecond=0)
+        number.save()
         data['form_is_valid'] = True
         types = FormTypeTemplate.objects.filter(is_active=True)
         data['form_list'] = render_to_string('forms/form_type_2.html', {'types': types})
@@ -210,3 +224,13 @@ def form_type_delete(request, id):
         data['html_form'] = render_to_string('forms/form_type_delete.html', context, request=request)
 
     return JsonResponse(data)
+
+
+def forms(request, id):
+    type = get_object_or_404(FormTypeTemplate, id=id)
+    all_form = FormTemplate.objects.filter(form_type_template_id=type)
+    context = {
+        'type':type,
+        'all_form': all_form,
+    }
+    return render(request, 'forms/forms.html', context)

@@ -13,5 +13,5 @@ urlpatterns = [
     url(r'^forms/create$', form_type_create, name='form_type_create'),
     url(r'^forms/(?P<id>\d+)/update$', form_type_update, name='form_type_update'),
     url(r'^forms/(?P<id>\d+)/delete$', form_type_delete, name='form_type_delete'),
-
+    url(r'^forms/(?P<id>\d+)', forms, name='forms'),
 ]
