@@ -5,13 +5,14 @@
     <td class="data">{{ a.phase_description }}</td>
 
     <td style="white-space:nowrap;">
-        <button style="display:inline;width:33%;color:black;margin-top:3%;" class="btn btn-block btn-info btn-xs" onclick="window.location.href='{% url 'unit_main_list' a.id %}'">
+        <button style="display:inline;width:33%;color:black;" class="btn btn-block btn-info btn-xs" onclick="window.location.href='{% url 'unit_main_list' a.id %}'">
       <span class="fa fa-eye"></span>View
       </button>
-       <button  style="display:inline;width:33%" class="btn btn-block btn-warning btn-xs show-form-update" data-url="#" >
+        <a href="{% url 'phase_edit' a.id %}"><button  style="display:inline;width:33%" class="btn btn-block btn-warning btn-xs show-form" data-toggle="modal" data-target="#modal-edit_phase">
         <span class="fa fa-edit"></span>Edit
-      </button>
-        <button  style="display:inline;width:33%;" class="btn btn-block btn-danger btn-xs show-form-delete" data-url="{% url 'phase_delete' a.id %}" >
+      </button></a>
+
+        <button  style="display:inline;width:33%;" class="btn btn-block btn-danger btn-xs show-form-delete">
                 <span class="fa fa-fw fa-trash"></span>Delete
       </button>
       </button></td>

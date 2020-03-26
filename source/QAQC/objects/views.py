@@ -15,14 +15,23 @@ def project_main_list_empty(request):
     c = Company.objects.all()
     page_title_project = None
 
+    if request.method == 'POST':
+        add_project = ProjectForm(request.POST)
+        if add_project.is_valid():
+         n = add_project.save()
+         n.pk
+         return redirect(reverse('project_main_list', kwargs={'id': n.pk}))
+    else:
+        add_project = ProjectForm()
     return render(request, 'object/project_main_list.html',
-                  {'c': c, 'page_title_project': page_title_project})
+                  {'c': c, 'page_title_project': page_title_project,'add_project':add_project})
 
 
 def project_main_list(request, id):
     c = Company.objects.all()
     phase = Phase.objects.filter(project_id=id)
     page_title = Project.objects.get(pk=id)
+
     if request.method == 'POST':
         add_project = ProjectForm(request.POST)
         add_phase = PhaseForm(request.POST or None)
@@ -65,75 +74,18 @@ def unit_main_list(request, id):
     return render(request, 'object/unit_main_list.html',
                   {'unit': unit, 'add_project': add_project, 'c': c,'page_title':page_title,'add_unit':add_unit})
 
-
-def project_delete(request, id):
-    data = dict()
-    project = get_object_or_404(Project, id=id)
+def phase_edit(request, id=None):
+    instance = get_object_or_404(Phase, pk=id)
+    n = Project.objects.get(phase__pk=id)
     if request.method == 'POST':
-        project.is_deleted = True
-        project.is_active = False
-        project.delete_user_id = request.user.username
-        project.deletion_time = datetime.datetime.now().replace(microsecond=0)
-        project.save()
-        data['form_is_valid'] = True
-        projects = Project.objects.filter(is_active=True)
-        # data['project_main_list'] = render_to_string('object/unit_list.html', {'projects': projects})
+        form = PhaseForm(request.POST, instance=instance)
+        if form.is_valid():
+
+            form.save()
+            return redirect(reverse('project_main_list', kwargs={'id': n.pk}))
+         #   form.last_modifier_user_id = request.user.username
+          #  form.last_modification_time = datetime.datetime.now().replace(microsecond=0)
     else:
-        context = {'project': project}
-        data['html_form'] = render_to_string('object/project_delete.html', context, request=request)
+        form = PhaseForm(instance=instance)
+        return render(request,'object/phase_edit.html',{'form': form})
 
-    return JsonResponse(data)
-
-
-def phase_delete(request, id):
-    data = dict()
-    phase = get_object_or_404(Phase, id=id)
-    if request.method == 'POST':
-        phase.is_deleted = True
-        phase.is_active = False
-        phase.delete_user_id = request.user.username
-        phase.deletion_time = datetime.datetime.now().replace(microsecond=0)
-        phase.save()
-        data['form_is_valid'] = True
-        phases = Project.objects.filter(is_active=True)
-        data['project_main_list'] = render_to_string('object/phase_list.html', {'phase': phases})
-    else:
-        context = {'phase': phase}
-        data['html_form'] = render_to_string('object/phase_delete.html', context, request=request)
-    return JsonResponse(data)
-'''
-def unit_delete(request, id):
-    data = dict()
-    group = get_object_or_404(Group, id=id)
-    if request.method == 'POST':
-        group.is_deleted = True
-        group.is_active = False
-        group.delete_user_id = request.user.username
-        group.deletion_time = datetime.datetime.now().replace(microsecond=0)
-        group.save()
-        data['form_is_valid'] = True
-        groups = Group.objects.filter(is_active=True)
-        data['group_list'] = render_to_string('elements/group_list_2.html', {'groups': groups})
-    else:
-        context = {'group': group}
-        data['html_form'] = render_to_string('elements/group_delete.html', context, request=request)
-
-    return JsonResponse(data)
-def phase_delete(request, id):
-    data = dict()
-    group = get_object_or_404(Group, id=id)
-    if request.method == 'POST':
-        group.is_deleted = True
-        group.is_active = False
-        group.delete_user_id = request.user.username
-        group.deletion_time = datetime.datetime.now().replace(microsecond=0)
-        group.save()
-        data['form_is_valid'] = True
-        groups = Group.objects.filter(is_active=True)
-        data['group_list'] = render_to_string('elements/group_list_2.html', {'groups': groups})
-    else:
-        context = {'group': group}
-        data['html_form'] = render_to_string('elements/group_delete.html', context, request=request)
-
-    return JsonResponse(data)
-    '''
