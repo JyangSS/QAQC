@@ -61,12 +61,6 @@
         </ul>
          <ul class="list-unstyled components">
             {% if user.is_superuser %}
-            <li><a href="/view_all" onclick="toggleSidebar()">Element,Defect Group, Question</a></li>
-            {% endif %}
-        </ul>
-
-         <ul class="list-unstyled components">
-            {% if user.is_superuser %}
             <li><a href="/inspection/elements" onclick="toggleSidebar()">Elements</a></li>
             {% endif %}
         </ul>

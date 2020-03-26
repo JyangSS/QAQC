@@ -88,22 +88,27 @@ def element_delete(request, id):
 
 # group
 def group_list(request, id):
+    extra_forms = 1
     element = get_object_or_404(Element, id=id)
     groups = Group.objects.filter(element_id=element.id, is_active=True)
     GroupFormset = inlineformset_factory(Element, Group, fields=('defect_group', 'description',), can_delete=True,
-                                         extra=1)
+                                         extra=extra_forms)
     formset = GroupFormset(request.POST, instance=element)
     if request.method == 'POST':
-        formset = GroupFormset(request.POST, instance=element)
-        if formset.is_valid():
-            for group in formset.save(commit=False):
-                group.last_modifier_user_id = request.user.username
-                group.last_modification_time = datetime.datetime.now().replace(microsecond=0)
-                if group.creator_user_id == '':
-                    group.creator_user_id = request.user.username
-                    group.creation_time = datetime.datetime.now().replace(microsecond=0)
-            formset.save()
-            return redirect('group_list', id=id)
+        # if 'add' in request.POST and request.POST['add'] == 'true':
+        #     formset_dictionary_copy = request.POST.copy()
+        #     formset_dictionary_copy['form-TOTAL_FORMS'] =int(formset_dictionary_copy['form-TOTAL_FORMS']) + extra_forms
+        # formset = GroupFormset(formset_dictionary_copy)
+     formset = GroupFormset(request.POST, instance=element)
+    if formset.is_valid():
+        for group in formset.save(commit=False):
+            group.last_modifier_user_id = request.user.username
+            group.last_modification_time = datetime.datetime.now().replace(microsecond=0)
+            if group.creator_user_id == '':
+                group.creator_user_id = request.user.username
+                group.creation_time = datetime.datetime.now().replace(microsecond=0)
+                formset.save()
+                return redirect('group_list', id=id)
     else:
         formset = GroupFormset()
     formset = GroupFormset(instance=element)
@@ -226,11 +231,16 @@ def form_type_delete(request, id):
     return JsonResponse(data)
 
 
+# form and form details
 def forms(request, id):
     type = get_object_or_404(FormTypeTemplate, id=id)
     all_form = FormTemplate.objects.filter(form_type_template_id=type)
     context = {
-        'type':type,
+        'type': type,
         'all_form': all_form,
     }
     return render(request, 'forms/forms.html', context)
+
+
+def add_forms(request):
+    pass

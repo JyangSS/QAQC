@@ -125,6 +125,7 @@ class FormTemplate(models.Model):
     form_type_template_id = models.ForeignKey(FormTypeTemplate, on_delete=models.CASCADE)
     form_title = models.CharField(max_length=200)
     ref_no = models.CharField(max_length=20)
+    rev = models.IntegerField(default=1)
     remarks = models.CharField(max_length=200,blank=True)
     is_active = models.BooleanField(default=True)
     creation_time = models.DateTimeField(null=True, blank=True)
@@ -174,7 +175,6 @@ class Inspection01(models.Model):
 
     template_detail_id = models.ForeignKey(TemplateDetail, on_delete=models.CASCADE)
     unit_number_id = models.ForeignKey('objects.UnitNumber', on_delete=models.CASCADE)
-    rev = models.IntegerField()
     draw_ref = models.CharField(max_length=15)
     is_active = models.BooleanField(default=True)
     creation_time = models.DateTimeField(null=True, blank=True)
