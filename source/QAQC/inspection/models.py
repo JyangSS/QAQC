@@ -100,7 +100,7 @@ class NumberSeries(models.Model):
         verbose_name_plural = 'Number_Series'
 
     series = models.CharField(max_length=50)
-    current = models.IntegerField()
+    current = models.IntegerField(default=1)
     form_type_template_id = models.ForeignKey(FormTypeTemplate, on_delete=models.CASCADE)
     is_active = models.BooleanField(default=True)
     creation_time = models.DateTimeField(null=True, blank=True)
@@ -125,7 +125,8 @@ class FormTemplate(models.Model):
     form_type_template_id = models.ForeignKey(FormTypeTemplate, on_delete=models.CASCADE)
     form_title = models.CharField(max_length=200)
     ref_no = models.CharField(max_length=20)
-    remarks = models.CharField(max_length=200)
+    rev = models.IntegerField(default=1)
+    remarks = models.CharField(max_length=200,blank=True)
     is_active = models.BooleanField(default=True)
     creation_time = models.DateTimeField(null=True, blank=True)
     creator_user_id = models.CharField(max_length=50, blank=True)
@@ -174,7 +175,6 @@ class Inspection01(models.Model):
 
     template_detail_id = models.ForeignKey(TemplateDetail, on_delete=models.CASCADE)
     unit_number_id = models.ForeignKey('objects.UnitNumber', on_delete=models.CASCADE)
-    rev = models.IntegerField()
     draw_ref = models.CharField(max_length=15)
     is_active = models.BooleanField(default=True)
     creation_time = models.DateTimeField(null=True, blank=True)

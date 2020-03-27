@@ -23,7 +23,7 @@ $(document).ready(function(){
 			dataType: 'json',
 			success: function(data){
 				if(data.form_is_valid){
-					$('#type-table tbody').html(data.type_list);
+					$('#type-table tbody').html(data.form_list);
 					$('#modal-type').modal('hide');
 
 				} else {
@@ -36,7 +36,7 @@ $(document).ready(function(){
 
 // create
 $("#form2").click(ShowForm2);
-$("#modal-type").on("submit","#form",SaveForm2);
+$("#modal-type").on("submit","#form3",SaveForm2);
 
 //update
 $('#type-table').on("click",".show-form-update",ShowForm2);

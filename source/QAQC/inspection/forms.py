@@ -27,9 +27,44 @@ class FormTypeForm(forms.ModelForm):
         }
 
 
-# class NumberSeriesForm(forms.ModelForm):
-#     class Meta:
-#         model = NumberSeries
-#         fields = (
-#             'series',
-#         )
+class NumberSeriesForm(forms.ModelForm):
+    class Meta:
+        model = NumberSeries
+        fields = (
+            'series',
+            'current',
+            'form_type_template_id',
+        )
+
+
+class FromTemplateForm(forms.ModelForm):
+    class Meta:
+        model = FormTemplate
+        fields = (
+            'form_title',
+            'ref_no',
+            'remarks',
+            'form_type_template_id',
+        )
+
+
+class FromDetailsForm(forms.ModelForm):
+    class Meta:
+        model = TemplateDetail
+        fields = (
+            'legend',
+            'question_line',
+            'question',
+            'is_boolean_question',
+            'group_id',
+            'form_template_id',
+        )
+
+
+class GroupForm(forms.ModelForm):
+    class Meta:
+        model = Group
+        fields = (
+            'defect_group',
+            'description',
+        )
