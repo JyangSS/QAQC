@@ -11,4 +11,5 @@ urlpatterns = [
    # path('projectmainlist/project/delete/<int:id>', views.project_delete, name='project_delete'),
    # path('phaselist/delete/<int:id>', views.phase_delete, name='phase_delete'),
     path('projectmainlist/phaselist/edit/<int:id>', views.phase_edit, name='phase_edit'),
+    path('projectmainlist/phaselist/delete/<int:id>', views.phase_delete, name='phase_delete'),
 ]

@@ -11,11 +11,10 @@
         <a href="{% url 'phase_edit' a.id %}"><button  style="display:inline;width:33%" class="btn btn-block btn-warning btn-xs show-form" data-toggle="modal" data-target="#modal-edit_phase">
         <span class="fa fa-edit"></span>Edit
       </button></a>
-
-        <button  style="display:inline;width:33%;" class="btn btn-block btn-danger btn-xs show-form-delete">
+     <a href="{% url 'phase_delete' a.id %}"onclick="return confirm('Are you sure you want to delete {{ a.phase_short_form }}?')">   <button  style="display:inline;width:33%;" class="btn btn-block btn-danger btn-xs show-form"data-toggle="modal" data-target="#modal-delete_phase">
                 <span class="fa fa-fw fa-trash"></span>Delete
-      </button>
-      </button></td>
+      </button></a>
+      </td>
 
 
   </tr>
