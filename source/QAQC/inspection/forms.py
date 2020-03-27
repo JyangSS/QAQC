@@ -59,3 +59,12 @@ class FromDetailsForm(forms.ModelForm):
             'group_id',
             'form_template_id',
         )
+
+
+class GroupForm(forms.ModelForm):
+    class Meta:
+        model = Group
+        fields = (
+            'defect_group',
+            'description',
+        )
