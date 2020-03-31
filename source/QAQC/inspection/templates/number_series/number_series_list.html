@@ -10,14 +10,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <br>
 
-<h1 class="page-header"><a href="{% url 'element_list' %}"><span class="fa fa-angle-double-left" ></span></a>DEFECT GROUPS <button id="element_form"class="btn btn-block btn-primary btn-sm show-form" data-url="{% url 'group_create' %}" style="float:right;width:20%;">
-   <span class="fa fa-fw fa-plus"></span> New_GROUP
+    <h1 class="page-header"><span class="fa fa-home" ></span></a>NUMBER SERIES <button id="element_form"class="btn btn-block btn-primary btn-sm show-form" data-url="{% url 'number_series_create' %}" style="float:right;width:20%;">
+   <span class="fa fa-fw fa-plus"></span> New_Series
   </button></h1>
-<hr>
-<p style="width:34.5%;margin:0;display:inline;float:left"><strong>ELEMENT</strong></p>
-    <p style="margin:0;display:inline:float:right" ><strong>:</strong>{{ element.element}}</p>
-    <p style="width:34.5%;margin:0;display:inline;float:left"><strong>ELEMENT DESCRIPTION</strong></p>
-    <p style="margin:0;display:inline:float:right" ><strong>:</strong>{{ element.description}}</p>
   <hr>
 <style>
 table th {
@@ -31,13 +26,13 @@ table th {
     <thead>
       <tr>
         <th style="text-align:center;">#</th>
-        <th>Defect Group</th>
-        <th>Description</th>
+        <th>Series</th>
+        <th>Current</th>
         <th style="text-align:center;">Action</th>
       </tr>
     </thead>
     <tbody>
-      {% include "elements/group_list_2.html" %}
+      {% include "number_series/number_series_list_2.html" %}
     </tbody>
   </table>
 

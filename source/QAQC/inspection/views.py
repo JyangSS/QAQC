@@ -84,53 +84,69 @@ def element_delete(request, id):
 
     return JsonResponse(data)
 
-    return JsonResponse(data)
-
 
 # group
 def group_list(request, id):
-    element = get_object_or_404(Element, id=id)
-    groups = Group.objects.filter(element_id=element.id, is_active=True)
-    GroupFormset = inlineformset_factory(Element, Group, fields=('defect_group', 'description',), can_delete=False,
-                                         extra=1, )
-    if request.method == 'POST':
-        formset = GroupFormset(request.POST, instance=element)
-        if formset.is_valid():
-            for group in formset.save(commit=False):
-                group.last_modifier_user_id = request.user.username
-                group.last_modification_time = datetime.datetime.now().replace(microsecond=0)
-                if group.creator_user_id == '':
-                    group.creator_user_id = request.user.username
-                    group.creation_time = datetime.datetime.now().replace(microsecond=0)
-            formset.save()
-            return redirect('group_list', id=id)
-    else:
-        formset = GroupFormset(instance=element)
+    element = Element.objects.get(pk=id)
+    groups = Group.objects.filter(is_active=True, element_id=element)
+
     context = {
         'element': element,
-        'groups': groups,
-        'formset': formset,
-    }
+        'groups': groups, }
+
     return render(request, 'elements/group_list.html', context)
 
 
-def group_delete(request, id):
+def save_group(request, form, template_name):
     data = dict()
-    group = get_object_or_404(Group, id=id)
     if request.method == 'POST':
-        group.is_deleted = True
-        group.is_active = False
-        group.delete_user_id = request.user.username
-        group.deletion_time = datetime.datetime.now().replace(microsecond=0)
-        group.save()
-        data['form_is_valid'] = True
-        groups = Group.objects.filter(is_active=True)
-        data['group-list'] = render_to_string('elements/element_list.html', {'groups': groups})
-    else:
-        context = {'group': group}
-        data['html_form'] = render_to_string('elements/element_delete.html', context, request=request)
-
+        if form.is_valid():
+            form.save()
+            obj = Group.objects.order_by('-pk')[0]
+            if obj.creator_user_id == '':
+                obj.creator_user_id = request.user.username
+                obj.creation_time = datetime.datetime.now().replace(microsecond=0)
+                obj.last_modifier_user_id = request.user.username
+                obj.last_modification_time = datetime.datetime.now().replace(microsecond=0)
+                obj.save()
+            data['form_is_valid'] = True
+            groups = Group.objects.filter(is_active=True)
+            data['element_list'] = render_to_string('elements/group_list_2.html',
+                                                    {'groups': groups})
+        else:
+            data['form_is_valid'] = False
+    context = {
+        'form': form
+    }
+    data['html_form'] = render_to_string(template_name, context, request=request)
     return JsonResponse(data)
+
+
+def group_create(request):
+    if request.method == 'POST':
+        form = GroupForm(request.POST)
+    else:
+        form = GroupForm()
+    return save_group(request,form, 'elements/group_create.html')
+
+
+# def group_delete(request, id):
+#     data = dict()
+#     group = get_object_or_404(Group, id=id)
+#     if request.method == 'POST':
+#         group.is_deleted = True
+#         group.is_active = False
+#         group.delete_user_id = request.user.username
+#         group.deletion_time = datetime.datetime.now().replace(microsecond=0)
+#         group.save()
+#         data['form_is_valid'] = True
+#         groups = Group.objects.filter(is_active=True)
+#         data['group-list'] = render_to_string('elements/element_list.html', {'groups': groups})
+#     else:
+#         context = {'group': group}
+#         data['html_form'] = render_to_string('elements/element_delete.html', context, request=request)
+#
+#     return JsonResponse(data)
 
 
 # form type
@@ -237,5 +253,76 @@ def forms(request, id):
 
 
 # number series
-def number_series(request):
-    pass
+def number_series_list(request):
+    numbers = NumberSeries.objects.filter(is_active=True)
+    context = {
+        'numbers': numbers,
+    }
+    return render(request, 'number_series/number_series_list.html', context)
+
+
+def save_number(request, form, template_name):
+    data = dict()
+    if request.method == 'POST':
+        if form.is_valid():
+            form.save()
+            obj = NumberSeries.objects.order_by('-pk')[0]
+            if obj.creator_user_id == '':
+                obj.creator_user_id = request.user.username
+                obj.creation_time = datetime.datetime.now().replace(microsecond=0)
+                obj.last_modifier_user_id = request.user.username
+                obj.last_modification_time = datetime.datetime.now().replace(microsecond=0)
+                obj.save()
+            data['form_is_valid'] = True
+            numbers = NumberSeries.objects.filter(is_active=True)
+            data['element_list'] = render_to_string('number_series/number_series_list_2.html',
+                                                    {'numbers': numbers})
+        else:
+            data['form_is_valid'] = False
+    context = {
+        'form': form
+    }
+    data['html_form'] = render_to_string(template_name, context, request=request)
+    return JsonResponse(data)
+
+
+# create
+def number_series_create(request):
+    if request.method == 'POST':
+        form = NumberSeriesForm(request.POST)
+    else:
+        form = NumberSeriesForm()
+    return save_number(request, form, 'number_series/number_series_create.html')
+
+
+# update
+def number_series_update(request, id):
+    number_series = get_object_or_404(NumberSeries, id=id)
+    if request.method == 'POST':
+        form = NumberSeriesForm(request.POST, instance=number_series)
+        number_series.last_modifier_user_id = request.user.username
+        number_series.last_modification_time = datetime.datetime.now().replace(microsecond=0)
+
+    else:
+        form = NumberSeriesForm(instance=number_series)
+    return save_number(request, form, 'number_series/number_series_update.html')
+
+
+# delete
+def number_series_delete(request, id):
+    data = dict()
+    number_series = get_object_or_404(NumberSeries, id=id)
+    if request.method == 'POST':
+        number_series.is_deleted = True
+        number_series.is_active = False
+        number_series.delete_user_id = request.user.username
+        number_series.deletion_time = datetime.datetime.now().replace(microsecond=0)
+        number_series.save()
+        data['form_is_valid'] = True
+        numbers = NumberSeries.objects.filter(is_active=True)
+        data['element_list'] = render_to_string('number_series/number_series_list_2.html', {'numbers': numbers})
+    else:
+        context = {'number_series': number_series}
+        data['html_form'] = render_to_string('number_series/number_series_delete.html', context, request=request)
+
+    return JsonResponse(data)

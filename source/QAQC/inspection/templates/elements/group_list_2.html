@@ -5,6 +5,9 @@
     <td style="overflow:hidden;">{{ group.description }}</td>
 
     <td style="white-space:nowrap;">
+      <button  style="display:inline;width:32%;color:black;" class="btn btn-block btn-info btn-xs"  onclick="window.location.href='{% url ''  %}'">
+      <span class="fa fa-eye"></span>View
+      </button>
 
        <button  style="display:inline;width:32%;margin-bottom:8px" class="btn btn-block btn-warning btn-xs show-form-update" data-url="{% url 'group_update' group.id %}" >
         <span class="fa fa-edit"></span>Edit

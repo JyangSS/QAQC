@@ -11,6 +11,16 @@ class ElementForm(forms.ModelForm):
         )
 
 
+class GroupForm(forms.ModelForm):
+    class Meta:
+        model = Group
+        fields = (
+            'defect_group',
+            'description',
+            'element_id',
+        )
+
+
 class FormTypeForm(forms.ModelForm):
     class Meta:
         model = FormTypeTemplate
@@ -33,7 +43,6 @@ class NumberSeriesForm(forms.ModelForm):
         fields = (
             'series',
             'current',
-            'form_type_template_id',
         )
 
 
@@ -59,5 +68,3 @@ class FromDetailsForm(forms.ModelForm):
             'group_id',
             'form_template_id',
         )
-
-

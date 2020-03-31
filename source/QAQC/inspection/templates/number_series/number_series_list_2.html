@@ -1,0 +1,23 @@
+{% for number in numbers %}
+  <tr>
+    <td style="overflow:hidden;text-align:center;">{{ forloop.counter }}</td>
+    <td style="overflow:hidden;">{{ number.series }}</td>
+    <td style="overflow:hidden;">{{ number.current }}</td>
+
+    <td style="white-space:nowrap;">
+    <button  style="display:inline;width:32%;color:black;" class="btn btn-block btn-info btn-xs"  onclick="window.location.href='{% url 'number_series_list'  %}'">
+      <span class="fa fa-eye"></span>View
+      </button>
+
+       <button  style="display:inline;width:32%;margin-bottom:8px" class="btn btn-block btn-warning btn-xs show-form-update" data-url="{% url 'number_series_update' number.id %}" >
+        <span class="fa fa-edit"></span>Edit
+      </button>
+
+        <button  style="display:inline;width:35%;margin-bottom:8px;color:black;" class="btn btn-block btn-danger btn-xs show-form-delete" data-url="{% url 'number_series_delete' number.id %}" >
+      <span class="fa fa-fw fa-trash"></span>Delete
+      </button></td>
+
+  </tr>
+
+
+{% endfor %}
