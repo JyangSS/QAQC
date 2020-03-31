@@ -1,4 +1,4 @@
-{% extends 'elements/base.html' %}
+{% extends 'object/base_kent.html' %}
 
 {% block content %}
 {% load static %}
@@ -7,8 +7,9 @@
     <link rel="stylesheet" href="{% static 'js/datatables.min.js' %}">
 	<link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+<!-- icon css -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-
+ <script src="{% static 'js/jquery-3.1.1.min.js' %}"></script>
 <style>
 table.dataTable thead .sorting:after,
 table.dataTable thead .sorting:before,
@@ -81,7 +82,7 @@ bottom: .5em;
 
 
 {% if page_title_project != None %}
-  <button  style="display:inline;width:10%;margin-bottom:8px;" class="btn btn-block btn-danger btn-xs show-form-delete" data-url="{% url 'project_delete' page_title_project.id %}" >
+  <button  style="display:inline;width:10%;margin-bottom:8px;" class="btn btn-block btn-danger btn-xs show-form-delete">
       <span class="fa fa-fw fa-trash"></span>Delete
       </button>
 {% else %}
@@ -123,7 +124,7 @@ bottom: .5em;
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
-              <h4 class="modal-title">Default Modal</h4>
+              <h4 class="modal-title">Create Project</h4>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">×</span>
               </button>
@@ -145,7 +146,7 @@ bottom: .5em;
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
-              <h4 class="modal-title">Default Modal</h4>
+              <h4 class="modal-title">Create Phase</h4>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">×</span>
               </button>
@@ -162,6 +163,9 @@ bottom: .5em;
 		  </div>
         </div>
       </div>
+<!----POP UP Delete PHASE-->
+
+
 
 
 
