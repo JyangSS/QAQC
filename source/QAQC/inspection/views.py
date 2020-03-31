@@ -1,3 +1,4 @@
+from django.db import transaction
 from django.forms import modelformset_factory, inlineformset_factory
 from django.shortcuts import render, get_object_or_404
 from .forms import *
@@ -90,9 +91,8 @@ def element_delete(request, id):
 def group_list(request, id):
     element = get_object_or_404(Element, id=id)
     groups = Group.objects.filter(element_id=element.id, is_active=True)
-    GroupFormset = inlineformset_factory(Element, Group, fields=('defect_group', 'description',), can_delete=True,
-                                         extra=1)
-    formset = GroupFormset(request.POST, instance=element)
+    GroupFormset = inlineformset_factory(Element, Group, fields=('defect_group', 'description',), can_delete=False,
+                                         extra=1, )
     if request.method == 'POST':
         formset = GroupFormset(request.POST, instance=element)
         if formset.is_valid():
@@ -105,8 +105,7 @@ def group_list(request, id):
             formset.save()
             return redirect('group_list', id=id)
     else:
-        formset = GroupFormset()
-    formset = GroupFormset(instance=element)
+        formset = GroupFormset(instance=element)
     context = {
         'element': element,
         'groups': groups,
@@ -195,7 +194,7 @@ def form_type_update(request, id):
         number.series = request.POST.get('form_description')
         number.last_modifier_user_id = request.user.username
         number.last_modification_time = datetime.datetime.now().replace(microsecond=0)
-        number.save()
+        number.sav
     else:
         form = FormTypeForm(instance=type)
     return save_form_type(request, form, 'forms/form_type_update.html')
@@ -237,6 +236,6 @@ def forms(request, id):
     return render(request, 'forms/forms.html', context)
 
 
-def add_forms(request):
-
+# number series
+def number_series(request):
     pass

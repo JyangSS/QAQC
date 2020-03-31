@@ -1,7 +1,8 @@
 {% extends 'elements/base.html' %}
-
+{% load crispy_forms_tags %}
 {% block content %}
 {% load static %}
+
 	<link rel="stylesheet" href="{% static 'plugins/fontawesome-free/css/all.min.css' %}">
     <link rel="stylesheet" href="{% static 'js/bootstrap3-typeahead.js' %}">
     <link rel="stylesheet" href="{% static 'js/datatables.min.js' %}">
@@ -33,18 +34,28 @@ bottom: .5em;
     <p style="width:34.5%;margin:0;display:inline;float:left"><strong>ELEMENT DESCRIPTION</strong></p>
     <p style="margin:0;display:inline:float:right" ><strong>:</strong>{{ element.description}}</p>
   <hr>
+<h3>Groups</h3>
 <form method="post">
     {% csrf_token %}
-{% load crispy_forms_tags %}
-<table>
 {{ formset.management_form }}
- {{ formset.as_table }}
-
-</table>
-     <input type="hidden" value="false" name="add" id="add">
-    <button class="btn btn-primary" id="addbutton">Add More</button>
-    <button type="submit">Save</button>
+{% for form in formset %}
+      <div class="form-row">
+      <div class="form-group col-md-6 mb-0">
+        {{ form.defect_group|as_crispy_field }}
+      </div>
+      <div class="form-group col-md-6 mb-0">
+        {{ form.description|as_crispy_field }}
+      </div>
+    </div>
+{% endfor %}
+<input type="button" value="Add More" id="add_more">
+<input type="submit" value="Save">
     </form>
+<script>
+    $('#add_more').click(function() {
+        cloneMore('div.form-row:last', 'service');
+    });
+</script>
 
 <script src="{% static 'plugins/jquery/jquery.min.js' %}"></script>
 <script src="{% static 'plugins/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
@@ -52,6 +63,7 @@ bottom: .5em;
 <script src="{% static 'plugins/datatables-bs4/js/dataTables.bootstrap4.js' %}"></script>
 <script src="{% static 'dist/js/adminlte.min.js' %}"></script>
 <script src="{% static 'dist/js/demo.js' %}"></script>
+<script src="{% static 'js/formset.js' %}"></script>
 
 {% endblock %}
 
