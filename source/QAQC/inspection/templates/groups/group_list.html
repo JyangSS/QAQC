@@ -1,43 +1,55 @@
 {% extends 'elements/base.html' %}
-
+{% load crispy_forms_tags %}
 {% block content %}
 {% load static %}
+
 	<link rel="stylesheet" href="{% static 'plugins/fontawesome-free/css/all.min.css' %}">
     <link rel="stylesheet" href="{% static 'js/bootstrap3-typeahead.js' %}">
     <link rel="stylesheet" href="{% static 'js/datatables.min.js' %}">
 	<link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <br>
 
-<h1 class="page-header"><a href="{% url 'element_list' %}"><span class="fa fa-angle-double-left" ></span></a>DEFECT GROUPS <button id="element_form"class="btn btn-block btn-primary btn-sm show-form" data-url="{% url 'group_create' %}" style="float:right;width:20%;">
-   <span class="fa fa-fw fa-plus"></span> New_GROUP
+<style>
+table.dataTable thead .sorting:after,
+table.dataTable thead .sorting:before,
+table.dataTable thead .sorting_asc:after,
+table.dataTable thead .sorting_asc:before,
+table.dataTable thead .sorting_asc_disabled:after,
+table.dataTable thead .sorting_asc_disabled:before,
+table.dataTable thead .sorting_desc:after,
+table.dataTable thead .sorting_desc:before,
+table.dataTable thead .sorting_desc_disabled:after,
+table.dataTable thead .sorting_desc_disabled:before {
+bottom: .5em;
+}
+
+</style>
+    <br>
+  <h1 class="page-header"><a href="{% url 'element_list' %}"><span class="fa fa-angle-double-left" ></span></a>DEFECT GROUPS
+  <button id="element_form"class="btn btn-block btn-primary btn-sm show-form" data-url="{% url 'group_create' element.id %}" style="float:right;width:20%;">
+   <span class="fa fa-fw fa-plus"></span> New_Group
   </button></h1>
 <hr>
-<p style="width:34.5%;margin:0;display:inline;float:left"><strong>ELEMENT</strong></p>
+
+    <p style="width:34.5%;margin:0;display:inline;float:left"><strong>ELEMENT</strong></p>
     <p style="margin:0;display:inline:float:right" ><strong>:</strong>{{ element.element}}</p>
     <p style="width:34.5%;margin:0;display:inline;float:left"><strong>ELEMENT DESCRIPTION</strong></p>
     <p style="margin:0;display:inline:float:right" ><strong>:</strong>{{ element.description}}</p>
   <hr>
-<style>
-table th {
-  table-layout: fixed;
-}
-table th {
-  word-wrap: break-word;
-}
-</style>
+
+
   <table class="table table-striped table-bordered" id="element-table" width="100%">
     <thead>
       <tr>
         <th style="text-align:center;">#</th>
-        <th>Defect Group</th>
+        <th>Group</th>
         <th>Description</th>
         <th style="text-align:center;">Action</th>
       </tr>
     </thead>
     <tbody>
-      {% include "elements/group_list_2.html" %}
+      {% include "groups/group_list_2.html" %}
     </tbody>
   </table>
 
@@ -71,4 +83,5 @@ $(document).ready(function() {
 );
 </script>
 {% endblock %}
+
 

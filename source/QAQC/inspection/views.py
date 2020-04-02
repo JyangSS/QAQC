@@ -5,7 +5,8 @@ from .forms import *
 from django.template.loader import render_to_string
 from django.shortcuts import render, redirect
 import datetime
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
+from django.urls import resolve
 
 
 # show all objects in table
@@ -88,13 +89,12 @@ def element_delete(request, id):
 # group
 def group_list(request, id):
     element = Element.objects.get(pk=id)
-    groups = Group.objects.filter(is_active=True, element_id=element)
-
+    groups = Group.objects.filter(is_active=True, element_id=element.id)
     context = {
         'element': element,
-        'groups': groups, }
-
-    return render(request, 'elements/group_list.html', context)
+        'groups': groups,
+    }
+    return render(request, 'groups/group_list.html', context)
 
 
 def save_group(request, form, template_name):
@@ -110,8 +110,8 @@ def save_group(request, form, template_name):
                 obj.last_modification_time = datetime.datetime.now().replace(microsecond=0)
                 obj.save()
             data['form_is_valid'] = True
-            groups = Group.objects.filter(is_active=True)
-            data['element_list'] = render_to_string('elements/group_list_2.html',
+            groups = Group.objects.filter(is_active=True, element_id=obj.element_id)
+            data['element_list'] = render_to_string('groups/group_list_2.html',
                                                     {'groups': groups})
         else:
             data['form_is_valid'] = False
@@ -122,31 +122,49 @@ def save_group(request, form, template_name):
     return JsonResponse(data)
 
 
-def group_create(request):
+def group_create(request, id):
+    element = Element.objects.get(pk=id)
+    context = {
+        'element': element
+    }
     if request.method == 'POST':
         form = GroupForm(request.POST)
+        form.instance.element_id = element.pk
+        return render(request, 'groups/group_create.html', context)
     else:
         form = GroupForm()
-    return save_group(request,form, 'elements/group_create.html')
+
+    return save_group(request, form, 'groups/group_create.html')
 
 
-# def group_delete(request, id):
-#     data = dict()
-#     group = get_object_or_404(Group, id=id)
-#     if request.method == 'POST':
-#         group.is_deleted = True
-#         group.is_active = False
-#         group.delete_user_id = request.user.username
-#         group.deletion_time = datetime.datetime.now().replace(microsecond=0)
-#         group.save()
-#         data['form_is_valid'] = True
-#         groups = Group.objects.filter(is_active=True)
-#         data['group-list'] = render_to_string('elements/element_list.html', {'groups': groups})
-#     else:
-#         context = {'group': group}
-#         data['html_form'] = render_to_string('elements/element_delete.html', context, request=request)
-#
-#     return JsonResponse(data)
+def group_update(request, id):
+    group = get_object_or_404(Group, id=id)
+    if request.method == 'POST':
+        form = GroupForm(request.POST, instance=group)
+        group.last_modifier_user_id = request.user.username
+        group.last_modification_time = datetime.datetime.now().replace(microsecond=0)
+
+    else:
+        form = GroupForm(instance=group)
+    return save_group(request, form, 'groups/group_update.html')
+
+
+def group_delete(request, id):
+    data = dict()
+    group = get_object_or_404(Group, id=id)
+    if request.method == 'POST':
+        group.is_deleted = True
+        group.is_active = False
+        group.delete_user_id = request.user.username
+        group.deletion_time = datetime.datetime.now().replace(microsecond=0)
+        group.save()
+        data['form_is_valid'] = True
+        groups = Group.objects.filter(is_active=True, element_id=group.element_id)
+        data['element_list'] = render_to_string('groups/group_list_2.html', {'groups': groups})
+    else:
+        context = {'group': group}
+        data['html_form'] = render_to_string('groups/group_delete.html', context, request=request)
+    return JsonResponse(data)
 
 
 # form type
