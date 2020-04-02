@@ -1,0 +1,22 @@
+{% extends 'object/base_kent.html' %}
+
+{% block content %}
+{% load static %}
+
+<br>
+<h1>Edit Company</h1>
+<br>
+<form  method="post" >
+        {% csrf_token %}
+      {{form.as_p}}
+    	  <button type="button" class="btn btn-default" onclick="goBack()">Back</button>
+    <button type="submit" class="btn btn-primary" >Edit And Save</button>
+
+</form>
+<script>
+function goBack() {
+  window.history.back();
+}
+</script>
+
+{% endblock %}

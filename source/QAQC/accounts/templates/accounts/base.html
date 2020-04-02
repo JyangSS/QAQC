@@ -15,6 +15,9 @@
     <script src="https://cdn.rawgit.com/serratus/quaggaJS/0420d5e0/dist/quagga.min.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.8/css/select2.min.css" rel="stylesheet" />
 
+
+
+
     <title>{% block title %}QAQC{% endblock title %}</title>
 </head>
 
@@ -71,8 +74,15 @@
         </ul>
           <ul class="list-unstyled components">
             {% if user.is_superuser %}
-            <li><a href="/objects/projectmainlist/1" onclick="toggleSidebar()">Kent</a></li>
-            {% endif %}
+            <li data-toggle="collapse" data-target="#Object" class="collapsed"><a href="#" >Object     <i class="fa fa-angle-down"></i>
+</a></li>
+
+                <ul class="sub-menu collapse" id="Object">
+                    <li><a href="/objects/companylist/" >Company -- Project</a></li>
+                    <li><a href="#" >Project -- Phase</a></li>
+                    <li><a href="#" >Phase -- Unit</a></li>
+                </ul>
+        {% endif %}
         </ul>
     </div>
 

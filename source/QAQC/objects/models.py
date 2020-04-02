@@ -6,7 +6,7 @@ from datetime import *
 # =========PROJECT============================
 class Company(models.Model):
 
-    company = models.CharField(default=True, max_length=55, null=True)
+    company = models.CharField(default=True, max_length=55, blank=True,null=False)
 
     def __str__(self):
         return str(self.company)
@@ -20,8 +20,8 @@ class Project(models.Model):
         verbose_name_plural = 'Projects'
 
     company_id = models.ForeignKey(Company, verbose_name="Company", on_delete=models.CASCADE)
-    project_description = models.CharField(max_length=100)
-    project_short_form = models.CharField(max_length=10)
+    project_description = models.CharField(max_length=100,verbose_name="Project Description")
+    project_short_form = models.CharField(max_length=10,verbose_name="Project Short Name")
     location = models.CharField(max_length=100)
     is_active = models.BooleanField(null=True)
     creation_time = models.DateTimeField(default=datetime.now, blank=True)
