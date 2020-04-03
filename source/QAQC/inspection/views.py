@@ -3,10 +3,9 @@ from django.forms import modelformset_factory, inlineformset_factory
 from django.shortcuts import render, get_object_or_404
 from .forms import *
 from django.template.loader import render_to_string
-from django.shortcuts import render, redirect
+from django.shortcuts import render
 import datetime
-from django.http import JsonResponse, HttpResponse
-from django.urls import resolve
+from django.http import JsonResponse
 
 
 # show all objects in table
@@ -97,7 +96,8 @@ def group_list(request, id):
     return render(request, 'groups/group_list.html', context)
 
 
-def save_group(request, form, template_name):
+def save_group(request, form, template_name, id):
+    element = Element.objects.get(pk=id)
     data = dict()
     if request.method == 'POST':
         if form.is_valid():
@@ -116,7 +116,27 @@ def save_group(request, form, template_name):
         else:
             data['form_is_valid'] = False
     context = {
-        'form': form
+        'form': form,
+        'element': element,
+    }
+    data['html_form'] = render_to_string(template_name, context, request=request)
+    return JsonResponse(data)
+
+
+def save_group2(request, form, template_name):
+    data = dict()
+    if request.method == 'POST':
+        if form.is_valid():
+            form.save()
+            obj = Group.objects.order_by('-pk')[0]
+            data['form_is_valid'] = True
+            groups = Group.objects.filter(is_active=True, element_id=obj.element_id)
+            data['element_list'] = render_to_string('groups/group_list_2.html',
+                                                    {'groups': groups})
+        else:
+            data['form_is_valid'] = False
+    context = {
+        'form': form,
     }
     data['html_form'] = render_to_string(template_name, context, request=request)
     return JsonResponse(data)
@@ -124,17 +144,12 @@ def save_group(request, form, template_name):
 
 def group_create(request, id):
     element = Element.objects.get(pk=id)
-    context = {
-        'element': element
-    }
     if request.method == 'POST':
-        form = GroupForm(request.POST)
-        form.instance.element_id = element.pk
-        return render(request, 'groups/group_create.html', context)
+        form = GroupForm(request.POST, initial={'element_id': id})
     else:
-        form = GroupForm()
+        form = GroupForm(initial={'element_id': id})
 
-    return save_group(request, form, 'groups/group_create.html')
+    return save_group(request, form, 'groups/group_create.html', int(element.id))
 
 
 def group_update(request, id):
@@ -146,7 +161,7 @@ def group_update(request, id):
 
     else:
         form = GroupForm(instance=group)
-    return save_group(request, form, 'groups/group_update.html')
+    return save_group2(request, form, 'groups/group_update.html')
 
 
 def group_delete(request, id):
@@ -168,15 +183,18 @@ def group_delete(request, id):
 
 
 # form type
-def form_type(request):
-    types = FormTypeTemplate.objects.filter(is_active=True)
+def form_type(request, id):
+    number = NumberSeries.objects.get(pk=id)
+    types = FormTypeTemplate.objects.filter(is_active=True, number_series_id=number)
     context = {
         'types': types,
+        'number': number,
     }
-    return render(request, 'forms/form_type.html', context)
+    return render(request, 'forms_type/form_type.html', context)
 
 
-def save_form_type(request, form, template_name):
+def save_type(request, form, template_name, id):
+    number = NumberSeries.objects.get(pk=id)
     data = dict()
     if request.method == 'POST':
         if form.is_valid():
@@ -188,34 +206,47 @@ def save_form_type(request, form, template_name):
                 obj.last_modifier_user_id = request.user.username
                 obj.last_modification_time = datetime.datetime.now().replace(microsecond=0)
                 obj.save()
-                number = NumberSeries(series=obj.form_description,
-                                      current=1,
-                                      form_type_template_id=obj,
-                                      creator_user_id=request.user.username,
-                                      creation_time=datetime.datetime.now().replace(microsecond=0),
-                                      last_modifier_user_id=request.user.username,
-                                      last_modification_time=datetime.datetime.now().replace(microsecond=0)
-                                      )
-                number.save(force_insert=True)
             data['form_is_valid'] = True
-            types = FormTypeTemplate.objects.filter(is_active=True)
-            data['form_list'] = render_to_string('forms/form_type_2.html',
-                                                 {'types': types, 'obj': obj})
+            types = FormTypeTemplate.objects.filter(is_active=True, number_series_id=obj.number_series_id)
+            data['element_list'] = render_to_string('forms_type/form_type_2.html',
+                                                    {'types': types})
         else:
             data['form_is_valid'] = False
     context = {
-        'form': form
+        'form': form,
+        'number': number,
     }
     data['html_form'] = render_to_string(template_name, context, request=request)
     return JsonResponse(data)
 
 
-def form_type_create(request):
+def save_type2(request, form, template_name):
+    data = dict()
     if request.method == 'POST':
-        form = FormTypeForm(request.POST)
+        if form.is_valid():
+            form.save()
+            obj = FormTypeTemplate.objects.order_by('-pk')[0]
+            data['form_is_valid'] = True
+            types = FormTypeTemplate.objects.filter(is_active=True, number_series_id=obj.number_series_id)
+            data['element_list'] = render_to_string('forms_type/form_type_2.html',
+                                                    {'types': types})
+        else:
+            data['form_is_valid'] = False
+    context = {
+        'form': form,
+    }
+    data['html_form'] = render_to_string(template_name, context, request=request)
+    return JsonResponse(data)
+
+
+def form_type_create(request, id):
+    number = NumberSeries.objects.get(pk=id)
+    if request.method == 'POST':
+        form = FormTypeForm(request.POST, initial={'number_series_id': id})
     else:
-        form = FormTypeForm()
-    return save_form_type(request, form, 'forms/form_type_create.html')
+        form = FormTypeForm(initial={'number_series_id': id})
+
+    return save_type(request, form, 'forms_type/form_type_create.html', int(number.id))
 
 
 def form_type_update(request, id):
@@ -224,14 +255,10 @@ def form_type_update(request, id):
         form = FormTypeForm(request.POST, instance=type)
         type.last_modifier_user_id = request.user.username
         type.last_modification_time = datetime.datetime.now().replace(microsecond=0)
-        number = NumberSeries.objects.get(form_type_template_id=type.pk)
-        number.series = request.POST.get('form_description')
-        number.last_modifier_user_id = request.user.username
-        number.last_modification_time = datetime.datetime.now().replace(microsecond=0)
-        number.sav
+
     else:
         form = FormTypeForm(instance=type)
-    return save_form_type(request, form, 'forms/form_type_update.html')
+    return save_type2(request, form, 'forms_type/form_type_update.html')
 
 
 def form_type_delete(request, id):
@@ -243,31 +270,13 @@ def form_type_delete(request, id):
         type.delete_user_id = request.user.username
         type.deletion_time = datetime.datetime.now().replace(microsecond=0)
         type.save()
-        number = NumberSeries.objects.get(form_type_template_id=type.pk)
-        number.is_deleted = True
-        number.is_active = False
-        number.delete_user_id = request.user.username
-        number.deletion_time = datetime.datetime.now().replace(microsecond=0)
-        number.save()
         data['form_is_valid'] = True
-        types = FormTypeTemplate.objects.filter(is_active=True)
-        data['form_list'] = render_to_string('forms/form_type_2.html', {'types': types})
+        types = FormTypeTemplate.objects.filter(is_active=True, number_series_id=type.number_series_id)
+        data['element_list'] = render_to_string('forms_type/form_type_2.html', {'types': types})
     else:
         context = {'type': type}
-        data['html_form'] = render_to_string('forms/form_type_delete.html', context, request=request)
-
+        data['html_form'] = render_to_string('forms_type/form_type_delete.html', context, request=request)
     return JsonResponse(data)
-
-
-# form and form details
-def forms(request, id):
-    type = get_object_or_404(FormTypeTemplate, id=id)
-    all_form = FormTemplate.objects.filter(form_type_template_id=type)
-    context = {
-        'type': type,
-        'all_form': all_form,
-    }
-    return render(request, 'forms/forms.html', context)
 
 
 # number series

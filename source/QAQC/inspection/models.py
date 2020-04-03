@@ -91,7 +91,7 @@ class NumberSeries(models.Model):
     delete_user_id = models.CharField(max_length=50, blank=True)
 
     def __str__(self):
-        return str(self.id)
+        return str(self.series)
 
     pass
 

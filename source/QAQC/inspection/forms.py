@@ -14,6 +14,9 @@ class ElementForm(forms.ModelForm):
 class GroupForm(forms.ModelForm):
     class Meta:
         model = Group
+        widgets = {
+            'element_id': forms.HiddenInput(),
+        }
         fields = (
             'defect_group',
             'description',
@@ -30,6 +33,7 @@ class FormTypeForm(forms.ModelForm):
         fields = (
             'form_type',
             'form_description',
+            'number_series_id',
         )
         labels = {
             'form_type': 'Form Type Name',
@@ -46,25 +50,3 @@ class NumberSeriesForm(forms.ModelForm):
         )
 
 
-class FromTemplateForm(forms.ModelForm):
-    class Meta:
-        model = FormTemplate
-        fields = (
-            'form_title',
-            'ref_no',
-            'remarks',
-            'form_type_template_id',
-        )
-
-
-class FromDetailsForm(forms.ModelForm):
-    class Meta:
-        model = TemplateDetail
-        fields = (
-            'legend',
-            'question_line',
-            'question',
-            'is_boolean_question',
-            'group_id',
-            'form_template_id',
-        )

@@ -176,7 +176,7 @@ class CustomUserChangeForm(UserChangeForm):
         )
 
 
-# class FormWithFormattedDates(forms.ModelForm):
+# class FormWithFormattedDates(forms_type.ModelForm):
 #     def __init__(self, *args, **kwargs):
 #         date_format = None
 #         if 'date_format' in kwargs:
@@ -185,8 +185,8 @@ class CustomUserChangeForm(UserChangeForm):
 #         super(FormWithFormattedDates, self).__init__(*args, **kwargs)
 #         if date_format is not None:
 #             for (field_name, field) in self.fields.items():
-#                 if isinstance(field, forms.fields.DateField):
+#                 if isinstance(field, forms_type.fields.DateField):
 #                     field.input_format = [date_format]
-#                     field.widget = forms.widgets.DateTimeInput(format=date_format)
+#                     field.widget = forms_type.widgets.DateTimeInput(format=date_format)
 
 

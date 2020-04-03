@@ -12,21 +12,20 @@ urlpatterns = [
 
     # groups
     path('elements/<int:id>/groups', group_list, name='group_list'),
-    path('groups/<int:id>/create', group_create, name='group_create'),
+    path('elements/<int:id>/groups/create', group_create, name='group_create'),
     path('groups/<int:id>/update', group_update, name='group_update'),
     path('groups/<int:id>/delete', group_delete, name='group_delete'),
-
-    # forms_type
-    path('forms/type', form_type, name='form_type'),
-    path('forms/create', form_type_create, name='form_type_create'),
-    path('forms/<int:id>/update', form_type_update, name='form_type_update'),
-    path('forms/<int:id>/delete', form_type_delete, name='form_type_delete'),
-    path('forms/<int:id>/', forms, name='forms'),
 
     # number_series
     path('number_series/', number_series_list, name='number_series_list'),
     path('number_series/create$', number_series_create, name='number_series_create'),
     path('number_series/<int:id>/update$', number_series_update, name='number_series_update'),
     path('number_series/<int:id>/delete', number_series_delete, name='number_series_delete'),
+
+    # forms_type
+    path('number_series/<int:id>/forms_type', form_type, name='form_type'),
+    path('number_series/<int:id>/forms_type/create', form_type_create, name='form_type_create'),
+    path('forms_type/<int:id>/update', form_type_update, name='form_type_update'),
+    path('forms_type/<int:id>/delete', form_type_delete, name='form_type_delete'),
 
 ]

@@ -1,4 +1,4 @@
-{% extends 'elements/base.html' %}
+{% extends 'accounts/base.html' %}
 {% load crispy_forms_tags %}
 {% block content %}
 {% load static %}
@@ -24,6 +24,18 @@ table.dataTable thead .sorting_desc_disabled:before {
 bottom: .5em;
 }
 
+</style>
+<style>
+#element-table_filter{
+float:right;
+margin-right:20px;
+}
+table th {
+  table-layout: fixed;
+}
+table th {
+  word-wrap: break-word;
+}
 </style>
     <br>
   <h1 class="page-header"><a href="{% url 'element_list' %}"><span class="fa fa-angle-double-left" ></span></a>DEFECT GROUPS
