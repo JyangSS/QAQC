@@ -18,8 +18,8 @@ urlpatterns = [
 
     # number_series
     path('number_series/', number_series_list, name='number_series_list'),
-    path('number_series/create$', number_series_create, name='number_series_create'),
-    path('number_series/<int:id>/update$', number_series_update, name='number_series_update'),
+    path('number_series/create', number_series_create, name='number_series_create'),
+    path('number_series/<int:id>/update', number_series_update, name='number_series_update'),
     path('number_series/<int:id>/delete', number_series_delete, name='number_series_delete'),
 
     # forms_type
