@@ -4,12 +4,6 @@ from django.urls import path
 
 
 urlpatterns = [
-
-
-    #path('projectmainlist/unitlist/<int:id>/', views.unit_main_list, name='unit_main_list'),
-    path('projectmainlist/<int:id>/', views.project_main_list, name='project_main_list'),
-
-
     path('companylist/',views.company_list, name='company_list'),
     path('companylist/create', views.company_create, name='company_create'),
     path('companylist/edit/<int:id>/', views.company_edit, name='company_edit'),
@@ -21,5 +15,7 @@ urlpatterns = [
     path('phaselist/edit/<int:id>/', views.phase_edit, name='phase_edit'),
     path('unitlist/<int:id>/', views.unit_list, name='unit_list'),
     path('unitlist/edit/<int:id>/', views.unit_edit, name='unit_edit'),
+    path('registerunit/',views.register_unit,name='register_unit'),
+    path('registerunitlist/', views.register_unit_list, name='register_unit_list'),
 
 ]

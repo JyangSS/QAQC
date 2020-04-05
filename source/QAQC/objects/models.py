@@ -56,7 +56,7 @@ class Phase(models.Model):
     delete_user_id = models.CharField(max_length=50)
 
     def __str__(self):
-        return str(self.project_id.project_description + "--  " + self.phase_description)
+        return str(self.project_id.project_short_form + " ---  " + self.phase_short_form)
 
     pass
 

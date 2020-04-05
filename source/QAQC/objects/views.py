@@ -168,29 +168,19 @@ def unit_edit(request, id):
         return render(request, 'object/object_edit.html', {'form': form})
 
 
-# ==================================ignore below====================================================
-def project_main_list(request, id):
-    c = Company.objects.all()
-    phase = Phase.objects.filter(project_id=id)
-    page_title = Project.objects.get(pk=id)
-
+def register_unit (request):
     if request.method == 'POST':
-        add_project = ProjectForm(request.POST)
-        add_phase = PhaseForm(request.POST or None)
-
-        if add_project.is_valid():
-            n = add_project.save()
-            n.pk
-            return redirect(reverse('project_main_list', kwargs={'id': n.pk}))
-        elif add_phase.is_valid():
-            add_phase.save()
-            return redirect(reverse('project_main_list', kwargs={'id': id}))
+        form= UnitNumberForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('register_unit_list')
     else:
-        add_project = ProjectForm()
-        add_phase = PhaseForm(initial={'project_id': id})
+        form = UnitNumberForm()
+    return render(request,'object/register_unit.html',{'form':form})
 
-    return render(request, 'object/project_main_list.html',
-                  {'add_project': add_project, 'c': c, 'page_title': page_title,
-                   'phase': phase, 'add_phase': add_phase})
+def register_unit_list(request):
+    list = UnitNumber.objects.all()
+
+    return render(request,'object/register_unit_list.html', {'list':list})
 
 
