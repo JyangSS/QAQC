@@ -68,23 +68,23 @@ class UserRegistrationForm(UserCreationForm):
 
         self.helper.layout = Layout(
             Row(
-                Column('first_name', css_class='form-group col-md-6 mb-0', autocomplete="off"),
-                Column('last_name', css_class='form-group col-md-6 mb-0', autocomplete="off"),
-                css_class='form-row'
+                Column('first_name', css_class='forms-group col-md-6 mb-0', autocomplete="off"),
+                Column('last_name', css_class='forms-group col-md-6 mb-0', autocomplete="off"),
+                css_class='forms-row'
             ),
             Field('username', autocomplete="off"),
             AppendedText('email', '@huayang.com.my', autocomplete="off"),
             Field('contact', autocomplete="off"),
             Row(
-                Column('password1', css_class='form-group col-md-6 mb-0'),
-                Column('password2', css_class='form-group col-md-6 mb-0'),
-                css_class='form-row'
+                Column('password1', css_class='forms-group col-md-6 mb-0'),
+                Column('password2', css_class='forms-group col-md-6 mb-0'),
+                css_class='forms-row'
             ),
             'company',
             Row(
-                Column('branch', css_class='form-group col-md-6 mb-0'),
-                Column('department', css_class='form-group col-md-6 mb-0'),
-                css_class='form-row'
+                Column('branch', css_class='forms-group col-md-6 mb-0'),
+                Column('department', css_class='forms-group col-md-6 mb-0'),
+                css_class='forms-row'
             ),
             'supervisor',
             Submit('submit', 'Sign Up', css_class='btn-outline-success col-md-12')

@@ -40,7 +40,7 @@ table th {
     <br>
   <h1 class="page-header"><a href="{% url 'number_series_list' %}"><span class="fa fa-angle-double-left" ></span></a>FORMS TYPE
   <button id="element_form"class="btn btn-block btn-primary btn-sm show-form"  style="float:right;width:20%;" data-url="{% url 'form_type_create' number.id %}">
-   <span class="fa fa-fw fa-plus"></span> New_Group
+   <span class="fa fa-fw fa-plus"></span> New_Type
   </button></h1>
 <hr>
 
@@ -55,9 +55,9 @@ table th {
     <thead>
       <tr>
         <th style="text-align:center;">#</th>
-        <th>Form Type</th>
-        <th>Description</th>
-        <th style="text-align:center;">Action</th>
+        <th>FORM TYPE</th>
+        <th>DESCRIPTION</th>
+        <th style="text-align:center;">ACTION</th>
       </tr>
     </thead>
     <tbody>
@@ -93,7 +93,9 @@ $(document).ready(function() {
     });
  }
 );
+
 </script>
+
 {% endblock %}
 
 

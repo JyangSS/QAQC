@@ -1,14 +1,10 @@
-{% for type in types %}
+{% for template in templates %}
   <tr>
-    <td style="overflow:hidden;text-align:center;">{{ forloop.counter }}</td>
-    <td style="overflow:hidden;">{{ type.form_type }}</td>
-    <td style="overflow:hidden;">{{ type.form_description }}</td>
-
+    <td style="overflow:hidden;text-align:center;">{{ template.ref_no }}</td>
+    <td style="overflow:hidden;">{{ template.rev }}</td>
+    <td style="overflow:hidden;">{{ template.form_title }}</td>
+     <td style="overflow:hidden;">{{ template.remarks }}</td>
     <td style="white-space:nowrap;">
-      <button  style="display:inline;width:32%;color:black;" class="btn btn-block btn-info btn-xs" onclick="window.location.href='{% url 'templates' type.id %}'">
-      <span class="fa fa-eye"></span>View
-      </button>
-
        <button  style="display:inline;width:32%;margin-bottom:8px" class="btn btn-block btn-warning btn-xs show-form-update" data-url="{% url 'form_type_update' type.id %}" >
          <span class="fa fa-edit"></span>Edit
       </button>

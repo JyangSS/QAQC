@@ -28,4 +28,7 @@ urlpatterns = [
     path('forms_type/<int:id>/update', form_type_update, name='form_type_update'),
     path('forms_type/<int:id>/delete', form_type_delete, name='form_type_delete'),
 
+    # forms
+    path('forms_type/<int:id>/templates', templates, name='templates'),
+
 ]

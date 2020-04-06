@@ -83,11 +83,11 @@ def phase_edit(request, id=None):
         if form.is_valid():
             form.save()
             return redirect(reverse('project_main_list', kwargs={'id': n.pk}))
-        #   form.last_modifier_user_id = request.user.username
-        #  form.last_modification_time = datetime.datetime.now().replace(microsecond=0)
+        #   forms.last_modifier_user_id = request.user.username
+        #  forms.last_modification_time = datetime.datetime.now().replace(microsecond=0)
     else:
         form = PhaseForm(instance=instance)
-        return render(request, 'object/phase_edit.html', {'form': form})
+        return render(request, 'object/phase_edit.html', {'forms': form})
 
 
 def phase_delete(request, id):

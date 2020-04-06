@@ -182,7 +182,7 @@ def group_delete(request, id):
     return JsonResponse(data)
 
 
-# form type
+# forms type
 def form_type(request, id):
     number = NumberSeries.objects.get(pk=id)
     types = FormTypeTemplate.objects.filter(is_active=True, number_series_id=number)
@@ -353,3 +353,14 @@ def number_series_delete(request, id):
         data['html_form'] = render_to_string('number_series/number_series_delete.html', context, request=request)
 
     return JsonResponse(data)
+
+
+# forms
+def templates(request, id):
+    type = FormTypeTemplate.objects.get(pk=id)
+    templates = FormTemplate.objects.filter(is_active=True, form_type_template_id=type)
+    context = {
+        'type': type,
+        'templates': templates,
+    }
+    return render(request, 'forms/form_list.html', context)
