@@ -1,0 +1,27 @@
+{% extends 'accounts/base.html' %}
+
+{% block content %}
+{% load static %}
+<br>
+<h1>Register New Block</h1>
+<br>
+
+<form  method="post" >
+        {% csrf_token %}
+
+    <pre><label>Phase:                      </label> {{form.phase_id}}</pre>
+    <pre><label>Block:                      </label> {{form.block}}</pre>
+    <pre><label>Max level:                  </label> <input type="text" name="max_level" maxlength="10"></pre>
+    <pre><label>Max unit per level:         </label> <input type="text" name="max_unit_per_level" maxlength="10"></pre>
+    	  <button type="button" class="btn btn-default" onclick="goBack()" style="background-color:#dbdbdb;">Back</button>
+    <button type="submit" class="btn btn-primary" >Submit</button>
+
+</form>
+    </div>
+<script>
+function goBack() {
+  window.history.back();
+}
+</script>
+
+{% endblock %}

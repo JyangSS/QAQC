@@ -1,4 +1,4 @@
-{% extends 'object/base_kent.html' %}
+{% extends 'accounts/base.html' %}
 
 {% block content %}
 {% load static %}
@@ -14,7 +14,7 @@
          {{form.as_p}}
          <hr>
       {% endfor %}
-    	  <button type="button" class="btn btn-default" onclick="goBack()">Back</button>
+    	  <button type="button" class="btn btn-default" onclick="goBack()" style="background-color:#dbdbdb;">Back</button>
     <button type="submit" class="btn btn-primary" >Add</button>
 
 </form>

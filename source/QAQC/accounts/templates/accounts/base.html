@@ -4,6 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'plugins/datatables-bs4/css/dataTables.bootstrap4.css' %}"><!-- object css -->
+
     <link rel="stylesheet" href="{% static 'accounts/style.css' %}">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
@@ -79,7 +81,7 @@
 
                 <ul class="sub-menu collapse" id="Object">
                     <li><a href="/objects/companylist/" >Object Data/Manage</a></li>
-                    <li><a href="/objects/registerunit/" >Register New Unit</a></li>
+                    <li><a href="/objects/registernewblock/" >Register New Block</a></li>
                     <li><a href="/objects/registerunitlist/" >Unit List</a></li>
                 </ul>
         {% endif %}
@@ -90,7 +92,10 @@
 
 
     <div id="content-wrap">
+            <div class="container">
+
    {% block content %}{% endblock %}
+            </div>
     </div>
 
    <div id="footer">

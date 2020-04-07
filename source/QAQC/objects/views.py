@@ -168,15 +168,24 @@ def unit_edit(request, id):
         return render(request, 'object/object_edit.html', {'form': form})
 
 
-def register_unit (request):
+def register_new_block(request):
     if request.method == 'POST':
-        form= UnitNumberForm(request.POST)
+        form = RegisterNewBlockForm(request.POST)
         if form.is_valid():
-            form.save()
-            return redirect('register_unit_list')
+            i = request.POST.get('max_level')
+            j = request.POST.get('max_unit_per_level')
+            for a in range(1,int(i)+1):
+                for b in range(1,int(j)+1):
+                    form = RegisterNewBlockForm(request.POST)
+                    obj = form.save(commit=False)
+                    obj.level = int(a)
+                    obj.unit_number=int(b)
+                    obj.save()
+            else:
+                return redirect('register_unit_list')
     else:
-        form = UnitNumberForm()
-    return render(request,'object/register_unit.html',{'form':form})
+        form = RegisterNewBlockForm()
+    return render(request,'object/register_new_block.html',{'form':form})
 
 def register_unit_list(request):
     list = UnitNumber.objects.all()

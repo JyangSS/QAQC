@@ -1,4 +1,4 @@
-{% extends 'object/base_kent.html' %}
+{% extends 'accounts/base.html' %}
 
 {% block content %}
 {% load static %}
@@ -116,7 +116,7 @@ bottom: .5em;
 </h1>
 
 <hr>
-    <button type="button" class="btn btn-primary" onclick="window.location.href='{% url 'register_unit' %}'" >Register Unit</button>
+    <button type="button" class="btn btn-primary" onclick="window.location.href='{% url 'register_new_block' %}'" >Register New Block</button>
 
 
 
@@ -127,12 +127,18 @@ bottom: .5em;
       <tr>
         <th width="5%" style="text-align:center;" >#
         </th>
-        <th width="25%" >Block
+          <th width="25%" >Project
         </th>
-           <th width="25%" >Level
+           <th width="25%" >Phase
         </th>
-           <th width="25%" >Unit Number
+        <th width="10%" >Block
         </th>
+           <th width="10%" >Level
+        </th>
+           <th width="10%" >Unit Number
+        </th>
+
+
         <th class="th-sm" style="text-align:center;" width="10%">Action
         </th>
       </tr>
@@ -141,9 +147,14 @@ bottom: .5em;
      {% for a in list %}
   <tr>
     <td class="data">{{ forloop.counter }}</td>
-    <td class="data">{{ a.block }}</td>
+       <td class="data">{{ a.phase_id.project_id.project_short_form }}</td>
+       <td class="data">{{ a.phase_id.phase_short_form }}</td>
+         <td class="data">{{ a.block }}</td>
        <td class="data">{{ a.level }}</td>
- <td class="data">{{ a.unit_number }}</td>
+        <td class="data">{{ a.unit_number }}</td>
+
+
+
     <td class="item" style="white-space:nowrap;">
 
           <button type="button" style="display:inline;width:100%;color:black;margin-top:0.5px;" class="btn btn-block btn-warning btn-xs" onclick="window.location.href='{% url 'unit_edit' a.id %}'">

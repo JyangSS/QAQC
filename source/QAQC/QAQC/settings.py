@@ -29,6 +29,7 @@ ALLOWED_HOSTS = ['*']
 # Application definition
 
 INSTALLED_APPS = [
+    'django_select2',
     'inspection',
     'adminlte3',
     'adminlte3_theme',
@@ -156,4 +157,5 @@ CKEDITOR_CONFIGS = {
 
 CRISPY_TEMPLATE_PACK = 'bootstrap3'
 STATIC_URL = '/static/'
+SELECT2_CACHE_BACKEND = 'select2'
 

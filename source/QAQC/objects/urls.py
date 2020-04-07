@@ -15,7 +15,7 @@ urlpatterns = [
     path('phaselist/edit/<int:id>/', views.phase_edit, name='phase_edit'),
     path('unitlist/<int:id>/', views.unit_list, name='unit_list'),
     path('unitlist/edit/<int:id>/', views.unit_edit, name='unit_edit'),
-    path('registerunit/',views.register_unit,name='register_unit'),
+    path('registernewblock/',views.register_new_block,name='register_new_block'),
     path('registerunitlist/', views.register_unit_list, name='register_unit_list'),
 
 ]
