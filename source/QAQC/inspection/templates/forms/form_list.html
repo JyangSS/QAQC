@@ -38,8 +38,8 @@ table th {
 }
 </style>
     <br>
-  <h1 class="page-header"><a href=""><span class="fa fa-angle-double-left" ></span></a>SUMMARY OF {{ type.form_description }} LIST
-  <button id="element_form"class="btn btn-block btn-primary btn-sm show-form"  style="float:right;width:20%;" >
+  <h1 class="page-header"><a href="{% url 'form_type' number.id %}"><span class="fa fa-angle-double-left" ></span></a>SUMMARY OF {{ type.form_description }} LIST
+  <button id="element_form"class="btn btn-block btn-primary btn-sm show-form"  style="float:right;width:20%;" data-url="{% url 'template_create' type.id %}">
    <span class="fa fa-fw fa-plus"></span> New_Type
   </button></h1>
 <hr>

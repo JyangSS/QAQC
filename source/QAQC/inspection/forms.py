@@ -50,3 +50,39 @@ class NumberSeriesForm(forms.ModelForm):
         )
 
 
+class TemplateForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(TemplateForm, self).__init__(*args, **kwargs)
+        self.fields['ref_no'].widget.attrs['readonly'] = True
+
+    class Meta:
+        model = FormTemplate
+        widgets = {
+            'form_type_template_id': forms.HiddenInput(),
+            'rev': forms.HiddenInput(),
+        }
+        fields = (
+            'form_title',
+            'ref_no',
+            'rev',
+            'remarks',
+            'form_type_template_id',
+        )
+
+
+class TemplateDetailForm(forms.ModelForm):
+    class Meta:
+        widgets = {
+            'form_template_id': forms.HiddenInput(),
+            'legend': forms.HiddenInput(),
+            'question_line': forms.HiddenInput(),
+        }
+        model = TemplateDetail
+        fields = (
+            'group_id',
+            'form_template_id',
+            'legend',
+            'question_line',
+            'question',
+            'is_boolean_question',
+        )

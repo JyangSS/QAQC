@@ -30,5 +30,6 @@ urlpatterns = [
 
     # forms
     path('forms_type/<int:id>/templates', templates, name='templates'),
+    path('forms_type/<int:id>/template/create', template_create, name='template_create'),
 
 ]
