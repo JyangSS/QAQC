@@ -1,4 +1,4 @@
-{% extends 'elements/base.html' %}
+{% extends 'accounts/base.html' %}
 
 {% block content %}
 {% load static %}
@@ -8,34 +8,44 @@
 	<link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-
     <br>
 
-    <h1 class="page-header"><span class="fa fa-home" ></span></a>FORM TYPES <button id="form2" class="btn btn-block btn-primary btn-sm show-form" data-url="{% url 'form_type_create' %}" style="float:right;width:20%;">
-   <span class="fa fa-fw fa-plus"></span> New_Type
+    <h1 class="page-header"><span class="fa fa-home" ></span></a>NUMBER SERIES <button id="element_form"class="btn btn-block btn-primary btn-sm show-form" data-url="{% url 'number_series_create' %}" style="float:right;width:20%;">
+   <span class="fa fa-fw fa-plus"></span> New_Series
   </button></h1>
   <hr>
-
-  <table class="table table-striped table-bordered" id="type-table" width="100%">
+<style>
+#element-table_filter{
+float:right;
+margin-right:20px;
+}
+table th {
+  table-layout: fixed;
+}
+table th {
+  word-wrap: break-word;
+}
+</style>
+  <table class="table table-striped table-bordered" id="element-table" width="100%">
     <thead>
       <tr>
         <th style="text-align:center;">#</th>
-        <th>Type </th>
-        <th>Form Short Description</th>
-        <th style="text-align:center;">Action</th>
+        <th>SERIES</th>
+        <th>CURRENT</th>
+        <th style="text-align:center;">ACTION</th>
       </tr>
     </thead>
     <tbody>
-    {% include "forms/form_type_2.html" %}
+      {% include "number_series/number_series_list_2.html" %}
     </tbody>
   </table>
 
-  <div class="modal fade in" id="modal-type">
+  <div class="modal fade in" id="modal-element">
     <div class="modal-dialog">
       <div class="modal-content"></div>
     </div>
   </div>
-
+<br><br><br>
 
 <script src="{% static 'plugins/jquery/jquery.min.js' %}"></script>
 <script src="{% static 'plugins/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
@@ -44,10 +54,9 @@
 <script src="{% static 'dist/js/adminlte.min.js' %}"></script>
 <script src="{% static 'dist/js/demo.js' %}"></script>
 
-
 <script>
 $(document).ready(function() {
-    $('#type-table').DataTable( {
+    $('#element-table').DataTable( {
         "scrollY": 430,
         "scrollX": true,
         "scrollCollapse": false,

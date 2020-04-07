@@ -1,7 +1,8 @@
-{% extends 'elements/base.html' %}
-
+{% extends 'accounts/base.html' %}
+{% load crispy_forms_tags %}
 {% block content %}
 {% load static %}
+
 	<link rel="stylesheet" href="{% static 'plugins/fontawesome-free/css/all.min.css' %}">
     <link rel="stylesheet" href="{% static 'js/bootstrap3-typeahead.js' %}">
     <link rel="stylesheet" href="{% static 'js/datatables.min.js' %}">
@@ -24,27 +25,47 @@ bottom: .5em;
 }
 
 </style>
+<style>
+#element-table_filter{
+float:right;
+margin-right:20px;
+}
+table th {
+  table-layout: fixed;
+}
+table th {
+  word-wrap: break-word;
+}
+</style>
     <br>
-<h1 class="page-header"><a href="{% url 'element_list' %}"><span class="fa fa-angle-double-left" ></span></a> DEFECT GROUPS</h1>
+  <h1 class="page-header"><a href="{% url 'form_type' number.id %}"><span class="fa fa-angle-double-left" ></span></a>SUMMARY OF {{ type.form_description }} LIST
+  <button id="element_form"class="btn btn-block btn-primary btn-sm show-form"  style="float:right;width:20%;" data-url="{% url 'template_create' type.id %}">
+   <span class="fa fa-fw fa-plus"></span> New_Type
+  </button></h1>
 <hr>
 
-    <p style="width:34.5%;margin:0;display:inline;float:left"><strong>ELEMENT</strong></p>
-    <p style="margin:0;display:inline:float:right" ><strong>:</strong>{{ element.element}}</p>
-    <p style="width:34.5%;margin:0;display:inline;float:left"><strong>ELEMENT DESCRIPTION</strong></p>
-    <p style="margin:0;display:inline:float:right" ><strong>:</strong>{{ element.description}}</p>
-  <hr>
-<form method="post">
-    {% csrf_token %}
-{% load crispy_forms_tags %}
-<table>
-{{ formset.management_form }}
- {{ formset.as_table }}
 
-</table>
-     <input type="hidden" value="false" name="add" id="add">
-    <button class="btn btn-primary" id="addbutton">Add More</button>
-    <button type="submit">Save</button>
-    </form>
+
+  <table class="table table-striped table-bordered" id="element-table" width="100%">
+    <thead>
+      <tr>
+        <th style="text-align:center;">REF NO</th>
+        <th>REV</th>
+        <th>FORMs</th><th>REMARKS</th>
+        <th style="text-align:center;">Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% include "forms/form_list_2.html" %}
+    </tbody>
+  </table>
+
+  <div class="modal fade in" id="modal-element">
+    <div class="modal-dialog">
+      <div class="modal-content"></div>
+    </div>
+  </div>
+<br><br><br>
 
 <script src="{% static 'plugins/jquery/jquery.min.js' %}"></script>
 <script src="{% static 'plugins/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
@@ -53,5 +74,23 @@ bottom: .5em;
 <script src="{% static 'dist/js/adminlte.min.js' %}"></script>
 <script src="{% static 'dist/js/demo.js' %}"></script>
 
+<script>
+$(document).ready(function() {
+    $('#element-table').DataTable( {
+        "scrollY": 430,
+        "scrollX": true,
+        "scrollCollapse": false,
+        "paging":false,
+        "info": false,
+        "columnDefs": [ {
+        "targets": [3],
+        "orderable": false} ]
+    });
+ }
+);
+
+</script>
+
 {% endblock %}
+
 

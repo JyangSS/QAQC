@@ -1,19 +1,30 @@
 {% extends 'accounts/base.html' %}
-
+{% load crispy_forms_tags %}
 {% block content %}
 {% load static %}
+
 	<link rel="stylesheet" href="{% static 'plugins/fontawesome-free/css/all.min.css' %}">
     <link rel="stylesheet" href="{% static 'js/bootstrap3-typeahead.js' %}">
     <link rel="stylesheet" href="{% static 'js/datatables.min.js' %}">
 	<link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <br>
 
-    <h1 class="page-header"><span class="fa fa-home" ></span></a>ELEMENTS <button id="element_form"class="btn btn-block btn-primary btn-sm show-form" data-url="{% url 'element_create' %}" style="float:right;width:20%;">
-   <span class="fa fa-fw fa-plus"></span> New_Element
-  </button></h1>
-  <hr>
+<style>
+table.dataTable thead .sorting:after,
+table.dataTable thead .sorting:before,
+table.dataTable thead .sorting_asc:after,
+table.dataTable thead .sorting_asc:before,
+table.dataTable thead .sorting_asc_disabled:after,
+table.dataTable thead .sorting_asc_disabled:before,
+table.dataTable thead .sorting_desc:after,
+table.dataTable thead .sorting_desc:before,
+table.dataTable thead .sorting_desc_disabled:after,
+table.dataTable thead .sorting_desc_disabled:before {
+bottom: .5em;
+}
+
+</style>
 <style>
 #element-table_filter{
 float:right;
@@ -26,17 +37,31 @@ table th {
   word-wrap: break-word;
 }
 </style>
+    <br>
+  <h1 class="page-header"><a href="{% url 'number_series_list' %}"><span class="fa fa-angle-double-left" ></span></a>FORMS TYPE
+  <button id="element_form"class="btn btn-block btn-primary btn-sm show-form"  style="float:right;width:20%;" data-url="{% url 'form_type_create' number.id %}">
+   <span class="fa fa-fw fa-plus"></span> New_Type
+  </button></h1>
+<hr>
+
+    <p style="width:34.5%;margin:0;display:inline;float:left"><strong>NUMBER SERIES</strong></p>
+    <p style="margin:0;display:inline:float:right" ><strong>:</strong>{{ number.series}}</p>
+    <p style="width:34.5%;margin:0;display:inline;float:left"><strong>CURRENT</strong></p>
+    <p style="margin:0;display:inline:float:right" ><strong>:</strong>{{ number.current}}</p>
+  <hr>
+
+
   <table class="table table-striped table-bordered" id="element-table" width="100%">
     <thead>
       <tr>
-        <th>#</th>
-        <th>ELEMENT</th>
+        <th style="text-align:center;">#</th>
+        <th>FORM TYPE</th>
         <th>DESCRIPTION</th>
-        <th>ACTION</th>
+        <th style="text-align:center;">ACTION</th>
       </tr>
     </thead>
     <tbody>
-      {% include "elements/element_list_2.html" %}
+      {% include "forms_type/form_type_2.html" %}
     </tbody>
   </table>
 
@@ -68,6 +93,9 @@ $(document).ready(function() {
     });
  }
 );
+
 </script>
+
 {% endblock %}
+
 

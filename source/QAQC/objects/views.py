@@ -9,6 +9,8 @@ import datetime
 from django.http import JsonResponse
 from django.views.generic import View
 from django.forms import modelformset_factory
+from django.contrib import messages
+
 
 
 # Create your views here. (KENT)
@@ -134,6 +136,7 @@ def phase_edit(request, id):
         form = PhaseForm(request.POST, instance=instance)
         if form.is_valid():
             form.save()
+
             return redirect(reverse('phase_list', kwargs={'id': n.pk}))
 
     else:
@@ -174,22 +177,60 @@ def register_new_block(request):
         if form.is_valid():
             i = request.POST.get('max_level')
             j = request.POST.get('max_unit_per_level')
-            for a in range(1,int(i)+1):
-                for b in range(1,int(j)+1):
-                    form = RegisterNewBlockForm(request.POST)
-                    obj = form.save(commit=False)
-                    obj.level = int(a)
-                    obj.unit_number=int(b)
-                    obj.save()
+            s1 = request.POST.get('specific_level_1')
+            ss1 = request.POST.get('specific_unit_1')
+            s2 = request.POST.get('specific_level_2')
+            ss2 = request.POST.get('specific_unit_2')
+            s3 = request.POST.get('specific_level_3')
+            ss3 = request.POST.get('specific_unit_3')
+
+            if not i or not j or not s1 or not ss1 or not s2 or not ss2 or not s3 or not ss3 or (int(ss1)>int(i)) or (int(ss2)>int(i)) or (int(ss3)>int(i)):
+                messages.error(request, 'Error!!! You might not completely fill up the form or the specific level is greater than max level!!!')
+                return redirect('register_new_block')
             else:
-                return redirect('register_unit_list')
+                for a in range(1,int(i)+1):
+                    if (int(s1) == a):
+                        for b in range(1,int(ss1)+1):
+                            form = RegisterNewBlockForm(request.POST)
+                            obj = form.save(commit=False)
+                            obj.level = int(a)
+                            obj.unit_number = int(b)
+                            obj.save()
+
+                    elif (int(s2) == a):
+                        for b in range(1,int(ss2)+1):
+                            form = RegisterNewBlockForm(request.POST)
+                            obj = form.save(commit=False)
+                            obj.level = int(a)
+                            obj.unit_number = int(b)
+                            obj.save()
+                    elif (int(s3) == a):
+                        for b in range(1, int(ss3) + 1):
+                            form = RegisterNewBlockForm(request.POST)
+                            obj = form.save(commit=False)
+                            obj.level = int(a)
+                            obj.unit_number = int(b)
+                            obj.save()
+
+                    else:
+                        for b in range(1,int(j)+1):
+                            form = RegisterNewBlockForm(request.POST)
+                            obj = form.save(commit=False)
+                            obj.level = int(a)
+                            obj.unit_number=int(b)
+                            obj.save()
+                else:
+                    return redirect('register_unit_list')
+
     else:
-        form = RegisterNewBlockForm()
-    return render(request,'object/register_new_block.html',{'form':form})
+            form = RegisterNewBlockForm()
+            return render(request,'object/register_new_block.html',{'form':form})
 
 def register_unit_list(request):
     list = UnitNumber.objects.all()
 
     return render(request,'object/register_unit_list.html', {'list':list})
+
+
 
 

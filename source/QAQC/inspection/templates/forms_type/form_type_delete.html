@@ -1,5 +1,5 @@
 {% load crispy_forms_tags %}
-<form method="post" data-url="{% url 'form_type_delete' type.id %}" class="delete-form" >
+<form method="post" data-url="{% url 'form_type_delete' type.id %}" class="delete-form ">
 	{% csrf_token %}
 		<div class="modal-header ">
 		<h5 class="modal-title" >Delete Form Type</h5>
@@ -12,6 +12,6 @@
 		</div>
 		<div class="modal-footer">
 		<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-		<button type="submit" class="btn btn-danger"><i class="fa fa-fw fa-exclamation-circle"></i>Delete</button>
+		<button type="submit" class="btn btn-danger" ><i class="fa fa-fw fa-exclamation-circle"></i>Delete</button>
 		</div>
 </form>
