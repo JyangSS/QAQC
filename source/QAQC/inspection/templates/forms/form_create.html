@@ -1,7 +1,6 @@
 {% load crispy_forms_tags %}
 <form method="post"  data-url="{% url 'template_create' type.id %}"  class="create-form" id="form">
 	{% csrf_token %}
-
 		<div class="modal-header">
 		<h5 class="modal-title" >Create Form </h5>
 		<button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -9,17 +8,37 @@
 		</button>
 		</div>
 		<div class="modal-body">
-		{{form|crispy}}
-		{% for form2 in formset %}
-			{{form2|crispy}}
-		{% endfor %}
+		{{ form.form_title|as_crispy_field }}
+			<div class="form-row">
+				<div class="form-group col-md-4 mb-0">
+					{{ form.ref_no|as_crispy_field }}
+				</div>
+      			<div class="form-group col-md-8 mb-0">
+       				 {{ form.remarks|as_crispy_field }}
+				</div>
+    		</div>
+			 {{ form.rev|as_crispy_field }}
+			 {{ form.form_type_template_id|as_crispy_field }}
+	<!--	{% for form2 in formset %}
+			<div class="form-row">
+				<div class="form-group col-md-6 mb-0">
+				{{ form2.group_id|as_crispy_field }}
+				</div>
+
+			</div>
+			<div class="form-row">
+				<div class="form-group col-md-11 mb-0">
+					{{ form2.question|as_crispy_field }}
+				</div>
+      			<div class="form-group col-md-1 mb-0">
+       				 {{ form2.is_boolean_question|as_crispy_field }}
+				</div>
+    		</div>
+		    <button id="add-another">add another</button>
+		{% endfor %}--!>
 		</div>
 		<div class="modal-footer">
 		<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
 		<button type="submit" class="btn btn-primary" id="submit" ><i class="fa fa-fw fa-save"></i>Create</button>
 		</div>
 </form>
-
-<script>
-	$('#myform')[0].reset();
-</script>

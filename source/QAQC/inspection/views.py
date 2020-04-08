@@ -374,16 +374,15 @@ def template_create(request, id):
     count = FormTemplate.objects.filter(form_type_template_id=type.id).count()
     ref = type.form_description + "/" + str('{0:03}'.format(count + 1))
     if request.method == 'POST':
-        form = TemplateForm(request.POST, initial={'form_type_template_id': id, 'ref_no': ref, })
-        formset = formset_factory(TemplateDetailForm)
+        form = TemplateForm(request.POST, initial={'form_type_template_id': id, 'ref_no': ref,'rev':1 ,})
+
     else:
-        form = TemplateForm(initial={'form_type_template_id': id, 'ref_no': ref, })
-        formset = formset_factory(TemplateDetailForm)
+        form = TemplateForm(initial={'form_type_template_id': id, 'ref_no': ref,'rev':1, })
 
-    return save_template(request, form, formset, 'forms/form_create.html', int(type.id))
+    return save_template(request, form, 'forms/form_create.html', int(type.id))
 
 
-def save_template(request, form, formset, template_name, id):
+def save_template(request, form, template_name, id):
     type = FormTypeTemplate.objects.get(pk=id)
     data = dict()
     if request.method == 'POST':
@@ -397,7 +396,7 @@ def save_template(request, form, formset, template_name, id):
                 obj.last_modification_time = datetime.datetime.now().replace(microsecond=0)
                 obj.save()
             data['form_is_valid'] = True
-            templates = FormTypeTemplate.objects.filter(is_active=True, form_type_template_id=obj.form_type_template_id)
+            templates = FormTemplate.objects.filter(is_active=True, form_type_template_id=obj.form_type_template_id)
             data['element_list'] = render_to_string('forms/form_list_2.html',
                                                     {'templates': templates})
         else:
@@ -405,7 +404,57 @@ def save_template(request, form, formset, template_name, id):
     context = {
         'form': form,
         'type': type,
-        'formset': formset,
     }
     data['html_form'] = render_to_string(template_name, context, request=request)
     return JsonResponse(data)
+
+
+def template_delete(request, id):
+    data = dict()
+    template = get_object_or_404(FormTemplate, id=id)
+    if request.method == 'POST':
+        template.is_deleted = True
+        template.is_active = False
+        template.delete_user_id = request.user.username
+        template.deletion_time = datetime.datetime.now().replace(microsecond=0)
+        template.save()
+        data['form_is_valid'] = True
+        templates = FormTemplate.objects.filter(is_active=True, form_type_template_id=template.form_type_template_id)
+        data['element_list'] = render_to_string('forms/form_list_2.html', {'templates': templates})
+    else:
+        context = {'template': template}
+        data['html_form'] = render_to_string('forms/form_delete.html', context, request=request)
+
+    return JsonResponse(data)
+
+
+def save_template2(request, form,id,template_name):
+    data = dict()
+    template = get_object_or_404(FormTemplate, id=id)
+    if request.method == 'POST':
+        if form.is_valid():
+            form.save()
+            data['form_is_valid'] = True
+            templates = FormTemplate.objects.filter(is_active=True, form_type_template_id=template.form_type_template_id)
+            data['element_list'] = render_to_string('forms/form_list_2.html',
+                                                    {'templates': templates})
+        else:
+            data['form_is_valid'] = False
+    context = {
+        'form': form,
+    }
+    data['html_form'] = render_to_string(template_name, context, request=request)
+    return JsonResponse(data)
+
+
+
+def template_update(request, id):
+    template = get_object_or_404(FormTemplate, id=id)
+    if request.method == 'POST':
+        form = TemplateForm(request.POST, instance=template)
+        template.last_modifier_user_id = request.user.username
+        template.last_modification_time = datetime.datetime.now().replace(microsecond=0)
+
+    else:
+        form = TemplateForm(instance=template)
+    return save_template2(request, form,template.id, 'forms/form_update.html')
