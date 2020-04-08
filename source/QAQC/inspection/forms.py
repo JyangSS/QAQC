@@ -86,3 +86,4 @@ class TemplateDetailForm(forms.ModelForm):
             'question',
             'is_boolean_question',
         )
+

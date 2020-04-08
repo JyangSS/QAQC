@@ -1,5 +1,5 @@
 from django.db import transaction
-from django.forms import modelformset_factory, inlineformset_factory
+from django.forms import modelformset_factory, inlineformset_factory, formset_factory
 from django.shortcuts import render, get_object_or_404
 from .forms import *
 from django.template.loader import render_to_string
@@ -375,13 +375,15 @@ def template_create(request, id):
     ref = type.form_description + "/" + str('{0:03}'.format(count + 1))
     if request.method == 'POST':
         form = TemplateForm(request.POST, initial={'form_type_template_id': id, 'ref_no': ref, })
+        formset = formset_factory(TemplateDetailForm)
     else:
         form = TemplateForm(initial={'form_type_template_id': id, 'ref_no': ref, })
+        formset = formset_factory(TemplateDetailForm)
 
-    return save_template(request, form, 'forms/form_create.html', int(type.id))
+    return save_template(request, form, formset, 'forms/form_create.html', int(type.id))
 
 
-def save_template(request, form, template_name, id):
+def save_template(request, form, formset, template_name, id):
     type = FormTypeTemplate.objects.get(pk=id)
     data = dict()
     if request.method == 'POST':
@@ -403,6 +405,7 @@ def save_template(request, form, template_name, id):
     context = {
         'form': form,
         'type': type,
+        'formset': formset,
     }
     data['html_form'] = render_to_string(template_name, context, request=request)
     return JsonResponse(data)
