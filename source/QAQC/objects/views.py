@@ -8,90 +8,229 @@ from django.shortcuts import render, redirect
 import datetime
 from django.http import JsonResponse
 from django.views.generic import View
+from django.forms import modelformset_factory
+from django.contrib import messages
+
 
 
 # Create your views here. (KENT)
-def project_main_list_empty(request):
-    c = Company.objects.all()
-    page_title_project = None
+def company_list(request):
+    list = Company.objects.all()
 
+    if request.POST.get('delete'):
+        Company.objects.filter(id__in=request.POST.getlist('item')).delete()
+        return redirect('company_list')
+    context = \
+        {'list': list}
+    return render(request, 'object/company_list.html', context)
+
+
+def company_create(request):
+    createFormSet = modelformset_factory(Company, fields=('company',), extra=1)
     if request.method == 'POST':
-        add_project = ProjectForm(request.POST)
-        if add_project.is_valid():
-            n = add_project.save()
-            n.pk
-            return redirect(reverse('project_main_list', kwargs={'id': n.pk}))
+        formset = createFormSet(request.POST, queryset=Company.objects.none(), initial=[{'company': ''}])
+        for form in formset:
+            if form.is_valid():
+                if form.cleaned_data != {}:
+                    form.save()
+        return redirect('company_list')
     else:
-        add_project = ProjectForm()
-    return render(request, 'object/project_main_list.html',
-                  {'c': c, 'page_title_project': page_title_project, 'add_project': add_project})
+        formset = createFormSet(queryset=Company.objects.none(), initial=[{'company': ''}])
+
+    return render(request, 'object/object_create.html', {'formset': formset})
 
 
-def project_main_list(request, id):
-    c = Company.objects.all()
-    phase = Phase.objects.filter(project_id=id)
-    page_title = Project.objects.get(pk=id)
-
+def company_edit(request, id):
+    instance = get_object_or_404(Company, pk=id)
     if request.method == 'POST':
-        add_project = ProjectForm(request.POST)
-        add_phase = PhaseForm(request.POST or None)
+        form = CompanyForm(request.POST, instance=instance)
+        if form.is_valid():
+            form.save()
+            return redirect('company_list')
 
-        if add_project.is_valid():
-            n = add_project.save()
-            n.pk
-            return redirect(reverse('project_main_list', kwargs={'id': n.pk}))
-        elif add_phase.is_valid():
-            add_phase.save()
-            return redirect(reverse('project_main_list', kwargs={'id': id}))
     else:
-        add_project = ProjectForm()
-        add_phase = PhaseForm(initial={'project_id': id})
-        # add_phase.fields['project_id'].queryset= Phase.objects.all().order_by('project_id')
-    return render(request, 'object/project_main_list.html',
-                  {'add_project': add_project, 'c': c, 'page_title': page_title,
-                   'phase': phase, 'add_phase': add_phase})
+        form = CompanyForm(instance=instance)
+        return render(request, 'object/object_edit.html', {'form': form})
 
 
-def unit_main_list(request, id):
-    unit = UnitNumber.objects.filter(phase_id=id)
-    c = Company.objects.all()
-    page_title = Phase.objects.get(pk=id)
+def project_list(request, id):
+    title = Company.objects.get(pk=id)
+    create_id = id
+    list = Project.objects.filter(company_id=id)
 
+    if request.POST.get('delete'):
+        Project.objects.filter(id__in=request.POST.getlist('item')).delete()
+        return redirect(reverse('project_list', kwargs={'id': id}))
+    context = \
+        {'list': list, 'create_id': create_id, 'title': title}
+    return render(request, 'object/project_list.html', context)
+
+
+def project_create(request, id):
+    createFormSet = modelformset_factory(Project, fields=('project_short_form', 'project_description',), extra=1)
     if request.method == 'POST':
-        add_project = ProjectForm(request.POST)
-        add_unit = UnitNumberForm(request.POST or None, initial={'phase_id': id})
+        formset = createFormSet(request.POST, queryset=Project.objects.none())
+        for form in formset:
+            if form.is_valid():
+                if form.cleaned_data != {}:
+                    instance = form.save(commit=False)
+                    instance.company_id = Company.objects.get(pk=id)
+                    instance.save()
 
-        if add_project.is_valid():
-            n = add_project.save()
-            n.pk
-            return redirect(reverse('project_main_list', kwargs={'id': n.pk}))
-        elif add_unit.is_valid():
-            add_unit.save()
-            return redirect(reverse('unit_main_list', kwargs={'id': id}))
+        return redirect(reverse('project_list', kwargs={'id': id}))
     else:
-        add_project = ProjectForm()
-        add_unit = UnitNumberForm(initial={'phase_id': id})
-    return render(request, 'object/unit_main_list.html',
-                  {'unit': unit, 'add_project': add_project, 'c': c, 'page_title': page_title, 'add_unit': add_unit})
+        formset = createFormSet(queryset=Project.objects.none())
+
+    return render(request, 'object/object_create.html', {'formset': formset})
 
 
-def phase_edit(request, id=None):
+def project_edit(request, id):
+    instance = get_object_or_404(Project, pk=id)
+    n = Company.objects.get(project__pk=id)
+    if request.method == 'POST':
+        form = ProjectForm(request.POST, instance=instance)
+        if form.is_valid():
+            form.save()
+            return redirect(reverse('project_list', kwargs={'id': n.pk}))
+
+    else:
+        form = ProjectForm(instance=instance)
+        return render(request, 'object/object_edit.html', {'form': form})
+
+
+def phase_list(request, id):
+    title = Project.objects.get(pk=id)
+    create_id = id
+    list = Phase.objects.filter(project_id=id)
+
+    if request.POST.get('delete'):
+        Project.objects.filter(id__in=request.POST.getlist('item')).delete()
+        return redirect(reverse('phase_list', kwargs={'id': id}))
+    context = \
+        {'list': list, 'create_id': create_id, 'title': title}
+    return render(request, 'object/phase_list.html', context)
+
+
+def phase_create(request, id):
+    createFormSet = modelformset_factory(Phase, fields=('phase_short_form', 'phase_description',), extra=1)
+    if request.method == 'POST':
+        formset = createFormSet(request.POST, queryset=Phase.objects.none())
+        for form in formset:
+            if form.is_valid():
+                if form.cleaned_data != {}:
+                    instance = form.save(commit=False)
+                    instance.project_id = Project.objects.get(pk=id)
+                    instance.save()
+
+        return redirect(reverse('phase_list', kwargs={'id': id}))
+    else:
+        formset = createFormSet(queryset=Phase.objects.none())
+
+    return render(request, 'object/object_create.html', {'formset': formset})
+
+
+def phase_edit(request, id):
     instance = get_object_or_404(Phase, pk=id)
     n = Project.objects.get(phase__pk=id)
     if request.method == 'POST':
         form = PhaseForm(request.POST, instance=instance)
         if form.is_valid():
             form.save()
-            return redirect(reverse('project_main_list', kwargs={'id': n.pk}))
-        #   forms.last_modifier_user_id = request.user.username
-        #  forms.last_modification_time = datetime.datetime.now().replace(microsecond=0)
+
+            return redirect(reverse('phase_list', kwargs={'id': n.pk}))
+
     else:
         form = PhaseForm(instance=instance)
-        return render(request, 'object/phase_edit.html', {'forms': form})
+        return render(request, 'object/object_edit.html', {'form': form})
 
 
-def phase_delete(request, id):
-    n = Project.objects.get(phase__pk=id)
-    phase = get_object_or_404(Phase, id=id)
-    phase.delete()
-    return redirect(reverse('project_main_list', kwargs={'id': n.pk}))
+def unit_list(request, id):
+    title = Phase.objects.get(pk=id)
+    create_id = id
+    list = UnitNumber.objects.filter(phase_id=id)
+
+    if request.POST.get('delete'):
+        UnitNumber.objects.filter(id__in=request.POST.getlist('item')).delete()
+        return redirect(reverse('unit_list', kwargs={'id': id}))
+    context = \
+        {'list': list, 'create_id': create_id, 'title': title}
+    return render(request, 'object/unit_list.html', context)
+
+
+def unit_edit(request, id):
+    instance = get_object_or_404(UnitNumber, pk=id)
+    n = Phase.objects.get(unitnumber__pk=id)
+    if request.method == 'POST':
+        form = UnitNumberForm(request.POST, instance=instance)
+        if form.is_valid():
+            form.save()
+            return redirect(reverse('unit_list', kwargs={'id': n.pk}))
+
+    else:
+        form = UnitNumberForm(instance=instance)
+        return render(request, 'object/object_edit.html', {'form': form})
+
+
+def register_new_block(request):
+    if request.method == 'POST':
+        form = RegisterNewBlockForm(request.POST)
+        if form.is_valid():
+            i = request.POST.get('max_level')
+            j = request.POST.get('max_unit_per_level')
+            s1 = request.POST.get('specific_level_1')
+            ss1 = request.POST.get('specific_unit_1')
+            s2 = request.POST.get('specific_level_2')
+            ss2 = request.POST.get('specific_unit_2')
+            s3 = request.POST.get('specific_level_3')
+            ss3 = request.POST.get('specific_unit_3')
+
+            if not i or not j or not s1 or not ss1 or not s2 or not ss2 or not s3 or not ss3 or (int(ss1)>int(i)) or (int(ss2)>int(i)) or (int(ss3)>int(i)):
+                messages.error(request, 'Error!!! You might not completely fill up the form or the specific level is greater than max level!!!')
+                return redirect('register_new_block')
+            else:
+                for a in range(1,int(i)+1):
+                    if (int(s1) == a):
+                        for b in range(1,int(ss1)+1):
+                            form = RegisterNewBlockForm(request.POST)
+                            obj = form.save(commit=False)
+                            obj.level = int(a)
+                            obj.unit_number = int(b)
+                            obj.save()
+
+                    elif (int(s2) == a):
+                        for b in range(1,int(ss2)+1):
+                            form = RegisterNewBlockForm(request.POST)
+                            obj = form.save(commit=False)
+                            obj.level = int(a)
+                            obj.unit_number = int(b)
+                            obj.save()
+                    elif (int(s3) == a):
+                        for b in range(1, int(ss3) + 1):
+                            form = RegisterNewBlockForm(request.POST)
+                            obj = form.save(commit=False)
+                            obj.level = int(a)
+                            obj.unit_number = int(b)
+                            obj.save()
+
+                    else:
+                        for b in range(1,int(j)+1):
+                            form = RegisterNewBlockForm(request.POST)
+                            obj = form.save(commit=False)
+                            obj.level = int(a)
+                            obj.unit_number=int(b)
+                            obj.save()
+                else:
+                    return redirect('register_unit_list')
+
+    else:
+            form = RegisterNewBlockForm()
+            return render(request,'object/register_new_block.html',{'form':form})
+
+def register_unit_list(request):
+    list = UnitNumber.objects.all()
+
+    return render(request,'object/register_unit_list.html', {'list':list})
+
+
+
+

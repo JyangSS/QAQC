@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <link rel="stylesheet" href="{% static 'accounts/style.css' %}">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
@@ -15,6 +16,9 @@
     <script src="https://cdn.rawgit.com/serratus/quaggaJS/0420d5e0/dist/quagga.min.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.8/css/select2.min.css" rel="stylesheet" />
 
+
+
+
     <title>{% block title %}QAQC{% endblock title %}</title>
 
      {% block javascript %}
@@ -22,7 +26,8 @@
       <script src="{% static 'js/plugin.js' %}"></script>
       <script src="{% static 'js/plugin2.js' %}"></script>
     {% endblock %}
-    <link rel="stylesheet" href="{% static 'plugins/fontawesome-free/css/all.min.css' %}">
+        <link rel="stylesheet" href="{% static 'plugins/datatables-bs4/css/dataTables.bootstrap4.css' %}"><!-- object css -->
+
 	<link rel="stylesheet" href="{% static 'https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css' %}">
 	<link rel="stylesheet" href="{% static 'plugins/datatables-bs4/css/dataTables.bootstrap4.css' %}">
 	<link rel="stylesheet" href="{% static 'dist/css/adminlte.min.css' %}">
@@ -89,21 +94,34 @@
         </ul>
          <ul class="list-unstyled components">
             {% if user.is_superuser %}
+             <li><a href="/inspection/forms/type" onclick="toggleSidebar()">Form Type</a></li>
             <li><a href="/inspection/number_series/" onclick="toggleSidebar()">Number Series</a></li>
             {% endif %}
         </ul>
           <ul class="list-unstyled components">
             {% if user.is_superuser %}
-            <li><a href="/objects/projectmainlist/1" onclick="toggleSidebar()">Kent</a></li>
-            {% endif %}
+            <li data-toggle="collapse" data-target="#Object" class="collapsed"><a href="#" >Object     <i class="fa fa-angle-down"></i>
+</a></li>
+
+                <ul class="sub-menu collapse" id="Object">
+                    <li><a href="/objects/companylist/" >Object Data/Manage</a></li>
+                    <li><a href="/objects/registernewblock/" >Register New Block</a></li>
+                    <li><a href="/objects/registerunitlist/" >Unit List</a></li>
+                </ul>
+        {% endif %}
         </ul>
     </div>
 
     <div id="overlay" onclick="off()"></div>
 
 
-    <div id="content-wrap" style="margin-left:30px;margin-right:30px;">
+ <div id="content-wrap" style="margin-left:30px;margin-right:30px;">
+            <div class="container" >
+
+
+
    {% block content %}{% endblock %}
+            </div>
     </div>
 
    <div id="footer">

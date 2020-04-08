@@ -112,30 +112,14 @@ bottom: .5em;
 </style>
 <br>
 <!-- drop down project -->
-<h1 class="page-header"><a href="{% url 'project_list' title.company_id.id %}"><span class="fa fa-angle-double-left" ></span></a><span class="fa fa-home" ></span>Phase Manage List <br>
-
-    </h1>
-<!-- display current web which project -->
-<hr>
- <p style="width:34.5%;margin:0;display:inline;float:left"><strong>COMPANY</strong></p>
-    <p style="margin:0;display:inline:float:right"><strong>:</strong>{{ title.company_id.company }}</p>
-    <p style="width:34.5%;margin:0;display:inline;float:left"><strong>PROJECT NAME</strong></p>
-    <p style="margin:0;display:inline:float:right"><strong>:</strong>{{ title.project_short_form}}</p>
-<!-- Button Add New Phase -->
-<button class="btn btn-block btn-primary btn-sm show-form"style="float:right;width:20%;"onclick="window.location.href='{% url 'phase_create' create_id %}'">
-    <span class="fa fa-fw fa-plus"></span> New Phase
-  </button>
-    <p style="width:34.5%;margin:0;display:inline;float:left"><strong>PHASE</strong></p>
-    <p style="margin:0;display:inline:float:right"><strong>:</strong></p>
-<!-- Button Add New  -->
-<br>
-<!-- Button Add New  -->
+<h1 class="page-header">Unit List <br>
+</h1>
 
 <hr>
+    <button type="button" class="btn btn-primary" onclick="window.location.href='{% url 'register_new_block' %}'" >Register New Block</button>
 
 
-    <form  method="POST">
-        {% csrf_token %}
+
 <!-- List table -->
   <table class="table table-striped table-bordered" id="company-table" width="100%" >
 
@@ -143,40 +127,40 @@ bottom: .5em;
       <tr>
         <th width="5%" style="text-align:center;" >#
         </th>
-        <th width="25%" >Phase short name
+          <th width="25%" >Project
         </th>
-           <th width="35%" >Phase description
+           <th width="25%" >Phase
         </th>
-        <th class="th-sm" style="text-align:center;" width="20%">Action
+        <th width="10%" >Block
         </th>
-          <th class="th-sm" style="text-align:center;" width="5%">Selection
-          </th>
+           <th width="10%" >Level
+        </th>
+           <th width="10%" >Unit Number
+        </th>
+
+
+        <th class="th-sm" style="text-align:center;" width="10%">Action
+        </th>
       </tr>
     </thead>
     <tbody>
      {% for a in list %}
   <tr>
     <td class="data">{{ forloop.counter }}</td>
-    <td class="data">{{ a.phase_short_form }}</td>
-       <td class="data">{{ a.phase_description }}</td>
+       <td class="data">{{ a.phase_id.project_id.project_short_form }}</td>
+       <td class="data">{{ a.phase_id.phase_short_form }}</td>
+         <td class="data">{{ a.block }}</td>
+       <td class="data">{{ a.level }}</td>
+        <td class="data">{{ a.unit_number }}</td>
+
+
 
     <td class="item" style="white-space:nowrap;">
-  <button style="display:inline;width:50%;color:black;" class="btn btn-block btn-info btn-xs" formaction="{% url 'unit_list' a.id %}">
-      <span class="fa fa-eye"></span>View
-      </button>
-<!-- Button href link is not working in form -->
-          <button type="button" style="display:inline;width:50%;color:black;margin-top:0.5px;" class="btn btn-block btn-warning btn-xs" onclick="window.location.href='{% url 'phase_edit' a.id %}'">
+
+          <button type="button" style="display:inline;width:100%;color:black;margin-top:0.5px;" class="btn btn-block btn-warning btn-xs" onclick="window.location.href='{% url 'unit_edit' a.id %}'">
               <span class="fa fa-edit"></span>Edit
     </td>
-      <td>
 
-     <label class="c1">
-         <input  type="checkbox"name="item" value="{{ a.id }}">
-             <span class="checkmark"></span>
-
-    </label>
-
-      </td>
 
 
   </tr>
@@ -188,11 +172,8 @@ bottom: .5em;
     </tbody>
 
   </table>
-  <button  class="btn  btn-danger " type="submit" name="delete" value="Delete selected company" style="position:absolute;right:15.5%;" onclick="return confirm('Are you sure you want to delete? \n Warning This may cause other data loss!!!')">
-                <span class="fa fa-fw fa-trash"></span>Delete Selected Phase
-      </button>
-    </form>
 
+      </button>
 <br><br><br><br><br><br><br>
 
 

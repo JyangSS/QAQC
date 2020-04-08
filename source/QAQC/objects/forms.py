@@ -36,6 +36,16 @@ class UnitNumberForm(forms.ModelForm):
     helper = FormHelper()
     helper.form_method = 'POST'
 
+class RegisterNewBlockForm(forms.ModelForm):
+    class Meta:
+        model = UnitNumber
+        fields = [
+            'phase_id',
+            'block',
+        ]
+
+    helper = FormHelper()
+    helper.form_method = 'POST'
 
 class PhaseForm(forms.ModelForm):
     class Meta:
