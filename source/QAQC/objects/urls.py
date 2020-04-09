@@ -16,6 +16,7 @@ urlpatterns = [
     path('unitlist/<int:id>/', views.unit_list, name='unit_list'),
     path('unitlist/edit/<int:id>/', views.unit_edit, name='unit_edit'),
     path('registernewblock/',views.register_new_block,name='register_new_block'),
-    path('registerunitlist/', views.register_unit_list, name='register_unit_list'),
+    path('registerunitlist/all', views.register_unit_list_all, name='register_unit_list_all'),
+    path('registerunitlist/project/phase/<int:id>', views.register_unit_list_phase, name='register_unit_list_phase'),
 
 ]

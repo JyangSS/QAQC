@@ -11,8 +11,6 @@ from django.views.generic import View
 from django.forms import modelformset_factory
 from django.contrib import messages
 
-
-
 # Create your views here. (KENT)
 def company_list(request):
     list = Company.objects.all()
@@ -175,6 +173,8 @@ def register_new_block(request):
     if request.method == 'POST':
         form = RegisterNewBlockForm(request.POST)
         if form.is_valid():
+            obj = form.save(commit=False)
+            id = obj.phase_id.id
             i = request.POST.get('max_level')
             j = request.POST.get('max_unit_per_level')
             s1 = request.POST.get('specific_level_1')
@@ -220,16 +220,33 @@ def register_new_block(request):
                             obj.unit_number=int(b)
                             obj.save()
                 else:
-                    return redirect('register_unit_list')
+                    return redirect(reverse('register_unit_list_phase',kwargs={'id':id}))
 
     else:
             form = RegisterNewBlockForm()
             return render(request,'object/register_new_block.html',{'form':form})
 
-def register_unit_list(request):
-    list = UnitNumber.objects.all()
 
-    return render(request,'object/register_unit_list.html', {'list':list})
+def register_unit_list_all(request):
+    list = UnitNumber.objects.all()
+    select=Project.objects.all()
+
+    return render(request,'object/register_unit_list.html', {'list':list,'select':select})
+
+
+'''def register_unit_list_project(request,id):
+    list = UnitNumber.objects.filter(phase_id__project_id=id)
+    select=Project.objects.all()
+
+    return render(request,'object/register_unit_list.html', {'list':list,'select':select})'''
+
+def register_unit_list_phase(request,id):
+    list = UnitNumber.objects.filter(phase_id=id)
+    select=Project.objects.all()
+
+    return render(request,'object/register_unit_list.html', {'list':list,'select':select})
+
+
 
 
 

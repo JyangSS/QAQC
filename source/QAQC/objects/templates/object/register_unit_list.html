@@ -9,8 +9,19 @@
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
 <!-- icon css -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
- <script src="{% static 'js/jquery-3.1.1.min.js' %}"></script>
-<style>
+<!--dropdown css and script-->
+<script>
+$(document).ready(function(){
+  $('.dropdown-submenu a.test').on("click", function(e){
+    $(this).next('ul').toggle();
+    e.stopPropagation();
+    e.preventDefault();
+  });
+});
+</script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <style>
 table.dataTable thead .sorting:after,
 table.dataTable thead .sorting:before,
 table.dataTable thead .sorting_asc:after,
@@ -24,21 +35,41 @@ table.dataTable thead .sorting_desc_disabled:before {
 bottom: .5em;
 }
 
+.scrollable-menu {
+    height: auto;
+    max-height: 300px;
+    overflow-x: hidden;
+}
 
-            .dropdown-submenu> a:after {
-                content: "";
-
-            }
-
-
-            .dropdown-submenu:hover>.dropdown-menu {
-                display: block;
-            }
-             .scrollable-menu {
-      height: auto;
-      max-height: 200px;
-      overflow-x: hidden;
     }
+    .dropdown-submenu {
+  position: relative;
+}
+
+.dropdown-submenu .dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -1px;
+}
+</style>
+<style>
+    #myInput {
+  box-sizing: border-box;
+  background-position: 14px 12px;
+  background-repeat: no-repeat;
+  font-size: 16px;
+  padding: 14px 20px 12px 0px;
+  border: none;
+  border-bottom: 1px solid #ddd;
+}
+
+#myInput:focus {outline: 3px solid #ddd;}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
 </style>
 <!-- Select checkbox CSS-->
 <style>
@@ -116,7 +147,27 @@ bottom: .5em;
 </h1>
 
 <hr>
-    <button type="button" class="btn btn-primary" onclick="window.location.href='{% url 'register_new_block' %}'" >Register New Block</button>
+<div class="btn-group">
+    <button type="button" class="btn btn-primary "style="width:400px;">
+        Filter Unit List By  <span class="fa fa-angle-down" style="float:right;"></span>  </button>
+ <ul class="dropdown-menu scrollable-menu " id="myDropdown" role="menu"style="width:400px;">
+     <i class="fa fa-search"></i>
+<input type="text" placeholder="Search.." id="myInput" onkeyup="filterFunction()" style="width:350px;">
+<br>
+{% for b in select %}
+     Project:  {{b.project_short_form}}
+
+     {% for c in b.phase_set.all %}
+     <li><a class="dropdown-item" href="{% url 'register_unit_list_phase' c.id %}">{{c.phase_short_form}}</a></li>
+{% endfor %}
+
+
+     <div class="dropdown-divider"></div>
+     {% endfor %}
+ </ul>
+
+  </div>
+
 
 
 
@@ -180,9 +231,6 @@ bottom: .5em;
 
 
 <!-- drop down menu script -->
-<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
 <script>
 $(".btn-group, .dropdown").hover(
                         function () {
@@ -193,15 +241,34 @@ $(".btn-group, .dropdown").hover(
                             $('>.dropdown-menu', this).stop(true, true).fadeOut("fast");
                             $(this).removeClass('open');
                         });
+
  </script>
+<script>
+     function filterFunction() {
+  var input, filter, ul, li, a, i;
+  input = document.getElementById("myInput");
+  filter = input.value.toUpperCase();
+  div = document.getElementById("myDropdown");
+  a = div.getElementsByTagName("a");
+  for (i = 0; i < a.length; i++) {
+    txtValue = a[i].textContent || a[i].innerText;
+    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+      a[i].style.display = "";
+    } else {
+      a[i].style.display = "none";
+    }
+  }
+}
+
+</script>
 <!-- --------------------- -->
+<script src="{% static 'js/jquery-3.1.1.min.js' %}"></script>
 <script src="{% static 'plugins/jquery/jquery.min.js' %}"></script>
 <script src="{% static 'plugins/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
 <script src="{% static 'plugins/datatables/jquery.dataTables.js' %}"></script>
 <script src="{% static 'plugins/datatables-bs4/js/dataTables.bootstrap4.js' %}"></script>
 <script src="{% static 'dist/js/adminlte.min.js' %}"></script>
 <script src="{% static 'dist/js/demo.js' %}"></script>
-
 <script>
 $(document).ready(function() {
     $('#company-table').DataTable( {
