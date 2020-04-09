@@ -24,7 +24,10 @@
 				<div class="form-group col-md-6 mb-0">
 				{{ form2.group_id|as_crispy_field }}
 				</div>
-
+				<div class="form-group col-md-6 mb-0">
+				{{ form2.question_line|as_crispy_field }}
+				{{ form2.legend|as_crispy_field }} {{ form2.form_template_id|as_crispy_field }}
+				</div>
 			</div>
 			<div class="form-row">
 				<div class="form-group col-md-11 mb-0">
@@ -34,7 +37,9 @@
        				 {{ form2.is_boolean_question|as_crispy_field }}
 				</div>
     		</div>
+
 		    <button id="add-another">add another</button>
+
 		{% endfor %}--!>
 		</div>
 		<div class="modal-footer">

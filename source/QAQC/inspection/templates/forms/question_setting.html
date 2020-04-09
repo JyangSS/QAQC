@@ -1,0 +1,27 @@
+{% extends 'accounts/base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+{% load static %}
+<form method="post"  data-url="{% url 'question' template.id %}"  class="create-form" id="form">
+	{% csrf_token %}
+		<div class="modal-header">
+		<h5 class="modal-title" >Form Setting</h5>
+
+		</div>
+		<div class="modal-body">
+       {{ formset.management_form }}
+        {% for form in formset %}
+            {{ form.group_id|as_crispy_field }}
+            {{ form.question|as_crispy_field }}
+            {{ form.is_boolean_question|as_crispy_field }}
+			{% endfor %}
+
+		</div>
+		<div class="modal-footer">
+		<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+		<button type="submit" class="btn btn-primary" id="submit" ><i class="fa fa-fw fa-save"></i>Create</button>
+		</div>
+</form>
+
+
+{% endblock %}

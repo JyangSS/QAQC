@@ -139,7 +139,7 @@ class FormTemplate(models.Model):
     delete_user_id = models.CharField(max_length=50, blank=True)
 
     def __str__(self):
-        return str(self.id)
+        return str(self.form_title)
 
     pass
 
@@ -151,10 +151,10 @@ class TemplateDetail(models.Model):
 
     group_id = models.ForeignKey(Group, on_delete=models.CASCADE)
     form_template_id = models.ForeignKey(FormTemplate, on_delete=models.CASCADE)
-    legend = models.CharField(max_length=5)
-    question_line = models.IntegerField()
+    legend = models.CharField(max_length=5,null=True, blank=True)
+    question_line = models.IntegerField(null=True, blank=True)
     question = models.CharField(max_length=500)
-    is_boolean_question = models.BooleanField()
+    is_boolean_question = models.BooleanField(null=False)
     is_active = models.BooleanField(default=True)
     creation_time = models.DateTimeField(null=True, blank=True)
     creator_user_id = models.CharField(max_length=50, blank=True)
@@ -165,7 +165,7 @@ class TemplateDetail(models.Model):
     delete_user_id = models.CharField(max_length=50, blank=True)
 
     def __str__(self):
-        return str(self.id)
+        return str(self.question)
 
     pass
 

@@ -90,9 +90,9 @@ class TemplateDetailForm(forms.ModelForm):
 
     class Meta:
         widgets = {
-            'form_template_id': forms.HiddenInput(),
-            'legend': forms.HiddenInput(),
-            'question_line': forms.HiddenInput(),
+            # 'form_template_id': forms.HiddenInput(),
+            # 'legend': forms.HiddenInput(),
+            # 'question_line': forms.HiddenInput(),
             'question': forms.TextInput(
                 attrs={'placeholder': 'Enter question here...(Tick if the answering style is True/False.)'}),
 
@@ -106,3 +106,5 @@ class TemplateDetailForm(forms.ModelForm):
             'question',
             'is_boolean_question',
         )
+
+
