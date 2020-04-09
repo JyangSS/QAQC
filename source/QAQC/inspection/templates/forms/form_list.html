@@ -40,7 +40,7 @@ table th {
     <br>
   <h1 class="page-header"><a href="{% url 'form_type' number.id %}"><span class="fa fa-angle-double-left" ></span></a>SUMMARY OF {{ type.form_description }} LIST
   <button id="element_form"class="btn btn-block btn-primary btn-sm show-form"  style="float:right;width:20%;" data-url="{% url 'template_create' type.id %}">
-   <span class="fa fa-fw fa-plus"></span> New_Type
+   <span class="fa fa-fw fa-plus"></span> New_Form
   </button></h1>
 <hr>
 
@@ -60,9 +60,9 @@ table th {
     </tbody>
   </table>
 
-  <div class="modal fade in" id="modal-element">
+  <div class="modal fade in" id="modal-element" >
     <div class="modal-dialog" >
-      <div class="modal-content" style="width:150%;"></div>
+      <div class="modal-content" style="width:110%;"></div>
     </div>
   </div>
 <br><br><br>
@@ -83,7 +83,7 @@ $(document).ready(function() {
         "paging":false,
         "info": false,
         "columnDefs": [ {
-        "targets": [3],
+        "targets": [4],
         "orderable": false} ]
     });
  }
