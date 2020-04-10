@@ -1,0 +1,23 @@
+{% extends 'accounts/base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+{% load static %}
+<form method="post"  data-url="{% url 'question' template.id %}"  class="create-form" id="form">
+	{% csrf_token %}
+		<div class="modal-header">
+		<h5 class="modal-title" >Form Setting</h5>
+
+		</div>
+		<div class="modal-body">
+     	<input type="text" name="input">
+		<input type="text" name="input">
+			<input type="text" name="input">
+		</div>
+
+		<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+		<button type="submit" class="btn btn-primary" id="submit" ><i class="fa fa-fw fa-save"></i>Create</button>
+		</div>
+</form>
+
+
+{% endblock %}

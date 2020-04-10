@@ -116,6 +116,7 @@ class FormTypeTemplate(models.Model):
     def __str__(self):
         return str(self.form_type)
 
+
     pass
 
 
@@ -139,7 +140,7 @@ class FormTemplate(models.Model):
     delete_user_id = models.CharField(max_length=50, blank=True)
 
     def __str__(self):
-        return str(self.id)
+        return str(self.form_title)
 
     pass
 
@@ -154,7 +155,7 @@ class TemplateDetail(models.Model):
     legend = models.CharField(max_length=5)
     question_line = models.IntegerField()
     question = models.CharField(max_length=500)
-    is_boolean_question = models.BooleanField()
+    is_boolean_question = models.BooleanField(null=False)
     is_active = models.BooleanField(default=True)
     creation_time = models.DateTimeField(null=True, blank=True)
     creator_user_id = models.CharField(max_length=50, blank=True)
@@ -165,7 +166,7 @@ class TemplateDetail(models.Model):
     delete_user_id = models.CharField(max_length=50, blank=True)
 
     def __str__(self):
-        return str(self.id)
+        return str(self.question)
 
     pass
 
@@ -175,7 +176,7 @@ class Inspection01(models.Model):
         verbose_name = 'Inspection1'
         verbose_name_plural = 'Inspections1'
 
-    template_detail_id = models.ForeignKey(TemplateDetail, on_delete=models.CASCADE)
+    form_template_id = models.ForeignKey(FormTemplate, on_delete=models.CASCADE)
     unit_number_id = models.ForeignKey('objects.UnitNumber', on_delete=models.CASCADE)
     inspection_count=models.IntegerField(null=True)   # for count the reinspection form
     draw_ref = models.CharField(max_length=15)

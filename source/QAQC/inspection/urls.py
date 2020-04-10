@@ -36,5 +36,7 @@ urlpatterns = [
 
     #inspection
     path('inspection/', views.inspection, name='inspection'),
+    # question
+    path('template/<int:id>/question', question, name='question'),
 
 ]
