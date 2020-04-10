@@ -224,14 +224,14 @@ def register_new_block(request):
 
     else:
             form = RegisterNewBlockForm()
-            return render(request,'object/register_new_block.html',{'form':form})
+            return render(request,'register_unit/register_new_block.html',{'form':form})
 
 
 def register_unit_list_all(request):
     list = UnitNumber.objects.all()
     select=Project.objects.all()
 
-    return render(request,'object/register_unit_list.html', {'list':list,'select':select})
+    return render(request,'register_unit/register_unit_list.html', {'list':list,'select':select})
 
 
 '''def register_unit_list_project(request,id):
@@ -240,11 +240,12 @@ def register_unit_list_all(request):
 
     return render(request,'object/register_unit_list.html', {'list':list,'select':select})'''
 
+# For filter phase in unit list
 def register_unit_list_phase(request,id):
     list = UnitNumber.objects.filter(phase_id=id)
     select=Project.objects.all()
 
-    return render(request,'object/register_unit_list.html', {'list':list,'select':select})
+    return render(request,'register_unit/register_unit_list.html', {'list':list,'select':select})
 
 
 

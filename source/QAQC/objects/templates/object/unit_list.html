@@ -24,21 +24,6 @@ table.dataTable thead .sorting_desc_disabled:before {
 bottom: .5em;
 }
 
-
-            .dropdown-submenu> a:after {
-                content: "";
-
-            }
-
-
-            .dropdown-submenu:hover>.dropdown-menu {
-                display: block;
-            }
-             .scrollable-menu {
-      height: auto;
-      max-height: 200px;
-      overflow-x: hidden;
-    }
 </style>
 <!-- Select checkbox CSS-->
 <style>
@@ -110,33 +95,26 @@ bottom: .5em;
   transform: rotate(45deg);
 }
 </style>
-<br>
-<!-- drop down project -->
-<h1 class="page-header"><a href="{% url 'phase_list' title.project_id.id %}"><span class="fa fa-angle-double-left" ></span></a><span class="fa fa-home" ></span>Unit Manage List <br>
 
+<!------------------------------ body ----------------------------->
+<br>
+<h1 class="page-header"><a href="{% url 'phase_list' title.project_id.id %}"><span class="fa fa-angle-double-left" ></span></a><span class="fa fa-home" ></span>Unit Manage List <br>
     </h1>
+
 <!-- display current web which project -->
 <hr>
  <p style="width:34.5%;margin:0;display:inline;float:left"><strong>COMPANY</strong></p>
     <p style="margin:0;display:inline:float:right"><strong>:</strong>{{ title.project_id.company_id.company }}</p>
     <p style="width:34.5%;margin:0;display:inline;float:left"><strong>PROJECT NAME</strong></p>
     <p style="margin:0;display:inline:float:right"><strong>:</strong>{{ title.project_id.project_short_form}}</p>
-<!-- Button Add New Phase -->
-
     <p style="width:34.5%;margin:0;display:inline;float:left"><strong>PHASE</strong></p>
     <p style="margin:0;display:inline:float:right"><strong>:</strong>{{title.phase_short_form}}</p>
-<!-- Button Add New  -->
-<br>
-<!-- Button Add New  -->
+<br><hr>
 
-<hr>
-
-
+<!----------- Table--------------->
     <form  method="POST">
         {% csrf_token %}
-<!-- List table -->
   <table class="table table-striped table-bordered" id="company-table" width="100%" >
-
     <thead>
       <tr>
         <th width="5%" style="text-align:center;" >#
@@ -154,6 +132,7 @@ bottom: .5em;
       </tr>
     </thead>
     <tbody>
+
      {% for a in list %}
   <tr>
     <td class="data">{{ forloop.counter }}</td>
@@ -161,9 +140,7 @@ bottom: .5em;
        <td class="data">{{ a.level }}</td>
  <td class="data">{{ a.unit_number }}</td>
     <td class="item" style="white-space:nowrap;">
-
-<!-- Button href link is not working in form -->
-          <button type="button" style="display:inline;width:100%;color:black;margin-top:0.5px;" class="btn btn-block btn-warning btn-xs" onclick="window.location.href='{% url 'unit_edit' a.id %}'">
+         <button type="button" style="display:inline;width:100%;color:black;margin-top:0.5px;" class="btn btn-block btn-warning btn-xs" onclick="window.location.href='{% url 'unit_edit' a.id %}'">
               <span class="fa fa-edit"></span>Edit
     </td>
       <td>
@@ -171,21 +148,15 @@ bottom: .5em;
      <label class="c1">
          <input  type="checkbox"name="item" value="{{ a.id }}">
              <span class="checkmark"></span>
-
     </label>
-
       </td>
-
-
   </tr>
   {% empty %}
-        <tr><td colspan="5">Currently no Data Available</td></tr>
-
-    {% endfor %}
-
+     <tr><td colspan="5">Currently no Data Available</td></tr>
+     {% endfor %}
     </tbody>
-
   </table>
+
   <button  class="btn  btn-danger " type="submit" name="delete" value="Delete selected company" style="position:absolute;right:14%;" onclick="return confirm('Are you sure you want to delete? \n Warning This may cause other data loss!!!')">
                 <span class="fa fa-fw fa-trash"></span>Delete Selected Phase
       </button>
@@ -193,25 +164,7 @@ bottom: .5em;
 
 <br><br><br><br><br><br><br>
 
-
-
-
-<!-- drop down menu script -->
-<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
-<script>
-$(".btn-group, .dropdown").hover(
-                        function () {
-                            $('>.dropdown-menu', this).stop(true, true).fadeIn("fast");
-                            $(this).addClass('open');
-                        },
-                        function () {
-                            $('>.dropdown-menu', this).stop(true, true).fadeOut("fast");
-                            $(this).removeClass('open');
-                        });
- </script>
-<!-- --------------------- -->
+<!------------ End body--------------------- -->
 <script src="{% static 'plugins/jquery/jquery.min.js' %}"></script>
 <script src="{% static 'plugins/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
 <script src="{% static 'plugins/datatables/jquery.dataTables.js' %}"></script>

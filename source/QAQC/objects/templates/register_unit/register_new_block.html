@@ -1,0 +1,42 @@
+{% extends 'accounts/base.html' %}
+
+{% block content %}
+{% load static %}
+<br>
+<h1>Register New Block</h1>
+<br>
+
+<form  method="post" >
+        {% csrf_token %}
+
+    <pre><label>Phase:                      </label> {{form.phase_id}}</pre>
+    <pre><label>Block:                      </label> {{form.block}}</pre>
+    <pre><label>Max level:                  </label> <input type="number" name="max_level" maxlength="10"></pre>
+    <pre><label>Max unit per level:         </label> <input type="number" name="max_unit_per_level" maxlength="10"></pre>
+    <pre><label>1st Specific level:         </label> <input type="number" name="specific_level_1" maxlength="10">  * If no specific level type 0 </pre>
+    <pre><label>Unit in 1stSpecific Level:  </label> <input type="number" name="specific_unit_1" maxlength="10">  * If no specific level type 0</pre>
+    <pre><label>2nd Specific level:         </label> <input type="number" name="specific_level_2" maxlength="10">  * If no specific level type 0 </pre>
+    <pre><label>Unit in 2ndSpecific Level:  </label> <input type="number" name="specific_unit_2" maxlength="10">  * If no specific level type 0</pre>
+    <pre><label>3rd Specific level:         </label> <input type="number" name="specific_level_3" maxlength="10">  * If no specific level type 0 </pre>
+    <pre><label>Unit in 3rdSpecific Level:  </label> <input type="number" name="specific_unit_3" maxlength="10">  * If no specific level type 0</pre>
+
+
+
+    <button type="button" class="btn btn-default" onclick="goBack()" style="background-color:#dbdbdb;">Back</button>
+    <button type="submit" class="btn btn-primary" >Submit</button><br><br>
+{% if messages %}
+{% for message in messages %}
+    <div class="alert alert-danger">
+    {{ message }}
+    </div>
+{% endfor %}
+
+{% endif %}
+</form>
+<script>
+function goBack() {
+  window.history.back();
+}
+</script>
+
+{% endblock %}

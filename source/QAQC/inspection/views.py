@@ -458,3 +458,9 @@ def template_update(request, id):
     else:
         form = TemplateForm(instance=template)
     return save_template2(request, form,template.id, 'forms/form_update.html')
+
+
+#=========Kent=======================================================================
+def inspection(request):
+
+    return render(request,'inspection/input_form.html',)
