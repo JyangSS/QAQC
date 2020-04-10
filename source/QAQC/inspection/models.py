@@ -116,6 +116,7 @@ class FormTypeTemplate(models.Model):
     def __str__(self):
         return str(self.form_type)
 
+
     pass
 
 
@@ -151,8 +152,8 @@ class TemplateDetail(models.Model):
 
     group_id = models.ForeignKey(Group, on_delete=models.CASCADE)
     form_template_id = models.ForeignKey(FormTemplate, on_delete=models.CASCADE)
-    legend = models.CharField(max_length=5,null=True, blank=True)
-    question_line = models.IntegerField(null=True, blank=True)
+    legend = models.CharField(max_length=5)
+    question_line = models.IntegerField()
     question = models.CharField(max_length=500)
     is_boolean_question = models.BooleanField(null=False)
     is_active = models.BooleanField(default=True)
@@ -175,7 +176,7 @@ class Inspection01(models.Model):
         verbose_name = 'Inspection1'
         verbose_name_plural = 'Inspections1'
 
-    template_detail_id = models.ForeignKey(TemplateDetail, on_delete=models.CASCADE)
+    form_template_id = models.ForeignKey(FormTemplate, on_delete=models.CASCADE)
     unit_number_id = models.ForeignKey('objects.UnitNumber', on_delete=models.CASCADE)
     draw_ref = models.CharField(max_length=15)
     is_active = models.BooleanField(default=True)

@@ -5,6 +5,12 @@ from .models import *
 
 class ElementForm(forms.ModelForm):
     class Meta:
+        widgets = {
+            'element': forms.TextInput(
+                attrs={'placeholder': 'Eg:Floor'}),
+            'description': forms.TextInput(
+                attrs={'placeholder': 'Remark / Description (if any)...'}),
+        }
         model = Element
         fields = (
             'element',
@@ -13,10 +19,18 @@ class ElementForm(forms.ModelForm):
 
 
 class GroupForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(GroupForm, self).__init__(*args, **kwargs)
+        self.fields['defect_group'].label = 'Group'
+
     class Meta:
         model = Group
         widgets = {
             'element_id': forms.HiddenInput(),
+            'defect_group': forms.TextInput(
+                attrs={'placeholder': 'Eg:Finishing'}),
+            'description': forms.TextInput(
+                attrs={'placeholder': 'Remark / Description (if any)...'}),
         }
         fields = (
             'defect_group',
@@ -26,10 +40,15 @@ class GroupForm(forms.ModelForm):
 
 
 class FormTypeForm(forms.ModelForm):
+
     class Meta:
         model = FormTypeTemplate
         widgets = {
             'number_series_id': forms.HiddenInput(),
+            'form_type': forms.TextInput(
+                attrs={'placeholder': 'Eg:Pre Delivery Inspection'}),
+            'form_description': forms.TextInput(
+                attrs={'placeholder': 'Eg:PDI'}),
         }
         fields = (
             'form_type',
@@ -108,3 +127,6 @@ class TemplateDetailForm(forms.ModelForm):
         )
 
 
+class QuestionForm(forms.Form):
+    group = forms.ModelChoiceField(queryset=Group.objects.filter(is_active=True))
+    question = forms.CharField(max_length=500)

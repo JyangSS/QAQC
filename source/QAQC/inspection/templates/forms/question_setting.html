@@ -9,15 +9,11 @@
 
 		</div>
 		<div class="modal-body">
-       {{ formset.management_form }}
-        {% for form in formset %}
-            {{ form.group_id|as_crispy_field }}
-            {{ form.question|as_crispy_field }}
-            {{ form.is_boolean_question|as_crispy_field }}
-			{% endfor %}
-
+     	<input type="text" name="input">
+		<input type="text" name="input">
+			<input type="text" name="input">
 		</div>
-		<div class="modal-footer">
+
 		<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
 		<button type="submit" class="btn btn-primary" id="submit" ><i class="fa fa-fw fa-save"></i>Create</button>
 		</div>

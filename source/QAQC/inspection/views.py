@@ -2,7 +2,7 @@ from django.db import transaction
 from django.forms import modelformset_factory, inlineformset_factory, formset_factory
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse
-
+from .models import NumberSeries
 from .forms import *
 from django.template.loader import render_to_string
 from django.shortcuts import render
@@ -375,17 +375,17 @@ def template_create(request, id):
     type = FormTypeTemplate.objects.get(pk=id)
     count = FormTemplate.objects.filter(form_type_template_id=type.id).count()
     ref = type.form_description + "/" + str('{0:03}'.format(count + 1))
-    TemplateDetailFormset = formset_factory(TemplateDetailForm, extra=1)
+    # TemplateDetailFormset = formset_factory(TemplateDetailForm, extra=1)
     if request.method == 'POST':
         form = TemplateForm(request.POST, initial={'form_type_template_id': id, 'ref_no': ref, 'rev': 1, })
-        formset = TemplateDetailFormset(request.POST)
+        # formset = TemplateDetailFormset(request.POST)
     else:
         form = TemplateForm(initial={'form_type_template_id': id, 'ref_no': ref, 'rev': 1, })
-        formset = TemplateDetailFormset()
-    return save_template(request, form, formset, 'forms/form_create.html', int(type.id))
+        # formset = TemplateDetailFormset()
+    return save_template(request, form, 'forms/form_create.html', int(type.id))
 
 
-def save_template(request, form, formset, template_name, id):
+def save_template(request, form, template_name, id):
     type = FormTypeTemplate.objects.get(pk=id)
     data = dict()
     if request.method == 'POST':
@@ -399,7 +399,8 @@ def save_template(request, form, formset, template_name, id):
             obj.last_modification_time = datetime.datetime.now().replace(microsecond=0)
             obj.save()
         data['form_is_valid'] = True
-        templates = FormTemplate.objects.filter(is_active=True, form_type_template_id=obj.form_type_template_id)
+        templates = FormTemplate.objects.filter(is_active=True,
+                                                form_type_template_id=obj.form_type_template_id).order_by('ref_no')
         data['element_list'] = render_to_string('forms/form_list_2.html',
                                                 {'templates': templates})
     else:
@@ -407,7 +408,6 @@ def save_template(request, form, formset, template_name, id):
     context = {
         'form': form,
         'type': type,
-        'formset': formset,
     }
     data['html_form'] = render_to_string(template_name, context, request=request)
     return JsonResponse(data)
@@ -423,7 +423,8 @@ def template_delete(request, id):
         template.deletion_time = datetime.datetime.now().replace(microsecond=0)
         template.save()
         data['form_is_valid'] = True
-        templates = FormTemplate.objects.filter(is_active=True, form_type_template_id=template.form_type_template_id)
+        templates = FormTemplate.objects.filter(is_active=True,
+                                                form_type_template_id=template.form_type_template_id).order_by('ref_no')
         data['element_list'] = render_to_string('forms/form_list_2.html', {'templates': templates})
     else:
         context = {'template': template}
@@ -466,14 +467,23 @@ def template_update(request, id):
 
 def question(request, id):
     template = FormTemplate.objects.get(pk=id)
-    TemplateDetailFormset = formset_factory(TemplateDetailForm,extra=1)
-    if request.method == 'POST':
-        formset = TemplateDetailFormset(request.POST, initial=[{'form_template_id': id,}])
-        for form in formset:
-            if form.is_valid():
-                form.save()
-        return redirect(reverse('question', kwargs={'id':id}))
-    else:
-        formset = TemplateDetailFormset(initial=[{'form_template_id': template.id, }])
+    # TemplateDetailFormset = formset_factory(TemplateDetailForm, extra=1)
 
-    return render(request, 'forms/question_setting.html', {'formset': formset, 'template': template})
+    if request.method == 'POST':
+        # formset = TemplateDetailFormset(request.POST)
+        #  for form in formset:
+        #      if form.is_valid():
+        #          form.save(commit=False)
+        #          form.initial['question_line'] = 1
+        #          form.initial['legend'] = 'a'
+        #          form.save()
+        form = QuestionForm(request.POST)
+        inputs = request.POST.getlist('input[]')
+
+    else:
+        # formset = TemplateDetailFormset(initial=[{'form_template_id': template.id, }])
+        # for form in formset:
+        #     form.initial['form_template_id'] = id
+        form = QuestionForm()
+
+    return render(request, 'forms/question_setting.html', {'form': form, 'template': template})
