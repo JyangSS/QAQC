@@ -126,7 +126,8 @@ class FormTemplate(models.Model):
         verbose_name_plural = 'FormTemplates'
 
     form_type_template_id = models.ForeignKey(FormTypeTemplate, on_delete=models.CASCADE)
-    form_title = models.CharField(max_length=200)
+    form_title = models.CharField(max_length=20)
+    inspection_count=models.IntegerField(null=True)
     ref_no = models.CharField(max_length=20)
     rev = models.IntegerField(default=1)
     remarks = models.CharField(max_length=200, blank=True)
