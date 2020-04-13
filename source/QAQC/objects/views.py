@@ -14,10 +14,6 @@ from django.contrib import messages
 # Create your views here. (KENT)
 def company_list(request):
     list = Company.objects.all()
-
-    if request.POST.get('delete'):
-        Company.objects.filter(id__in=request.POST.getlist('item')).delete()
-        return redirect('company_list')
     context = \
         {'list': list}
     return render(request, 'object/company_list.html', context)
@@ -50,15 +46,16 @@ def company_edit(request, id):
         form = CompanyForm(instance=instance)
         return render(request, 'object/object_edit.html', {'form': form})
 
+def company_delete(request,id):
+    delete=Company.objects.get(pk=id)
+    delete.delete()
+    return redirect('company_list')
+
 
 def project_list(request, id):
     title = Company.objects.get(pk=id)
     create_id = id
     list = Project.objects.filter(company_id=id)
-
-    if request.POST.get('delete'):
-        Project.objects.filter(id__in=request.POST.getlist('item')).delete()
-        return redirect(reverse('project_list', kwargs={'id': id}))
     context = \
         {'list': list, 'create_id': create_id, 'title': title}
     return render(request, 'object/project_list.html', context)
@@ -95,15 +92,17 @@ def project_edit(request, id):
         form = ProjectForm(instance=instance)
         return render(request, 'object/object_edit.html', {'form': form})
 
+def project_delete(request,id):
+    delete=Project.objects.get(pk=id)
+    n=Company.objects.get(project__pk=id)
+    delete.delete()
+    return redirect(reverse('project_list', kwargs={'id': n.pk}))
+
 
 def phase_list(request, id):
     title = Project.objects.get(pk=id)
     create_id = id
     list = Phase.objects.filter(project_id=id)
-
-    if request.POST.get('delete'):
-        Project.objects.filter(id__in=request.POST.getlist('item')).delete()
-        return redirect(reverse('phase_list', kwargs={'id': id}))
     context = \
         {'list': list, 'create_id': create_id, 'title': title}
     return render(request, 'object/phase_list.html', context)
@@ -134,12 +133,17 @@ def phase_edit(request, id):
         form = PhaseForm(request.POST, instance=instance)
         if form.is_valid():
             form.save()
-
             return redirect(reverse('phase_list', kwargs={'id': n.pk}))
 
     else:
         form = PhaseForm(instance=instance)
         return render(request, 'object/object_edit.html', {'form': form})
+
+def phase_delete(request,id):
+    delete=Phase.objects.get(pk=id)
+    n = Project.objects.get(phase__pk=id)
+    delete.delete()
+    return redirect(reverse('phase_list', kwargs={'id': n.pk}))
 
 
 def unit_list(request, id):
@@ -147,9 +151,6 @@ def unit_list(request, id):
     create_id = id
     list = UnitNumber.objects.filter(phase_id=id)
 
-    if request.POST.get('delete'):
-        UnitNumber.objects.filter(id__in=request.POST.getlist('item')).delete()
-        return redirect(reverse('unit_list', kwargs={'id': id}))
     context = \
         {'list': list, 'create_id': create_id, 'title': title}
     return render(request, 'object/unit_list.html', context)
@@ -168,6 +169,11 @@ def unit_edit(request, id):
         form = UnitNumberForm(instance=instance)
         return render(request, 'object/object_edit.html', {'form': form})
 
+def unit_delete(request,id):
+    delete=UnitNumber.objects.get(pk=id)
+    n = Phase.objects.get(unitnumber__pk=id)
+    delete.delete()
+    return redirect(reverse('unit_list', kwargs={'id': n.pk}))
 
 def register_new_block(request):
     if request.method == 'POST':
@@ -177,42 +183,13 @@ def register_new_block(request):
             id = obj.phase_id.id
             i = request.POST.get('max_level')
             j = request.POST.get('max_unit_per_level')
-            s1 = request.POST.get('specific_level_1')
-            ss1 = request.POST.get('specific_unit_1')
-            s2 = request.POST.get('specific_level_2')
-            ss2 = request.POST.get('specific_unit_2')
-            s3 = request.POST.get('specific_level_3')
-            ss3 = request.POST.get('specific_unit_3')
 
-            if not i or not j or not s1 or not ss1 or not s2 or not ss2 or not s3 or not ss3 or (int(ss1)>int(i)) or (int(ss2)>int(i)) or (int(ss3)>int(i)):
-                messages.error(request, 'Error!!! You might not completely fill up the form or the specific level is greater than max level!!!')
+
+            if not i or not j :
+                messages.error(request, 'Error!!! You might not completely fill up the form !!!')
                 return redirect('register_new_block')
             else:
                 for a in range(1,int(i)+1):
-                    if (int(s1) == a):
-                        for b in range(1,int(ss1)+1):
-                            form = RegisterNewBlockForm(request.POST)
-                            obj = form.save(commit=False)
-                            obj.level = int(a)
-                            obj.unit_number = int(b)
-                            obj.save()
-
-                    elif (int(s2) == a):
-                        for b in range(1,int(ss2)+1):
-                            form = RegisterNewBlockForm(request.POST)
-                            obj = form.save(commit=False)
-                            obj.level = int(a)
-                            obj.unit_number = int(b)
-                            obj.save()
-                    elif (int(s3) == a):
-                        for b in range(1, int(ss3) + 1):
-                            form = RegisterNewBlockForm(request.POST)
-                            obj = form.save(commit=False)
-                            obj.level = int(a)
-                            obj.unit_number = int(b)
-                            obj.save()
-
-                    else:
                         for b in range(1,int(j)+1):
                             form = RegisterNewBlockForm(request.POST)
                             obj = form.save(commit=False)
@@ -230,25 +207,16 @@ def register_new_block(request):
 def register_unit_list_all(request):
     list = UnitNumber.objects.all()
     select=Project.objects.all()
-
+    if request.POST.get('delete'):
+        UnitNumber.objects.filter(id__in=request.POST.getlist('item')).delete()
+        return redirect('register_unit_list_all')
     return render(request,'register_unit/register_unit_list.html', {'list':list,'select':select})
 
-
-'''def register_unit_list_project(request,id):
-    list = UnitNumber.objects.filter(phase_id__project_id=id)
-    select=Project.objects.all()
-
-    return render(request,'object/register_unit_list.html', {'list':list,'select':select})'''
-
-# For filter phase in unit list
-def register_unit_list_phase(request,id):
-    list = UnitNumber.objects.filter(phase_id=id)
-    select=Project.objects.all()
-
-    return render(request,'register_unit/register_unit_list.html', {'list':list,'select':select})
-
-
-
+'''
+ if request.POST.get('delete'):
+        Company.objects.filter(id__in=request.POST.getlist('item')).delete()
+        return redirect('company_list')
+'''
 
 
 

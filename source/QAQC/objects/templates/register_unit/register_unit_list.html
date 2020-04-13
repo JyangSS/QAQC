@@ -7,21 +7,9 @@
     <link rel="stylesheet" href="{% static 'js/datatables.min.js' %}">
 	<link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
-<!-- icon css -->
+    <!-- icon css -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<!--dropdown css and script-->
-<script>
-$(document).ready(function(){
-  $('.dropdown-submenu a.test').on("click", function(e){
-    $(this).next('ul').toggle();
-    e.stopPropagation();
-    e.preventDefault();
-  });
-});
-</script>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-  <style>
+    <style>
 table.dataTable thead .sorting:after,
 table.dataTable thead .sorting:before,
 table.dataTable thead .sorting_asc:after,
@@ -34,45 +22,9 @@ table.dataTable thead .sorting_desc_disabled:after,
 table.dataTable thead .sorting_desc_disabled:before {
 bottom: .5em;
 }
-
-.scrollable-menu {
-    height: auto;
-    max-height: 300px;
-    overflow-x: hidden;
-}
-
-    }
-    .dropdown-submenu {
-  position: relative;
-}
-
-.dropdown-submenu .dropdown-menu {
-  top: 0;
-  left: 100%;
-  margin-top: -1px;
-}
 </style>
-<style>
-    #myInput {
-  box-sizing: border-box;
-  background-position: 14px 12px;
-  background-repeat: no-repeat;
-  font-size: 16px;
-  padding: 14px 20px 12px 0px;
-  border: none;
-  border-bottom: 1px solid #ddd;
-}
-
-#myInput:focus {outline: 3px solid #ddd;}
-
-.dropdown {
-  position: relative;
-  display: inline-block;
-}
-
-</style>
-<!-- Select checkbox CSS-->
-<style>
+    <!-- Select checkbox CSS-->
+    <style>
 /* The container */
 .c1 {
   display: block;
@@ -99,8 +51,8 @@ bottom: .5em;
 /* Create a custom checkbox */
 .checkmark {
   position: absolute;
-  top: 0;
-  left: 0;
+  bottom: 0;
+  left:80%;
   height: 25px;
   width: 25px;
   background-color: #08080842;
@@ -141,60 +93,106 @@ bottom: .5em;
   transform: rotate(45deg);
 }
 </style>
+    <!-- input search css -->
+    <style>
+.filterable {
+    margin-top: 15px;
+}
+.filterable .panel-heading .pull-right {
+    margin-top: -20px;
+}
+.filterable .filters input[disabled] {
+    background-color: transparent;
+    border: none;
+    cursor: auto;
+    box-shadow: none;
+    padding: 0;
+    height: auto;
+}
+.filterable .filters input[disabled]::-webkit-input-placeholder {
+    color: #333;
+}
+.filterable .filters input[disabled]::-moz-placeholder {
+    color: #333;
+}
+.filterable .filters input[disabled]:-ms-input-placeholder {
+    color: #333;
+}
+
+}
+</style>
+<!-- table scroll css -->
+    <style>
+        tbody {
+    display:block;
+    height:500px;
+    overflow:auto;
+}
+thead, tbody tr {
+    display:table;
+    width:100%;
+    table-layout:fixed;/* even columns width , fix width of table too*/
+}
+thead {
+    width: calc( 100% - 1em )/* scrollbar is average 1em/16px width, remove it from thead width */
+}
+    </style>
+
+<!------------ body --------->
 <br>
-<!-- drop down project -->
 <h1 class="page-header">Unit List <br>
 </h1>
-
 <hr>
-<div class="btn-group">
-    <button type="button" class="btn btn-primary "style="width:400px;">
-        Filter Unit List By  <span class="fa fa-angle-down" style="float:right;"></span>  </button>
- <ul class="dropdown-menu scrollable-menu " id="myDropdown" role="menu"style="width:400px;">
-     <i class="fa fa-search"></i>
-<input type="text" placeholder="Search.." id="myInput" onkeyup="filterFunction()" style="width:350px;">
-<br>
-{% for b in select %}
-     Project:  {{b.project_short_form}}
-
-     {% for c in b.phase_set.all %}
-     <li><a class="dropdown-item" href="{% url 'register_unit_list_phase' c.id %}">{{c.phase_short_form}}</a></li>
-{% endfor %}
-
-
-     <div class="dropdown-divider"></div>
-     {% endfor %}
- </ul>
-
-  </div>
-
-
-
 
 <!-- List table -->
-  <table class="table table-striped table-bordered" id="company-table" width="100%" >
+<form method="Post">
+            {% csrf_token %}
+
+  <table class="table table-striped table-bordered" id="myTable" width="100%" >
+
+
 
     <thead>
       <tr>
-        <th width="5%" style="text-align:center;" >#
+        <th  style="text-align:center;" >#
         </th>
-          <th width="25%" >Project
+          <th  >Project
         </th>
-           <th width="25%" >Phase
+           <th  >Phase
         </th>
-        <th width="10%" >Block
+        <th  >Block
         </th>
-           <th width="10%" >Level
+           <th  >Level
         </th>
-           <th width="10%" >Unit Number
+           <th  >Unit Number
         </th>
-
-
-        <th class="th-sm" style="text-align:center;" width="10%">Action
+        <th class="th-sm" style="text-align:center;" >Action
+        </th>
+      </tr>
+     <tr>
+        <th width="5%" style="text-align:center;" >Search:
+        </th>
+          <th width="25%" >
+              <input type="text" id="myInput1" onkeyup="myFunction1()" placeholder="" title="Type in a name" style="width:100%;">
+        </th>
+           <th width="25%" >
+               <input type="text" id="myInput2" onkeyup="myFunction2()" placeholder="" title="Type in a name" style="width:100%;">
+        </th>
+        <th width="7%" >
+               <input type="text" id="myInput3" onkeyup="myFunction3()" placeholder="" title="Type in a name" style="width:100%;">
+        </th>
+           <th width="7%" >
+               <input type="text" id="myInput4" onkeyup="myFunction4()" placeholder="" title="Type in a name" style="width:100%;">
+        </th>
+           <th width="7%" >
+               <input type="text" id="myInput5" onkeyup="myFunction5()" placeholder="" title="Type in a name" style="width:100%;">
+        </th>
+        <th class="th-sm" style="text-align:center;" width="15%">
         </th>
       </tr>
     </thead>
     <tbody>
+
      {% for a in list %}
   <tr>
     <td class="data">{{ forloop.counter }}</td>
@@ -208,8 +206,13 @@ bottom: .5em;
 
     <td class="item" style="white-space:nowrap;">
 
-          <button type="button" style="display:inline;width:100%;color:black;margin-top:0.5px;" class="btn btn-block btn-info btn-xs" onclick="window.location.href=#">
-              <span class="fa fa-eye"></span>View
+          <button type="button" style="display:inline;width:60%;color:black;margin-top:0.5px;" class="btn btn-block btn-info btn-xs" onclick="window.location.href=#">
+              <span class="fa fa-eye"></span>View Form</button>
+
+               <label class="c1">
+         <input  type="checkbox"name="item" value="{{ a.id }}">
+             <span class="checkmark"></span>
+    </label>
     </td>
 
 
@@ -223,45 +226,15 @@ bottom: .5em;
     </tbody>
 
   </table>
-
+    <button  class="btn  btn-danger " type="submit" name="delete" value="Delete Selected Unit" style="position:absolute;right:13.5%;" onclick="return confirm('Are you sure you want to delete? \n Warning This may cause other data loss!!!')">
+                <span class="fa fa-fw fa-trash"></span>Delete Selected Unit
       </button>
+</form>
 <br><br><br><br><br><br><br>
 
 
 
-
-<!-- drop down menu script -->
-<script>
-$(".btn-group, .dropdown").hover(
-                        function () {
-                            $('>.dropdown-menu', this).stop(true, true).fadeIn("fast");
-                            $(this).addClass('open');
-                        },
-                        function () {
-                            $('>.dropdown-menu', this).stop(true, true).fadeOut("fast");
-                            $(this).removeClass('open');
-                        });
-
- </script>
-<script>
-     function filterFunction() {
-  var input, filter, ul, li, a, i;
-  input = document.getElementById("myInput");
-  filter = input.value.toUpperCase();
-  div = document.getElementById("myDropdown");
-  a = div.getElementsByTagName("a");
-  for (i = 0; i < a.length; i++) {
-    txtValue = a[i].textContent || a[i].innerText;
-    if (txtValue.toUpperCase().indexOf(filter) > -1) {
-      a[i].style.display = "";
-    } else {
-      a[i].style.display = "none";
-    }
-  }
-}
-
-</script>
-<!-- --------------------- -->
+<!----------End Body--------------------- -->
 <script src="{% static 'js/jquery-3.1.1.min.js' %}"></script>
 <script src="{% static 'plugins/jquery/jquery.min.js' %}"></script>
 <script src="{% static 'plugins/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
@@ -269,19 +242,100 @@ $(".btn-group, .dropdown").hover(
 <script src="{% static 'plugins/datatables-bs4/js/dataTables.bootstrap4.js' %}"></script>
 <script src="{% static 'dist/js/adminlte.min.js' %}"></script>
 <script src="{% static 'dist/js/demo.js' %}"></script>
+<!-- search script -->
 <script>
-$(document).ready(function() {
-    $('#company-table').DataTable( {
-        "scrollY":        "430px",
-        "scrollCollapse": true,
-        "paging":         false,
-        "info": false,
-        "columnDefs": [ {
-        "targets": [3],
-        "orderable": false} ]
-    });
- }
-);
+function myFunction1() {
+  var input, filter, table, tr, td, i, txtValue;
+  input = document.getElementById("myInput1");
+  filter = input.value.toUpperCase();
+  table = document.getElementById("myTable");
+  tr = table.getElementsByTagName("tr");
+  for (i = 0; i < tr.length; i++) {
+    td = tr[i].getElementsByTagName("td")[1];
+    if (td) {
+      txtValue = td.textContent || td.innerText;
+      if (txtValue.toUpperCase().indexOf(filter) > -1) {
+        tr[i].style.display = "";
+      } else {
+        tr[i].style.display = "none";
+      }
+    }
+  }
+}
+function myFunction2() {
+  var input, filter, table, tr, td, i, txtValue;
+  input = document.getElementById("myInput2");
+  filter = input.value.toUpperCase();
+  table = document.getElementById("myTable");
+  tr = table.getElementsByTagName("tr");
+  for (i = 0; i < tr.length; i++) {
+    td = tr[i].getElementsByTagName("td")[2];
+    if (td) {
+      txtValue = td.textContent || td.innerText;
+      if (txtValue.toUpperCase().indexOf(filter) > -1) {
+        tr[i].style.display = "";
+      } else {
+        tr[i].style.display = "none";
+
+      }
+    }
+  }
+}
+function myFunction3() {
+  var input, filter, table, tr, td, i, txtValue;
+  input = document.getElementById("myInput3");
+  filter = input.value.toUpperCase();
+  table = document.getElementById("myTable");
+  tr = table.getElementsByTagName("tr");
+  for (i = 0; i < tr.length; i++) {
+    td = tr[i].getElementsByTagName("td")[3];
+    if (td) {
+      txtValue = td.textContent || td.innerText;
+      if (txtValue.toUpperCase().indexOf(filter) > -1) {
+        tr[i].style.display = "";
+      } else {
+        tr[i].style.display = "none";
+      }
+    }
+  }
+}
+function myFunction4() {
+  var input, filter, table, tr, td, i, txtValue;
+  input = document.getElementById("myInput4");
+  filter = input.value.toUpperCase();
+  table = document.getElementById("myTable");
+  tr = table.getElementsByTagName("tr");
+  for (i = 0; i < tr.length; i++) {
+    td = tr[i].getElementsByTagName("td")[4];
+    if (td) {
+      txtValue = td.textContent || td.innerText;
+      if (txtValue.toUpperCase().indexOf(filter) > -1) {
+        tr[i].style.display = "";
+      } else {
+        tr[i].style.display = "none";
+      }
+    }
+  }
+}
+function myFunction5() {
+  var input, filter, table, tr, td, i, txtValue;
+  input = document.getElementById("myInput5");
+  filter = input.value.toUpperCase();
+  table = document.getElementById("myTable");
+  tr = table.getElementsByTagName("tr");
+  for (i = 0; i < tr.length; i++) {
+    td = tr[i].getElementsByTagName("td")[5];
+    if (td) {
+      txtValue = td.textContent || td.innerText;
+      if (txtValue.toUpperCase().indexOf(filter) > -1) {
+        tr[i].style.display = "";
+      } else {
+        tr[i].style.display = "none";
+      }
+    }
+  }
+}
 </script>
+
 {% endblock %}
 
