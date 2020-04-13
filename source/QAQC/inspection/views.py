@@ -7,7 +7,7 @@ from .forms import *
 from django.template.loader import render_to_string
 from django.shortcuts import render
 import datetime
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponseRedirect
 
 
 # show all objects in table
@@ -59,32 +59,32 @@ def element_update(request, id):
     element = get_object_or_404(Element, id=id)
     if request.method == 'POST':
         form = ElementForm(request.POST, instance=element)
-        element.last_modifier_user_id = request.user.username
-        element.last_modification_time = datetime.datetime.now().replace(microsecond=0)
-
+        if form.is_valid():
+            form.save()
+            element.last_modifier_user_id = request.user.username
+            element.last_modification_time = datetime.datetime.now().replace(microsecond=0)
+            return redirect(reverse('group_list', kwargs={'id': element.pk}))
     else:
         form = ElementForm(instance=element)
-    return save_all(request, form, 'elements/element_update.html')
+    return render(request, 'elements/element_update.html', {'form': form, 'element': element})
 
 
 # delete
 def element_delete(request, id):
-    data = dict()
     element = get_object_or_404(Element, id=id)
-    if request.method == 'POST':
-        element.is_deleted = True
-        element.is_active = False
-        element.delete_user_id = request.user.username
-        element.deletion_time = datetime.datetime.now().replace(microsecond=0)
-        element.save()
-        data['form_is_valid'] = True
-        elements = Element.objects.filter(is_active=True)
-        data['element_list'] = render_to_string('elements/element_list_2.html', {'elements': elements})
-    else:
-        context = {'element': element}
-        data['html_form'] = render_to_string('elements/element_delete.html', context, request=request)
-
-    return JsonResponse(data)
+    groups = Group.objects.filter(element_id=element)
+    for group in groups:
+        group.is_deleted = True
+        group.is_active = False
+        group.delete_user_id = request.user.username
+        group.deletion_time = datetime.datetime.now().replace(microsecond=0)
+        group.save()
+    element.is_deleted = True
+    element.is_active = False
+    element.delete_user_id = request.user.username
+    element.deletion_time = datetime.datetime.now().replace(microsecond=0)
+    element.save()
+    return redirect(reverse('element_list', kwargs={}))
 
 
 # group
@@ -329,32 +329,33 @@ def number_series_update(request, id):
     number_series = get_object_or_404(NumberSeries, id=id)
     if request.method == 'POST':
         form = NumberSeriesForm(request.POST, instance=number_series)
-        number_series.last_modifier_user_id = request.user.username
-        number_series.last_modification_time = datetime.datetime.now().replace(microsecond=0)
+        if form.is_valid():
+            form.save()
+            number_series.last_modifier_user_id = request.user.username
+            number_series.last_modification_time = datetime.datetime.now().replace(microsecond=0)
+            return redirect(reverse('form_type', kwargs={'id': number_series.pk}))
 
     else:
         form = NumberSeriesForm(instance=number_series)
-    return save_number(request, form, 'number_series/number_series_update.html')
+    return render(request, 'number_series/number_series_update.html', {'form': form, 'number_series': number_series})
 
 
 # delete
 def number_series_delete(request, id):
-    data = dict()
     number_series = get_object_or_404(NumberSeries, id=id)
-    if request.method == 'POST':
-        number_series.is_deleted = True
-        number_series.is_active = False
-        number_series.delete_user_id = request.user.username
-        number_series.deletion_time = datetime.datetime.now().replace(microsecond=0)
-        number_series.save()
-        data['form_is_valid'] = True
-        numbers = NumberSeries.objects.filter(is_active=True)
-        data['element_list'] = render_to_string('number_series/number_series_list_2.html', {'numbers': numbers})
-    else:
-        context = {'number_series': number_series}
-        data['html_form'] = render_to_string('number_series/number_series_delete.html', context, request=request)
-
-    return JsonResponse(data)
+    types = FormTypeTemplate.objects.filter(number_series_id=number_series)
+    for type in types:
+        type.is_deleted = True
+        type.is_active = False
+        type.delete_user_id = request.user.username
+        type.deletion_time = datetime.datetime.now().replace(microsecond=0)
+        type.save()
+    number_series.is_deleted = True
+    number_series.is_active = False
+    number_series.delete_user_id = request.user.username
+    number_series.deletion_time = datetime.datetime.now().replace(microsecond=0)
+    number_series.save()
+    return redirect(reverse('number_series_list', kwargs={}))
 
 
 # forms
@@ -462,15 +463,10 @@ def template_update(request, id):
 
     else:
         form = TemplateForm(instance=template)
-    return save_template2(request, form,template.id, 'forms/form_update.html')
+    return save_template2(request, form, template.id, 'forms/form_update.html')
 
 
-#=========Kent=======================================================================
-def inspection(request):
-
-    return render(request,'inspection/input_form.html',)
-
-
+# =========Kent=======================================================================
 def question(request, id):
     template = FormTemplate.objects.get(pk=id)
     # TemplateDetailFormset = formset_factory(TemplateDetailForm, extra=1)
