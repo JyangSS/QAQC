@@ -31,7 +31,7 @@ class Element(models.Model):
         verbose_name = 'Element'
         verbose_name_plural = 'Elements'
 
-    element = models.CharField(max_length=50)
+    element = models.CharField(max_length=50, unique=True)
     description = models.CharField(max_length=200, blank=True)
     is_active = models.BooleanField(default=True)
     creation_time = models.DateTimeField(null=True, blank=True)
@@ -54,7 +54,7 @@ class Group(models.Model):
         verbose_name_plural = 'Groups'
 
     element_id = models.ForeignKey(Element, on_delete=models.CASCADE)
-    defect_group = models.CharField(max_length=100)
+    defect_group = models.CharField(max_length=100, unique=True)
     description = models.CharField(max_length=200, blank=True)
     is_active = models.BooleanField(default=True)
     creation_time = models.DateTimeField(null=True, blank=True)
@@ -79,7 +79,7 @@ class NumberSeries(models.Model):
         verbose_name = 'NumberSeries'
         verbose_name_plural = 'Number_Series'
 
-    series = models.CharField(max_length=50)
+    series = models.CharField(max_length=50, unique=True)
     current = models.IntegerField(default=1)
     is_active = models.BooleanField(default=True)
     creation_time = models.DateTimeField(null=True, blank=True)
@@ -102,7 +102,7 @@ class FormTypeTemplate(models.Model):
         verbose_name_plural = 'FormTypeTemplates'
 
     number_series_id = models.ForeignKey(NumberSeries, on_delete=models.CASCADE)
-    form_type = models.CharField(max_length=20)
+    form_type = models.CharField(max_length=20, unique=True)
     form_description = models.CharField(max_length=200)
     is_active = models.BooleanField(default=True)
     creation_time = models.DateTimeField(null=True, blank=True)
@@ -116,7 +116,6 @@ class FormTypeTemplate(models.Model):
     def __str__(self):
         return str(self.form_type)
 
-
     pass
 
 
@@ -126,7 +125,7 @@ class FormTemplate(models.Model):
         verbose_name_plural = 'FormTemplates'
 
     form_type_template_id = models.ForeignKey(FormTypeTemplate, on_delete=models.CASCADE)
-    form_title = models.CharField(max_length=200)
+    form_title = models.CharField(max_length=200, unique=True)
     ref_no = models.CharField(max_length=20)
     rev = models.IntegerField(default=1)
     remarks = models.CharField(max_length=200, blank=True)
@@ -201,18 +200,18 @@ class Inspection02(models.Model):
         verbose_name_plural = 'Inspections2'
 
     inspection_01_id = models.ForeignKey(Inspection01, on_delete=models.CASCADE)
-    contractor = models.CharField(max_length=10,null=True)
-    consultant = models.CharField(max_length=10,null=True)
-    consultant_reinspection = models.CharField(max_length=10,null=True)
-    inspection = models.CharField(max_length=10,null=True)
-    reason = models.CharField(max_length=200,null=True)
+    contractor = models.CharField(max_length=10, null=True)
+    consultant = models.CharField(max_length=10, null=True)
+    consultant_reinspection = models.CharField(max_length=10, null=True)
+    inspection = models.CharField(max_length=10, null=True)
+    reason = models.CharField(max_length=200, null=True)
     comment = RichTextUploadingField(null=True)
     accept = models.BooleanField(null=True)
-    accept_date = models.DateTimeField(default=datetime.now, blank=True,null=True)
-    contractor_name = models.CharField(max_length=50,null=True)
-    contractor_date = models.DateTimeField(default=datetime.now, blank=True,null=True)
-    consultant_name = models.CharField(max_length=50,null=True)
-    consultant_date = models.DateTimeField(default=datetime.now, blank=True,null=True)
+    accept_date = models.DateTimeField(default=datetime.now, blank=True, null=True)
+    contractor_name = models.CharField(max_length=50, null=True)
+    contractor_date = models.DateTimeField(default=datetime.now, blank=True, null=True)
+    consultant_name = models.CharField(max_length=50, null=True)
+    consultant_date = models.DateTimeField(default=datetime.now, blank=True, null=True)
     remarks = RichTextUploadingField()
     is_active = models.BooleanField(default=True)
     creation_time = models.DateTimeField(null=True, blank=True)
