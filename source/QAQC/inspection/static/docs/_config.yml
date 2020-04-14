@@ -93,7 +93,7 @@ navigation:
   icon: fas fa-bookmark
 - title: FAQ
   url: faq.html
-  icon: fas fa-question-circle
+  icon: fas fa-questions-circle
 - title: License
   url: license.html
   icon: fas fa-file-alt

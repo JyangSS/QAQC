@@ -34,8 +34,10 @@ urlpatterns = [
     path('template/<int:id>/update', template_update, name='template_update'),
     path('template/<int:id>/delete', template_delete, name='template_delete'),
 
-
-    # question
-    path('template/<int:id>/question', question, name='question'),
+    # questions
+    path('template/<int:id>/questions', question, name='question'),
+    path('template/<int:id>/question/create', question_create, name='question_create'),
+    path('template/question/<int:id>/update', question_update, name='question_update'),
+    path('template/question/<int:id>/delete', question_delete, name='question_delete'),
 
 ]

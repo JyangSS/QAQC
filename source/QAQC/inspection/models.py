@@ -151,8 +151,8 @@ class TemplateDetail(models.Model):
 
     group_id = models.ForeignKey(Group, on_delete=models.CASCADE)
     form_template_id = models.ForeignKey(FormTemplate, on_delete=models.CASCADE)
-    legend = models.CharField(max_length=5)
-    question_line = models.IntegerField()
+    legend = models.CharField(max_length=5, null=True, blank=True)
+    question_line = models.IntegerField(null=True, blank=True)
     question = models.CharField(max_length=500)
     is_boolean_question = models.BooleanField(null=False)
     is_active = models.BooleanField(default=True)

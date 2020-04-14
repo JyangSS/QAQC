@@ -99,7 +99,7 @@ class TemplateForm(forms.ModelForm):
 
 
 class TemplateDetailForm(forms.ModelForm):
-    group_id = forms.ModelChoiceField(queryset=Group.objects.filter(is_active=True).order_by('defect_group'),
+    group_id = forms.ModelChoiceField(queryset=Group.objects.filter(is_active=True).order_by('element_id'),
                                       empty_label='Select Group For Questions')
 
     def __init__(self, *args, **kwargs):
@@ -110,11 +110,11 @@ class TemplateDetailForm(forms.ModelForm):
 
     class Meta:
         widgets = {
-            # 'form_template_id': forms.HiddenInput(),
-            # 'legend': forms.HiddenInput(),
-            # 'question_line': forms.HiddenInput(),
+            'form_template_id': forms.HiddenInput(),
+            #'legend': forms.HiddenInput(),
+            #'question_line': forms.HiddenInput(),
             'question': forms.TextInput(
-                attrs={'placeholder': 'Enter question here...(Tick if the answering style is True/False.)'}),
+                attrs={'placeholder': 'Enter questions here...(Tick if the answering style is True/False.)'}),
 
         }
         model = TemplateDetail
@@ -127,7 +127,3 @@ class TemplateDetailForm(forms.ModelForm):
             'is_boolean_question',
         )
 
-
-class QuestionForm(forms.Form):
-    group = forms.ModelChoiceField(queryset=Group.objects.filter(is_active=True))
-    question = forms.CharField(max_length=500)

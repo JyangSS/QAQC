@@ -273,7 +273,7 @@ def form_type_delete(request, id):
     type.delete_user_id = request.user.username
     type.deletion_time = datetime.datetime.now().replace(microsecond=0)
     type.save()
-    return redirect(reverse('form_type' , kwargs={'id': number.pk }))
+    return redirect(reverse('form_type', kwargs={'id': number.pk}))
 
 
 # number series
@@ -369,24 +369,24 @@ def templates(request, id):
 
 def template_create(request, id):
     type = FormTypeTemplate.objects.get(pk=id)
-    count = FormTemplate.objects.filter(form_type_template_id=type.id).count()
-    ref = type.form_description + "/" + str('{0:03}'.format(count + 1))
-    # TemplateDetailFormset = formset_factory(TemplateDetailForm, extra=1)
+    current = NumberSeries.objects.get(series=type.number_series_id)
+    ref = type.form_description + "/" + str('{0:03}'.format(int(current.current)))
     if request.method == 'POST':
         form = TemplateForm(request.POST, initial={'form_type_template_id': id, 'ref_no': ref, 'rev': 1, })
-        # formset = TemplateDetailFormset(request.POST)
     else:
         form = TemplateForm(initial={'form_type_template_id': id, 'ref_no': ref, 'rev': 1, })
-        # formset = TemplateDetailFormset()
     return save_template(request, form, 'forms/form_create.html', int(type.id))
 
 
 def save_template(request, form, template_name, id):
     type = FormTypeTemplate.objects.get(pk=id)
+    num = NumberSeries.objects.get(series=type.number_series_id)
     data = dict()
     if request.method == 'POST':
         if form.is_valid():
             form.save()
+            num.current = num.current + 1
+            num.save()
             obj = FormTemplate.objects.order_by('-pk')[0]
         if obj.creator_user_id == '':
             obj.creator_user_id = request.user.username
@@ -410,23 +410,14 @@ def save_template(request, form, template_name, id):
 
 
 def template_delete(request, id):
-    data = dict()
     template = get_object_or_404(FormTemplate, id=id)
-    if request.method == 'POST':
-        template.is_deleted = True
-        template.is_active = False
-        template.delete_user_id = request.user.username
-        template.deletion_time = datetime.datetime.now().replace(microsecond=0)
-        template.save()
-        data['form_is_valid'] = True
-        templates = FormTemplate.objects.filter(is_active=True,
-                                                form_type_template_id=template.form_type_template_id).order_by('ref_no')
-        data['element_list'] = render_to_string('forms/form_list_2.html', {'templates': templates})
-    else:
-        context = {'template': template}
-        data['html_form'] = render_to_string('forms/form_delete.html', context, request=request)
-
-    return JsonResponse(data)
+    type = FormTypeTemplate.objects.get(form_type=template.form_type_template_id)
+    template.is_deleted = True
+    template.is_active = False
+    template.delete_user_id = request.user.username
+    template.deletion_time = datetime.datetime.now().replace(microsecond=0)
+    template.save()
+    return redirect(reverse('templates', kwargs={'id': type.id}))
 
 
 def save_template2(request, form, id, template_name):
@@ -453,34 +444,109 @@ def template_update(request, id):
     template = get_object_or_404(FormTemplate, id=id)
     if request.method == 'POST':
         form = TemplateForm(request.POST, instance=template)
-        template.last_modifier_user_id = request.user.username
-        template.last_modification_time = datetime.datetime.now().replace(microsecond=0)
-
+        if form.is_valid():
+            form.save()
+            template.last_modifier_user_id = request.user.username
+            template.last_modification_time = datetime.datetime.now().replace(microsecond=0)
+            return redirect(reverse('question', kwargs={'id': template.pk}))
     else:
         form = TemplateForm(instance=template)
-    return save_template2(request, form, template.id, 'forms/form_update.html')
+    return render(request, 'forms/form_update.html', {'form': form, 'template': template})
 
 
-# =========Kent=======================================================================
 def question(request, id):
     template = FormTemplate.objects.get(pk=id)
-    # TemplateDetailFormset = formset_factory(TemplateDetailForm, extra=1)
+    questions = TemplateDetail.objects.filter(form_template_id=template)
+    type = FormTypeTemplate.objects.get(form_type=template.form_type_template_id)
+    context = {
+        'template': template,
+        'questions': questions,
+        'type': type,
+    }
+    return render(request, 'questions/question_list.html', context)
 
+
+def save_question(request, form, template_name, id):
+    template = FormTemplate.objects.get(pk=id)
+    data = dict()
     if request.method == 'POST':
-        # formset = TemplateDetailFormset(request.POST)
-        #  for form in formset:
-        #      if form.is_valid():
-        #          form.save(commit=False)
-        #          form.initial['question_line'] = 1
-        #          form.initial['legend'] = 'a'
-        #          form.save()
-        form = QuestionForm(request.POST)
-        inputs = request.POST.getlist('input[]')
+        if form.is_valid():
+            form.save()
+            obj = Group.objects.order_by('-pk')[0]
+            if obj.creator_user_id == '':
+                obj.creator_user_id = request.user.username
+                obj.creation_time = datetime.datetime.now().replace(microsecond=0)
+                obj.last_modifier_user_id = request.user.username
+                obj.last_modification_time = datetime.datetime.now().replace(microsecond=0)
+                obj.save()
+            data['form_is_valid'] = True
+            questions = TemplateDetail.objects.filter(is_active=True, form_template_id=template.id)
+            data['element_list'] = render_to_string('questions/question_list_2.html',
+                                                    {'questions': questions})
+        else:
+            data['form_is_valid'] = False
+    context = {
+        'form': form,
+        'template': template,
+    }
+    data['html_form'] = render_to_string(template_name, context, request=request)
+    return JsonResponse(data)
 
+
+def save_question2(request, form,template_name, id):
+    data = dict()
+    template = FormTemplate.objects.get(pk=id)
+    if request.method == 'POST':
+        if form.is_valid():
+            form.save()
+            data['form_is_valid'] = True
+            questions = TemplateDetail.objects.filter(is_active=True, form_template_id=template.id)
+            data['element_list'] = render_to_string('questions/question_list_2.html',
+                                                    {'questions': questions})
+        else:
+            data['form_is_valid'] = False
+    context = {
+        'form': form,
+    }
+    data['html_form'] = render_to_string(template_name, context, request=request)
+    return JsonResponse(data)
+
+
+def question_create(request, id):
+    template = FormTemplate.objects.get(pk=id)
+    if request.method == 'POST':
+        form = TemplateDetailForm(request.POST, initial={'form_template_id': id, })
     else:
-        # formset = TemplateDetailFormset(initial=[{'form_template_id': template.id, }])
-        # for form in formset:
-        #     form.initial['form_template_id'] = id
-        form = QuestionForm()
+        form = TemplateDetailForm(initial={'form_template_id': id, })
 
-    return render(request, 'forms/question_setting.html', {'form': form, 'template': template})
+    return save_question(request, form, 'questions/question_create.html', int(template.id))
+
+
+def question_update(request, id):
+    question = get_object_or_404(TemplateDetail, id=id)
+    template = FormTemplate.objects.get(form_title=question.form_template_id)
+    if request.method == 'POST':
+        form = TemplateDetailForm(request.POST, instance=question)
+        question.last_modifier_user_id = request.user.username
+        question.last_modification_time = datetime.datetime.now().replace(microsecond=0)
+    else:
+        form = TemplateDetailForm(instance=question)
+    return save_question2(request, form, 'questions/question_update.html', int(template.id))
+
+
+def question_delete(request, id):
+    data = dict()
+    question = get_object_or_404(TemplateDetail, id=id)
+    if request.method == 'POST':
+        question.is_deleted = True
+        question.is_active = False
+        question.delete_user_id = request.user.username
+        question.deletion_time = datetime.datetime.now().replace(microsecond=0)
+        question.save()
+        data['form_is_valid'] = True
+        questions = TemplateDetail.objects.filter(is_active=True, form_template_id=question.form_template_id)
+        data['element_list'] = render_to_string('questions/question_list_2.html', {'questions': questions})
+    else:
+        context = {'question': question}
+        data['html_form'] = render_to_string('questions/question_delete.html', context, request=request)
+    return JsonResponse(data)
