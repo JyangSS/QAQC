@@ -5,7 +5,7 @@
     <td style="overflow:hidden;">{{ group.description }}</td>
 
     <td style="white-space:nowrap;">
-       <button style="display:inline;width:40%;margin-bottom:8px;margin-left:20px;" class="btn btn-block btn-warning btn-xs show-form-update" data-url="{% url 'group_update' group.id %}">
+       <button style="display:inline;width:40%;margin-bottom:8px;color:black;margin-left:20px;" class="btn btn-block btn-warning btn-xs show-form-update" data-url="{% url 'group_update' group.id %}">
         <span class="fa fa-edit"></span>Edit
       </button>
         <button  style="display:inline;width:40%;margin-bottom:15px;color:black;margin-right:20px" class="btn btn-block btn-danger btn-xs show-form-delete"  data-url="{% url 'group_delete' group.id %}">

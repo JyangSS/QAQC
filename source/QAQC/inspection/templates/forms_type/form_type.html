@@ -38,29 +38,31 @@ table th {
 }
 </style>
     <br>
-  <a href="{% url 'number_series_list' %}"><button style="float:right;width:17%;margin-right:20px;" class="btn btn-block btn-default btn-sm"><span class="fa fa-angle-double-left" > Back</span></button></a>
+  <a href="{% url 'number_series_list' %}"><button style="float:right;width:23%;margin-right:20px;" class="btn btn-block btn-default btn-sm"><span class="fa fa-angle-double-left" > Back</span></button></a>
   <h1 class="page-header">FORMS TYPE</h1>
 <hr>
 
-       <button style="float:right;width:17%;margin-right:20px;" class="btn btn-block btn-info btn-sm show-form-update"  onclick="window.location.href='{% url 'number_series_update' number.id %}'" >
-        <span class="fa fa-edit"></span>Edit Element
+       <button style="float:right;width:23%;margin-right:20px;" class="btn btn-block btn-info btn-sm show-form-update"  onclick="window.location.href='{% url 'number_series_update' number.id %}'" >
+        <span class="fa fa-edit"></span>Edit Series
       </button>
     <p style="width:34.5%;margin:0;display:inline;float:left"><strong>NUMBER SERIES</strong></p>
     <p style="margin:0;display:inline:float:right" ><strong>:</strong>{{ number.series}}</p>
     <p style="width:34.5%;margin:0;display:inline;float:left"><strong>CURRENT</strong></p>
     <p style="margin:0;display:inline:float:right" ><strong>:</strong>{{ number.current}}</p>
+    <br>
   <hr>
 
 
-<button id="element_form"class="btn btn-block btn-primary btn-sm show-form"   style="float:right;width:17%;margin-right:20px;" data-url="{% url 'form_type_create' number.id %}">
-   <span class="fa fa-fw fa-plus"></span> Add_New
+<button id="element_form" class="btn btn-block btn-primary btn-sm show-form"   style="float:right;width:23%;margin-right:20px;" data-url="{% url 'form_type_create' number.id %}">
+   <span class="fa fa-fw fa-plus"></span>Add_New
   </button>
   <table class="table table-striped table-bordered" id="element-table" width="100%">
+
     <thead>
       <tr>
         <th style="text-align:center;">#</th>
         <th>FORM TYPE</th>
-        <th>DESCRIPTION</th>
+        <th>SHORT NAME</th>
         <th style="text-align:center;">ACTION</th>
       </tr>
     </thead>
@@ -88,7 +90,7 @@ $(document).ready(function() {
     $('#element-table').DataTable( {
         "scrollY": 430,
         "scrollX": true,
-        "scrollCollapse": false,
+        "scrollCollapse": true,
         "paging":false,
         "info": false,
         "columnDefs": [ {

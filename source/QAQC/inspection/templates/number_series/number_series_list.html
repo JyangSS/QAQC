@@ -12,8 +12,8 @@
 
     <h1 class="page-header"><span class="fa fa-home" ></span></a>NUMBER SERIES</h1>
   <hr>
- <button id="element_form"class="btn btn-block btn-primary btn-sm show-form" data-url="{% url 'number_series_create' %}" style="float:right;width:17%;margin-right:20px;">
-   <span class="fa fa-fw fa-plus"></span> Add_New
+ <button id="element_form" class="btn btn-block btn-primary btn-sm show-form" data-url="{% url 'number_series_create' %}" style="float:right;width:23%;margin-right:20px;">
+   <span class="fa fa-fw fa-plus"></span>Add_New
   </button>
 <style>
 #element-table_filter{
@@ -60,7 +60,7 @@ $(document).ready(function() {
     $('#element-table').DataTable( {
         "scrollY": 430,
         "scrollX": true,
-        "scrollCollapse": false,
+        "scrollCollapse": true,
         "paging":false,
         "info": false,
         "columnDefs": [ {
