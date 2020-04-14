@@ -177,7 +177,7 @@ class Inspection01(models.Model):
 
     form_template_id = models.ForeignKey(FormTemplate, on_delete=models.CASCADE)
     unit_number_id = models.ForeignKey('objects.UnitNumber', on_delete=models.CASCADE)
-    inspection_count = models.IntegerField(null=True)  # for count the reinspection form
+    inspection_count = models.IntegerField(null=True)   # for count the reinspection form
     draw_ref = models.CharField(max_length=15)
     is_active = models.BooleanField(default=True)
     creation_time = models.DateTimeField(null=True, blank=True)
