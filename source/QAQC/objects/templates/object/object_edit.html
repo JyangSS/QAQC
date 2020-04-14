@@ -9,10 +9,40 @@
 <form  method="post" >
         {% csrf_token %}
       {{form.as_p}}
+		<div class="modal-footer">
     	  <button type="button" class="btn btn-default" onclick="goBack()" style="background-color:#dbdbdb;">Back</button>
-
     <button type="submit" class="btn btn-primary" >Edit And Save</button>
 
+    {% if delete_company %}
+    {% for a in delete_company %}
+     <a onclick="return confirm('Are you sure you want to delete this? \n Warning This may cause other data loss!!!')" href="{% url 'company_delete' a.id %}">
+         <button type="button"  class="btn btn-block btn-danger ">
+          <span class="fa fa-edit"></span>Delete</button></a>
+    {% endfor %}
+
+    {% elif delete_project %}
+        {% for a in delete_project %}
+    <a onclick="return confirm('Are you sure you want to delete this?')" href="{% url 'project_delete' a.id %}">
+        <button type="button"  class="btn btn-block btn-danger ">
+          <span class="fa fa-edit"></span>Delete</button></a>
+        {% endfor %}
+
+    {% elif delete_phase %}
+        {% for a in delete_phase %}
+     <a onclick="return confirm('Are you sure you want to delete this? \n Warning This may cause other data loss!!!')" href="{% url 'project_delete' a.id %}">
+         <button type="button"  class="btn btn-block btn-danger ">
+          <span class="fa fa-edit"></span>Delete</button></a>
+        {% endfor %}
+
+    {% elif delete_unit %}
+        {% for a in delete_unit %}
+    <a onclick="return confirm('Are you sure you want to delete this? \n Warning This may cause other data loss!!!')" href="{% url 'unit_delete' a.id %}">
+        <button type="button"  class="btn btn-block btn-danger ">
+          <span class="fa fa-edit"></span>Delete</button></a>
+        {% endfor %}
+
+    {% endif %}
+            </div>
 </form>
 <script>
 function goBack() {

@@ -27,25 +27,28 @@ bottom: .5em;
 
 <!------------------------------ body ----------------------------->
 <br>
-<h1 class="page-header"><a href="{% url 'company_list' %}"><span class="fa fa-angle-double-left" ></span></a><span class="fa fa-home" ></span>Project Manage List <br>
+    <a href="{% url 'company_list' %}"><button style="float:right;width:23%;margin-right:20px;" class="btn btn-block btn-default btn-sm"><span class="fa fa-angle-double-left" > Back</span></button></a>
+<h1 class="page-header">Project Manage List <br>
     </h1>
-
-<!-- display current web which project -->
 <hr>
+<button style="float:right;width:23%;margin-right:20px;" class="btn btn-block btn-info btn-sm show-form-update"  onclick="window.location.href='{% url 'company_edit' title.id %}'" >
+        <span class="fa fa-edit"></span>Edit Company
+      </button>
+<!-- display current web which project -->
+
  <p style="width:34.5%;margin:0;display:inline;float:left"><strong>COMPANY</strong></p>
     <p style="margin:0;display:inline:float:right"><strong>:</strong>{{ title.company }}</p>
     <p style="width:34.5%;margin:0;display:inline;float:left"><strong>PROJECT NAME</strong></p>
     <p style="margin:0;display:inline:float:right"><strong>:</strong></p>
-
-<!-- Button Add New Phase -->
-<button class="btn btn-block btn-primary btn-sm show-form"style="float:right;width:20%;"onclick="window.location.href='{% url 'project_create' create_id %}'">
-    <span class="fa fa-fw fa-plus"></span> New Project
-  </button>
     <p style="width:34.5%;margin:0;display:inline;float:left"><strong>PHASE</strong></p>
     <p style="margin:0;display:inline:float:right"><strong>:</strong></p>
 <br>
 <hr>
+<!-- Button Add New Phase -->
 
+<button  class="btn btn-block btn-primary btn-sm show-form" onclick="window.location.href='{% url 'project_create' create_id %}'" style="float:right;width:23%;margin-right:20px;">
+       <span class="fa fa-fw fa-plus"></span>New Project
+      </button>
 <!----------- Table--------------->
   <table class="table table-striped table-bordered" id="company-table" width="100%" >
     <thead>
@@ -70,11 +73,9 @@ bottom: .5em;
        <td class="data">{{ a.project_description }}</td>
 
     <td class="item" style="white-space:nowrap;">
-  <button style="display:inline;width:33%;color:black;" class="btn btn-block btn-info btn-xs" onclick="window.location.href='{% url 'phase_list' a.id %}'">
+  <button style="display:inline;width:100%;color:black;" class="btn btn-block btn-info btn-xs" onclick="window.location.href='{% url 'phase_list' a.id %}'">
       <span class="fa fa-eye"></span>View
       </button>
-          <button type="button" style="display:inline;width:33%;color:black;margin-top:0.5px;" class="btn btn-block btn-warning btn-xs" onclick="window.location.href='{% url 'project_edit' a.id %}'">
-              <span class="fa fa-edit"></span>Edit
               <a onclick="return confirm('Are you sure you want to delete this?')" href="{% url 'project_delete' a.id %}"> <button type="button" style="display:inline;width:33%;color:black;margin-top:0.5px;" class="btn btn-block btn-danger btn-xs">
           <span class="fa fa-edit"></span>Delete</button></a>
     </td>

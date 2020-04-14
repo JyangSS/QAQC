@@ -36,7 +36,9 @@ def company_create(request):
 
 def company_edit(request, id):
     instance = get_object_or_404(Company, pk=id)
+    delete_company = Company.objects.filter(pk=id)
     if request.method == 'POST':
+
         form = CompanyForm(request.POST, instance=instance)
         if form.is_valid():
             form.save()
@@ -44,7 +46,8 @@ def company_edit(request, id):
 
     else:
         form = CompanyForm(instance=instance)
-        return render(request, 'object/object_edit.html', {'form': form})
+
+        return render(request, 'object/object_edit.html', {'form': form,'delete_company':delete_company})
 
 def company_delete(request,id):
     delete=Company.objects.get(pk=id)
@@ -82,6 +85,7 @@ def project_create(request, id):
 def project_edit(request, id):
     instance = get_object_or_404(Project, pk=id)
     n = Company.objects.get(project__pk=id)
+    delete_project=Project.objects.filter(pk=id)
     if request.method == 'POST':
         form = ProjectForm(request.POST, instance=instance)
         if form.is_valid():
@@ -90,7 +94,7 @@ def project_edit(request, id):
 
     else:
         form = ProjectForm(instance=instance)
-        return render(request, 'object/object_edit.html', {'form': form})
+        return render(request, 'object/object_edit.html', {'form': form,'delete_project':delete_project})
 
 def project_delete(request,id):
     delete=Project.objects.get(pk=id)
@@ -129,6 +133,7 @@ def phase_create(request, id):
 def phase_edit(request, id):
     instance = get_object_or_404(Phase, pk=id)
     n = Project.objects.get(phase__pk=id)
+    delete_phase=Phase.objects.filter(pk=id)
     if request.method == 'POST':
         form = PhaseForm(request.POST, instance=instance)
         if form.is_valid():
@@ -137,7 +142,7 @@ def phase_edit(request, id):
 
     else:
         form = PhaseForm(instance=instance)
-        return render(request, 'object/object_edit.html', {'form': form})
+        return render(request, 'object/object_edit.html', {'form': form,'delete_phase':delete_phase})
 
 def phase_delete(request,id):
     delete=Phase.objects.get(pk=id)
@@ -159,6 +164,7 @@ def unit_list(request, id):
 def unit_edit(request, id):
     instance = get_object_or_404(UnitNumber, pk=id)
     n = Phase.objects.get(unitnumber__pk=id)
+    delete_unit=UnitNumber.objects.filter(pk=id)
     if request.method == 'POST':
         form = UnitNumberForm(request.POST, instance=instance)
         if form.is_valid():
@@ -167,7 +173,7 @@ def unit_edit(request, id):
 
     else:
         form = UnitNumberForm(instance=instance)
-        return render(request, 'object/object_edit.html', {'form': form})
+        return render(request, 'object/object_edit.html', {'form': form,'delete_unit':delete_unit})
 
 def unit_delete(request,id):
     delete=UnitNumber.objects.get(pk=id)

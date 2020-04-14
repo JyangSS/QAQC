@@ -98,11 +98,14 @@ bottom: .5em;
 
 <!------------------------------ body ----------------------------->
 <br>
-<h1 class="page-header"><a href="{% url 'phase_list' title.project_id.id %}"><span class="fa fa-angle-double-left" ></span></a><span class="fa fa-home" ></span>Unit Manage List <br>
+    <a href="{% url 'phase_list' title.project_id.id %}"><button style="float:right;width:23%;margin-right:20px;" class="btn btn-block btn-default btn-sm"><span class="fa fa-angle-double-left" > Back</span></button></a>
+<h1 class="page-header">UNIT MANAGE LIST <br>
     </h1>
-
 <!-- display current web which project -->
 <hr>
+<button style="float:right;width:23%;margin-right:20px;" class="btn btn-block btn-info btn-sm show-form-update"  onclick="window.location.href='{% url 'phase_edit' title.id %}'" >
+        <span class="fa fa-edit"></span>Edit Phase
+      </button>
  <p style="width:34.5%;margin:0;display:inline;float:left"><strong>COMPANY</strong></p>
     <p style="margin:0;display:inline:float:right"><strong>:</strong>{{ title.project_id.company_id.company }}</p>
     <p style="width:34.5%;margin:0;display:inline;float:left"><strong>PROJECT NAME</strong></p>

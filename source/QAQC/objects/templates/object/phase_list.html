@@ -27,23 +27,25 @@ bottom: .5em;
 
 <!------------------------------ body ----------------------------->
 <br>
-<h1 class="page-header"><a href="{% url 'project_list' title.company_id.id %}"><span class="fa fa-angle-double-left" ></span></a><span class="fa fa-home" ></span>Phase Manage List <br>
+    <a href="{% url 'project_list' title.company_id.id%}"><button style="float:right;width:23%;margin-right:20px;" class="btn btn-block btn-default btn-sm"><span class="fa fa-angle-double-left" > Back</span></button></a>
+<h1 class="page-header">PHASE MANAGE LIST <br>
     </h1><hr>
 
+<button style="float:right;width:23%;margin-right:20px;" class="btn btn-block btn-info btn-sm show-form-update"  onclick="window.location.href='{% url 'project_edit' title.id %}'" >
+        <span class="fa fa-edit"></span>Edit Project
+      </button>
 <!-- display current web which project -->
- <p style="width:34.5%;margin:0;display:inline;float:left"><strong>COMPANY</strong></p>
+    <p style="width:34.5%;margin:0;display:inline;float:left"><strong>COMPANY</strong></p>
     <p style="margin:0;display:inline:float:right"><strong>:</strong>{{ title.company_id.company }}</p>
     <p style="width:34.5%;margin:0;display:inline;float:left"><strong>PROJECT NAME</strong></p>
     <p style="margin:0;display:inline:float:right"><strong>:</strong>{{ title.project_short_form}}</p>
-
-<!-- Button Add New Phase -->
-<button class="btn btn-block btn-primary btn-sm show-form"style="float:right;width:20%;"onclick="window.location.href='{% url 'phase_create' create_id %}'">
-    <span class="fa fa-fw fa-plus"></span> New Phase
-  </button>
     <p style="width:34.5%;margin:0;display:inline;float:left"><strong>PHASE</strong></p>
     <p style="margin:0;display:inline:float:right"><strong>:</strong></p>
 <br><hr>
-
+<!-- Button Add New Phase -->
+ <button  class="btn btn-block btn-primary btn-sm show-form" onclick="window.location.href='{% url 'phase_create' create_id %}'" style="float:right;width:23%;margin-right:20px;">
+       <span class="fa fa-fw fa-plus"></span>New Phase
+      </button>
 <!----------- Table--------------->
 
   <table class="table table-striped table-bordered" id="company-table" width="100%" >
@@ -68,11 +70,10 @@ bottom: .5em;
     <td class="data">{{ a.phase_short_form }}</td>
        <td class="data">{{ a.phase_description }}</td>
     <td class="item" style="white-space:nowrap;">
-  <button style="display:inline;width:33%;color:black;" class="btn btn-block btn-info btn-xs" onclick="window.location.href='{% url 'unit_list' a.id %}'">
+  <button style="display:inline;width:100%;color:black;" class="btn btn-block btn-info btn-xs" onclick="window.location.href='{% url 'unit_list' a.id %}'">
       <span class="fa fa-eye"></span>View
       </button>
-          <button type="button" style="display:inline;width:33%;color:black;margin-top:0.5px;" class="btn btn-block btn-warning btn-xs" onclick="window.location.href='{% url 'phase_edit' a.id %}'">
-              <span class="fa fa-edit"></span>Edit
+
                 <a onclick="return confirm('Are you sure you want to delete this? \n Warning This may cause other data loss!!!')" href="{% url 'project_delete' a.id %}"> <button type="button" style="display:inline;width:33%;color:black;margin-top:0.5px;" class="btn btn-block btn-danger btn-xs">
           <span class="fa fa-edit"></span>Delete</button></a>
     </td>
