@@ -255,30 +255,25 @@ def form_type_update(request, id):
     type = get_object_or_404(FormTypeTemplate, id=id)
     if request.method == 'POST':
         form = FormTypeForm(request.POST, instance=type)
-        type.last_modifier_user_id = request.user.username
-        type.last_modification_time = datetime.datetime.now().replace(microsecond=0)
-
+        if form.is_valid():
+            form.save()
+            type.last_modifier_user_id = request.user.username
+            type.last_modification_time = datetime.datetime.now().replace(microsecond=0)
+            return redirect(reverse('templates', kwargs={'id': type.pk}))
     else:
         form = FormTypeForm(instance=type)
-    return save_type2(request, form, 'forms_type/form_type_update.html')
+    return render(request, 'forms_type/form_type_update.html', {'form': form, 'type': type})
 
 
 def form_type_delete(request, id):
-    data = dict()
     type = get_object_or_404(FormTypeTemplate, id=id)
-    if request.method == 'POST':
-        type.is_deleted = True
-        type.is_active = False
-        type.delete_user_id = request.user.username
-        type.deletion_time = datetime.datetime.now().replace(microsecond=0)
-        type.save()
-        data['form_is_valid'] = True
-        types = FormTypeTemplate.objects.filter(is_active=True, number_series_id=type.number_series_id)
-        data['element_list'] = render_to_string('forms_type/form_type_2.html', {'types': types})
-    else:
-        context = {'type': type}
-        data['html_form'] = render_to_string('forms_type/form_type_delete.html', context, request=request)
-    return JsonResponse(data)
+    number = NumberSeries.objects.get(series=type.number_series_id)
+    type.is_deleted = True
+    type.is_active = False
+    type.delete_user_id = request.user.username
+    type.deletion_time = datetime.datetime.now().replace(microsecond=0)
+    type.save()
+    return redirect(reverse('form_type' , kwargs={'id': number.pk }))
 
 
 # number series
