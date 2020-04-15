@@ -504,6 +504,17 @@ def save_question(request, form, template_name, id):
         if form.is_valid():
             form.save()
             obj = TemplateDetail.objects.order_by('-pk')[0]
+            num = TemplateDetail.objects.filter(form_template_id=template).count()
+            obj.question_line = int(num)
+            obj.save
+            # groups = TemplateDetail.objects.filter(form_template_id=template).distinct('group_id')
+            # x = 1
+            # for group in groups:
+            #     if obj.group_id == group.group_id:
+            #         obj.legend = str(x) + chr(num)
+            #         obj.save
+            #     else:
+            #         x += 1
             if obj.creator_user_id == '':
                 obj.creator_user_id = request.user.username
                 obj.creation_time = datetime.datetime.now().replace(microsecond=0)
