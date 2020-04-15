@@ -1,7 +1,5 @@
-from crispy_forms.layout import Layout
 from django import forms
 from .models import *
-from crispy_forms.helper import FormHelper
 
 
 class ElementForm(forms.ModelForm):
@@ -41,7 +39,6 @@ class GroupForm(forms.ModelForm):
 
 
 class FormTypeForm(forms.ModelForm):
-
     class Meta:
         model = FormTypeTemplate
         widgets = {
@@ -99,7 +96,7 @@ class TemplateForm(forms.ModelForm):
 
 
 class TemplateDetailForm(forms.ModelForm):
-    group_id = forms.ModelChoiceField(queryset=Group.objects.filter(is_active=True).order_by('defect_group'),
+    group_id = forms.ModelChoiceField(queryset=Group.objects.filter(is_active=True).order_by('element_id'),
                                       empty_label='Select Group For Questions')
 
     def __init__(self, *args, **kwargs):
@@ -107,14 +104,15 @@ class TemplateDetailForm(forms.ModelForm):
         self.fields['question'].label = ''
         self.fields['is_boolean_question'].label = ''
         self.fields['group_id'].label = 'Defect Group'
+        self.fields['is_boolean_question'].label = 'Boolean Question(Default = Text)'
 
     class Meta:
         widgets = {
-            # 'form_template_id': forms.HiddenInput(),
+            'form_template_id': forms.HiddenInput(),
             # 'legend': forms.HiddenInput(),
             # 'question_line': forms.HiddenInput(),
             'question': forms.TextInput(
-                attrs={'placeholder': 'Enter question here...(Tick if the answering style is True/False.)'}),
+                attrs={'placeholder': 'Enter questions here...(Tick if the answering style is True/False.)'}),
 
         }
         model = TemplateDetail
@@ -126,8 +124,3 @@ class TemplateDetailForm(forms.ModelForm):
             'question',
             'is_boolean_question',
         )
-
-
-class QuestionForm(forms.Form):
-    group = forms.ModelChoiceField(queryset=Group.objects.filter(is_active=True))
-    question = forms.CharField(max_length=500)

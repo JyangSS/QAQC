@@ -1,20 +1,12 @@
 {% for template in templates %}
   <tr>
     <td style="overflow:hidden;text-align:center;">{{ template.ref_no }}</td>
-    <td style="overflow:hidden;">{{ template.rev }}</td>
-    <td style="overflow:hidden;">{{ template.form_title }}</td>
-     <td style="overflow:hidden;">{{ template.remarks }}</td>
-    <td style="white-space:nowrap;">
-      <button  style="display:inline;width:32%;color:black;" class="btn btn-block btn-info btn-xs"  onclick="window.location.href='{% url 'question' template.id%}'">
+    <td style="overflow:hidden;text-align:center;">{{ template.rev }}</td>
+    <td style="overflow:hidden;text-align:center;">{{ template.form_title }}</td>
+     <td style="overflow:hidden;text-align:center;">{{ template.remarks }}</td>
+    <td style="white-space:nowrap;text-align:center;">
+      <button  style="color:black;" class="btn btn-block btn-info btn-xs"  onclick="window.location.href='{% url 'question' template.id %}'">
       <span class="fa fa-eye"></span>Settings
-      </button>
-
-       <button  style="display:inline;width:32%;margin-bottom:8px" class="btn btn-block btn-warning btn-xs show-form-update" data-url="{% url 'template_update' template.id %}" >
-         <span class="fa fa-edit"></span>Edit
-      </button>
-
-      <button  style="display:inline;width:35%;margin-bottom:8px;color:black;" class="btn btn-block btn-danger btn-xs show-form-delete" data-url="{% url 'template_delete' template.id %}">
-      <span class="fa fa-fw fa-trash"></span>Delete
       </button></td>
 
   </tr>

@@ -31,7 +31,9 @@ class Element(models.Model):
         verbose_name = 'Element'
         verbose_name_plural = 'Elements'
 
-    element = models.CharField(max_length=50, unique=True)
+    element = models.CharField(max_length=50, unique=True, error_messages={
+        'unique': 'Element already exist.',
+    })
     description = models.CharField(max_length=200, blank=True)
     is_active = models.BooleanField(default=True)
     creation_time = models.DateTimeField(null=True, blank=True)
@@ -54,7 +56,8 @@ class Group(models.Model):
         verbose_name_plural = 'Groups'
 
     element_id = models.ForeignKey(Element, on_delete=models.CASCADE)
-    defect_group = models.CharField(max_length=100, unique=True)
+    defect_group = models.CharField(max_length=100, unique=True, error_messages={
+        'unique': 'Group already exist.', })
     description = models.CharField(max_length=200, blank=True)
     is_active = models.BooleanField(default=True)
     creation_time = models.DateTimeField(null=True, blank=True)
@@ -79,7 +82,8 @@ class NumberSeries(models.Model):
         verbose_name = 'NumberSeries'
         verbose_name_plural = 'Number_Series'
 
-    series = models.CharField(max_length=50, unique=True)
+    series = models.CharField(max_length=50, unique=True, error_messages={
+        'unique': 'Series name already exist.', })
     current = models.IntegerField(default=1)
     is_active = models.BooleanField(default=True)
     creation_time = models.DateTimeField(null=True, blank=True)
@@ -102,8 +106,10 @@ class FormTypeTemplate(models.Model):
         verbose_name_plural = 'FormTypeTemplates'
 
     number_series_id = models.ForeignKey(NumberSeries, on_delete=models.CASCADE)
-    form_type = models.CharField(max_length=20, unique=True)
-    form_description = models.CharField(max_length=200)
+    form_type = models.CharField(max_length=20, unique=True, error_messages={
+        'unique': 'Form type already exist.', })
+    form_description = models.CharField(max_length=200, unique=True, error_messages={
+        'unique': 'Short Name already exist.', })
     is_active = models.BooleanField(default=True)
     creation_time = models.DateTimeField(null=True, blank=True)
     creator_user_id = models.CharField(max_length=50, blank=True)
@@ -125,7 +131,8 @@ class FormTemplate(models.Model):
         verbose_name_plural = 'FormTemplates'
 
     form_type_template_id = models.ForeignKey(FormTypeTemplate, on_delete=models.CASCADE)
-    form_title = models.CharField(max_length=200, unique=True)
+    form_title = models.CharField(max_length=200, unique=True, error_messages={
+        'unique': 'Form title already exist.', })
     ref_no = models.CharField(max_length=20)
     rev = models.IntegerField(default=1)
     remarks = models.CharField(max_length=200, blank=True)
@@ -151,8 +158,8 @@ class TemplateDetail(models.Model):
 
     group_id = models.ForeignKey(Group, on_delete=models.CASCADE)
     form_template_id = models.ForeignKey(FormTemplate, on_delete=models.CASCADE)
-    legend = models.CharField(max_length=5)
-    question_line = models.IntegerField()
+    legend = models.CharField(max_length=5, null=True, blank=True)
+    question_line = models.IntegerField(null=True, blank=True)
     question = models.CharField(max_length=500)
     is_boolean_question = models.BooleanField(null=False)
     is_active = models.BooleanField(default=True)
@@ -177,7 +184,7 @@ class Inspection01(models.Model):
 
     form_template_id = models.ForeignKey(FormTemplate, on_delete=models.CASCADE)
     unit_number_id = models.ForeignKey('objects.UnitNumber', on_delete=models.CASCADE)
-    inspection_count = models.IntegerField(null=True)   # for count the reinspection form
+    inspection_count = models.IntegerField(null=True)  # for count the reinspection form
     draw_ref = models.CharField(max_length=15)
     is_active = models.BooleanField(default=True)
     creation_time = models.DateTimeField(null=True, blank=True)
