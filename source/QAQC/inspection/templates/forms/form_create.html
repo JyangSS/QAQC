@@ -7,43 +7,18 @@
 		<span aria-hidden="true">&times;</span>
 		</button>
 		</div>
+		</div>
 		<div class="modal-body">
-		{{ form.form_title|as_crispy_field }}
-			<div class="form-row">
-				<div class="form-group col-md-4 mb-0">
-					{{ form.ref_no|as_crispy_field }}
-				</div>
-      			<div class="form-group col-md-8 mb-0">
-       				 {{ form.remarks|as_crispy_field }}
-				</div>
-    		</div>
-			 {{ form.rev|as_crispy_field }}
-			 {{ form.form_type_template_id|as_crispy_field }}
-	<!--	{% for form2 in formset %}
-			<div class="form-row">
-				<div class="form-group col-md-6 mb-0">
-				{{ form2.group_id|as_crispy_field }}
-				</div>
-				<div class="form-group col-md-6 mb-0">
-				{{ form2.question_line|as_crispy_field }}
-				{{ form2.legend|as_crispy_field }} {{ form2.form_template_id|as_crispy_field }}
-				</div>
-			</div>
-			<div class="form-row">
-				<div class="form-group col-md-11 mb-0">
-					{{ form2.questions|as_crispy_field }}
-				</div>
-      			<div class="form-group col-md-1 mb-0">
-       				 {{ form2.is_boolean_question|as_crispy_field }}
-				</div>
-    		</div>
-
-		    <button id="add-another">add another</button>
-
-		{% endfor %}--!>
+		{{form|crispy}}
 		</div>
 		<div class="modal-footer">
 		<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
 		<button type="submit" class="btn btn-primary" id="submit" ><i class="fa fa-fw fa-save"></i>Create</button>
 		</div>
 </form>
+<style>
+	.help-block
+    {
+        color: red;
+    }
+</style>

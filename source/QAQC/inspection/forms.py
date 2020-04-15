@@ -1,7 +1,5 @@
-from crispy_forms.layout import Layout
 from django import forms
 from .models import *
-from crispy_forms.helper import FormHelper
 
 
 class ElementForm(forms.ModelForm):
@@ -41,7 +39,6 @@ class GroupForm(forms.ModelForm):
 
 
 class FormTypeForm(forms.ModelForm):
-
     class Meta:
         model = FormTypeTemplate
         widgets = {
@@ -107,12 +104,13 @@ class TemplateDetailForm(forms.ModelForm):
         self.fields['question'].label = ''
         self.fields['is_boolean_question'].label = ''
         self.fields['group_id'].label = 'Defect Group'
+        self.fields['is_boolean_question'].label = 'Boolean Question(Default = Text)'
 
     class Meta:
         widgets = {
             'form_template_id': forms.HiddenInput(),
-            #'legend': forms.HiddenInput(),
-            #'question_line': forms.HiddenInput(),
+            # 'legend': forms.HiddenInput(),
+            # 'question_line': forms.HiddenInput(),
             'question': forms.TextInput(
                 attrs={'placeholder': 'Enter questions here...(Tick if the answering style is True/False.)'}),
 
@@ -126,4 +124,3 @@ class TemplateDetailForm(forms.ModelForm):
             'question',
             'is_boolean_question',
         )
-

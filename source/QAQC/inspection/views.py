@@ -1,13 +1,10 @@
-from django.db import transaction
-from django.forms import modelformset_factory, inlineformset_factory, formset_factory
-from django.shortcuts import render, get_object_or_404, redirect
+from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse
-from .models import NumberSeries
 from .forms import *
 from django.template.loader import render_to_string
 from django.shortcuts import render
 import datetime
-from django.http import JsonResponse, HttpResponseRedirect
+from django.http import JsonResponse
 
 
 # show all objects in table
@@ -268,6 +265,20 @@ def form_type_update(request, id):
 def form_type_delete(request, id):
     type = get_object_or_404(FormTypeTemplate, id=id)
     number = NumberSeries.objects.get(series=type.number_series_id)
+    templates = FormTemplate.objects.filter(form_type_template_id=id)
+    for template in templates:
+        questions = TemplateDetail.objects.filter(form_template_id=template)
+        for question in questions:
+            question.is_deleted = True
+            question.is_active = False
+            question.delete_user_id = request.user.username
+            question.deletion_time = datetime.datetime.now().replace(microsecond=0)
+            question.save()
+        template.is_deleted = True
+        template.is_active = False
+        template.delete_user_id = request.user.username
+        template.deletion_time = datetime.datetime.now().replace(microsecond=0)
+        template.save()
     type.is_deleted = True
     type.is_active = False
     type.delete_user_id = request.user.username
@@ -340,6 +351,20 @@ def number_series_delete(request, id):
     number_series = get_object_or_404(NumberSeries, id=id)
     types = FormTypeTemplate.objects.filter(number_series_id=number_series)
     for type in types:
+        templates = FormTemplate.objects.filter(form_type_template_id=type)
+        for template in templates:
+            questions = TemplateDetail.objects.filter(form_template_id=template)
+            for question in questions:
+                question.is_deleted = True
+                question.is_active = False
+                question.delete_user_id = request.user.username
+                question.deletion_time = datetime.datetime.now().replace(microsecond=0)
+                question.save()
+            template.is_deleted = True
+            template.is_active = False
+            template.delete_user_id = request.user.username
+            template.deletion_time = datetime.datetime.now().replace(microsecond=0)
+            template.save()
         type.is_deleted = True
         type.is_active = False
         type.delete_user_id = request.user.username
@@ -362,7 +387,6 @@ def templates(request, id):
         'type': type,
         'number': number,
         'templates': templates,
-
     }
     return render(request, 'forms/form_list.html', context)
 
@@ -412,6 +436,13 @@ def save_template(request, form, template_name, id):
 def template_delete(request, id):
     template = get_object_or_404(FormTemplate, id=id)
     type = FormTypeTemplate.objects.get(form_type=template.form_type_template_id)
+    questions = TemplateDetail.objects.filter(form_template_id=id)
+    for question in questions:
+        question.is_deleted = True
+        question.is_active = False
+        question.delete_user_id = request.user.username
+        question.deletion_time = datetime.datetime.now().replace(microsecond=0)
+        question.save()
     template.is_deleted = True
     template.is_active = False
     template.delete_user_id = request.user.username
@@ -472,7 +503,7 @@ def save_question(request, form, template_name, id):
     if request.method == 'POST':
         if form.is_valid():
             form.save()
-            obj = Group.objects.order_by('-pk')[0]
+            obj = TemplateDetail.objects.order_by('-pk')[0]
             if obj.creator_user_id == '':
                 obj.creator_user_id = request.user.username
                 obj.creation_time = datetime.datetime.now().replace(microsecond=0)
@@ -493,7 +524,7 @@ def save_question(request, form, template_name, id):
     return JsonResponse(data)
 
 
-def save_question2(request, form,template_name, id):
+def save_question2(request, form, template_name, id):
     data = dict()
     template = FormTemplate.objects.get(pk=id)
     if request.method == 'POST':
