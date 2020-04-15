@@ -141,9 +141,7 @@ bottom: .5em;
     <td class="item" style="white-space:nowrap;">
          <button type="button" style="display:inline;width:50%;color:black;margin-top:0.5px;" class="btn btn-block btn-warning btn-xs" onclick="window.location.href='{% url 'unit_edit' a.id %}'">
               <span class="fa fa-edit"></span>Edit
-               <a onclick="return confirm('Are you sure you want to delete this? \n Warning This may cause other data loss!!!')" href="{% url 'unit_delete' a.id %}">
-                   <button type="button" style="display:inline;width:50%;color:black;margin-top:0.5px;" class="btn btn-block btn-danger btn-xs">
-          <span class="fa fa-edit"></span>Delete</button></a>
+              
     </td>
 
   </tr>
