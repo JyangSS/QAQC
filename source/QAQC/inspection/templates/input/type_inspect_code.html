@@ -3,22 +3,19 @@
 {% block content %}
 {% load static %}
 <br>
-<h1>Register New Block</h1>
+<h1>TYPE YOUR INSPECT CODE</h1>
 <br>
 
 <form  method="post" >
         {% csrf_token %}
 
-    <pre><label>Phase:                      </label> {{form.phase_id}}</pre>
-    <pre><label>Block:                      </label> {{form.block}}</pre>
-    <pre><label>Max level:                  </label> <input type="number" name="max_level" maxlength="10"></pre>
-    <pre><label>Max unit per level:         </label> <input type="number" name="max_unit_per_level" maxlength="10"></pre>
 
-
+    <p><label>Inspect code:                  </label> <input type="text" name="inspect_code" maxlength="11"></p>
 
 
     <button type="button" class="btn btn-default" onclick="goBack()" style="background-color:#dbdbdb;">Back</button>
     <button type="submit" class="btn btn-primary" >Submit</button><br><br>
+</form>
 {% if messages %}
 {% for message in messages %}
     <div class="alert alert-danger">
@@ -27,7 +24,6 @@
 {% endfor %}
 
 {% endif %}
-</form>
 <script>
 function goBack() {
   window.history.back();
@@ -35,4 +31,3 @@ function goBack() {
 </script>
 
 {% endblock %}
-

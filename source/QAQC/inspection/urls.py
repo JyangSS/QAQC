@@ -38,4 +38,7 @@ urlpatterns = [
     path('template/question/<int:id>/update', question_update, name='question_update'),
     path('template/question/<int:id>/delete', question_delete, name='question_delete'),
 
-]
+    #input
+    path('selectform/',select_form,name='select_form'),
+    path('selectform/typecode/<int:id>', type_code, name='type_code'),
+    path('selectform/typecode/inspection/<int:a>/<int:b>', inspection, name='inspection'),]

@@ -1,0 +1,49 @@
+{% extends 'accounts/base.html' %}
+
+{% block content %}
+{% load static %}
+<div class="card card-primary">
+              <div class="card-header">
+                <h3 class="card-title">{{form.form_title}}{{y}}</h3>
+              </div>
+              <!-- /.card-header -->
+              <!-- form start -->
+              <form role="form" method="Post">
+                      {% csrf_token %}
+                <div class="card-body">
+
+               <div class="form-group">
+                     <div class="form-group">
+        {% for a in form.templatedetail_set.all %}
+                                        <label>{{a.group_id.element_id.element}}:</label><br>
+                                        <label>{{a.group_id.defect_group}}</label><br>
+                         &emsp;&emsp;  <label>{{ a.question_line }}.{{a.question}}</label>
+                         {% if a.is_boolean_question == True %}
+                         &emsp;&emsp; <input type="radio" id="radioPrimary1" name="boolean{{ a.question_line }}" value="Yes">Yes
+                         &emsp;       <input type="radio" id="radioPrimary2" name="boolean{{ a.question_line }}" value="No">No
+                         {% else %}
+                         &emsp;       <input type="text" name="boolean{{ a.question_line }}" maxlength="10">
+                         {% endif %}
+<br> <br><hr>
+{% endfor %}
+
+                     </div>
+
+
+                    </div>
+
+                </div>
+                <!-- /.card-body -->
+
+                <div class="card-footer">
+    <button type="button" class="btn btn-default" onclick="goBack()" style="background-color:#dbdbdb;">Back</button>
+                  <button type="submit" class="btn btn-primary" name="submit" >Submit</button>
+                </div>
+              </form>
+            </div>
+<script>
+function goBack() {
+  window.history.back();
+}
+</script>
+{% endblock %}

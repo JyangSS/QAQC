@@ -5,9 +5,10 @@ from django.template.loader import render_to_string
 from django.shortcuts import render
 import datetime
 from django.http import JsonResponse
+from objects.models import *
+from django.contrib import messages
 
 
-# show all objects in table
 def element_list(request):
     elements = Element.objects.filter(is_active=True)
     context = {
@@ -581,3 +582,45 @@ def question_delete(request, id):
         context = {'question': question}
         data['html_form'] = render_to_string('questions/question_delete.html', context, request=request)
     return JsonResponse(data)
+
+
+# ==========================================INPUT ==============================================================
+def select_form(request):
+    list = FormTemplate.objects.all()
+
+    return render(request, 'input/select_form.html', {'list': list})
+
+
+def type_code(request, id):
+    if request.POST.get('inspect_code'):
+        inspect_code = request.POST.get('inspect_code')
+        if not Inspection01.objects.filter(unit_number_id__inspection_object=inspect_code,
+                                           template_detail_id__form_template_id=id):
+
+            messages.error(request, 'Error! Inspect code not found ! You may type - and uppercase alphabet.')
+            return redirect(reverse('type_code', kwargs={'id': id}))
+
+        else:
+            Inspection01.objects.filter(unit_number_id__inspection_object=inspect_code,   template_detail_id__form_template_id=id)
+            b=UnitNumber.objects.get(inspection_object=inspect_code)
+            return redirect(reverse('inspection', kwargs={'a': id,'b':b.pk}))
+
+    return render(request, 'input/type_inspect_code.html')
+
+
+def inspection(request, a,b):
+    form = FormTemplate.objects.get(pk=a)
+    y = Inspection01.objects.filter(unit_number_id=b,template_detail_id__form_template_id=form).count()
+    if request.method == 'POST':
+        for x in range(1,int(y)+1):
+              input= request.POST.get('boolean'+str('{0:01}'.format(int(x))))
+              obj=Inspection01.objects.get(unit_number_id=b,template_detail_id__question_line=x)
+              obj.inspection=input
+              obj.inspection_count+=1
+              obj.save()
+
+        else:
+                 return redirect("select_form")
+    return render(request, 'input/inspection.html', {'form': form,'y':y})
+
+

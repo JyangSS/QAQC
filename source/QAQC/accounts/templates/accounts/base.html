@@ -97,6 +97,11 @@
             <li><a href="/inspection/number_series/" onclick="toggleSidebar()">Number Series</a></li>
             {% endif %}
         </ul>
+         <ul class="list-unstyled components">
+            {% if user.is_superuser %}
+            <li><a href="/inspection/selectform/" onclick="toggleSidebar()">Inspection</a></li>
+            {% endif %}
+        </ul>
           <ul class="list-unstyled components">
             {% if user.is_superuser %}
             <li data-toggle="collapse" data-target="#Object" class="collapsed"><a href="#" >Object     <i class="fa fa-angle-down"></i>

@@ -51,8 +51,7 @@ bottom: .5em;
 /* Create a custom checkbox */
 .checkmark {
   position: absolute;
-  bottom: 0;
-  left:80%;
+  left:30%;
   height: 25px;
   width: 25px;
   background-color: #08080842;
@@ -166,28 +165,33 @@ thead {
         </th>
            <th  >Unit Number
         </th>
-        <th class="th-sm" style="text-align:center;" >Action
+               <th  >Object code
+        </th>
+        <th class="th-sm" style="text-align:center;" width="10%">Action
         </th>
       </tr>
      <tr>
-        <th width="5%" style="text-align:center;" >Search:
+        <th style="text-align:center;" >Search:
         </th>
-          <th width="25%" >
+          <th >
               <input type="text" id="myInput1" onkeyup="myFunction1()" placeholder="" title="Type in a name" style="width:100%;">
         </th>
-           <th width="25%" >
+           <th >
                <input type="text" id="myInput2" onkeyup="myFunction2()" placeholder="" title="Type in a name" style="width:100%;">
         </th>
-        <th width="7%" >
+        <th >
                <input type="text" id="myInput3" onkeyup="myFunction3()" placeholder="" title="Type in a name" style="width:100%;">
         </th>
-           <th width="7%" >
+           <th >
                <input type="text" id="myInput4" onkeyup="myFunction4()" placeholder="" title="Type in a name" style="width:100%;">
         </th>
-           <th width="7%" >
+           <th >
                <input type="text" id="myInput5" onkeyup="myFunction5()" placeholder="" title="Type in a name" style="width:100%;">
         </th>
-        <th class="th-sm" style="text-align:center;" width="15%">
+          <th  >
+               <input type="text" id="myInput6" onkeyup="myFunction6()" placeholder="" title="Type in a name" style="width:100%;">
+        </th>
+        <th class="th-sm" style="text-align:center;" >
         </th>
       </tr>
     </thead>
@@ -201,14 +205,10 @@ thead {
          <td class="data">{{ a.block }}</td>
        <td class="data">{{ a.level }}</td>
         <td class="data">{{ a.unit_number }}</td>
+ <td class="data" >{{ a.inspection_object }}</td>
 
 
-
-    <td class="item" style="white-space:nowrap;">
-
-          <button type="button" style="display:inline;width:60%;color:black;margin-top:0.5px;" class="btn btn-block btn-info btn-xs" onclick="window.location.href=#">
-              <span class="fa fa-eye"></span>View Form</button>
-
+    <td class="item" style="white-space:nowrap;" width="10%">
                <label class="c1">
          <input  type="checkbox"name="item" value="{{ a.id }}">
              <span class="checkmark"></span>
@@ -325,6 +325,24 @@ function myFunction5() {
   tr = table.getElementsByTagName("tr");
   for (i = 0; i < tr.length; i++) {
     td = tr[i].getElementsByTagName("td")[5];
+    if (td) {
+      txtValue = td.textContent || td.innerText;
+      if (txtValue.toUpperCase().indexOf(filter) > -1) {
+        tr[i].style.display = "";
+      } else {
+        tr[i].style.display = "none";
+      }
+    }
+  }
+}
+function myFunction6() {
+  var input, filter, table, tr, td, i, txtValue;
+  input = document.getElementById("myInput6");
+  filter = input.value.toUpperCase();
+  table = document.getElementById("myTable");
+  tr = table.getElementsByTagName("tr");
+  for (i = 0; i < tr.length; i++) {
+    td = tr[i].getElementsByTagName("td")[6];
     if (td) {
       txtValue = td.textContent || td.innerText;
       if (txtValue.toUpperCase().indexOf(filter) > -1) {

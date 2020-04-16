@@ -10,6 +10,9 @@ from django.http import JsonResponse
 from django.views.generic import View
 from django.forms import modelformset_factory
 from django.contrib import messages
+from string import ascii_uppercase
+from inspection.models import *
+
 
 # Create your views here. (KENT)
 def company_list(request):
@@ -26,8 +29,9 @@ def company_create(request):
         for form in formset:
             if form.is_valid():
                 if form.cleaned_data != {}:
-                    form.save()
-        return redirect('company_list')
+
+                        form.save()
+                        return redirect('company_list')
     else:
         formset = createFormSet(queryset=Company.objects.none(), initial=[{'company': ''}])
 
@@ -113,17 +117,18 @@ def phase_list(request, id):
 
 
 def phase_create(request, id):
-    createFormSet = modelformset_factory(Phase, fields=('phase_short_form', 'phase_description',), extra=1)
+    createFormSet = modelformset_factory(Phase, fields=('phase_short_form', 'phase_description','inspection_object',), extra=1)
     if request.method == 'POST':
         formset = createFormSet(request.POST, queryset=Phase.objects.none())
         for form in formset:
             if form.is_valid():
                 if form.cleaned_data != {}:
-                    instance = form.save(commit=False)
-                    instance.project_id = Project.objects.get(pk=id)
-                    instance.save()
-
-        return redirect(reverse('phase_list', kwargs={'id': id}))
+                            instance = form.save(commit=False)
+                            instance.project_id = Project.objects.get(pk=id)
+                            instance.save()
+                            return redirect(reverse('phase_list', kwargs={'id': id}))
+                else:
+                            return redirect('company_list')
     else:
         formset = createFormSet(queryset=Phase.objects.none())
 
@@ -185,12 +190,9 @@ def register_new_block(request):
     if request.method == 'POST':
         form = RegisterNewBlockForm(request.POST)
         if form.is_valid():
-            obj = form.save(commit=False)
-            id = obj.phase_id.id
             i = request.POST.get('max_level')
             j = request.POST.get('max_unit_per_level')
-
-
+            r=TemplateDetail.objects.all().count()
             if not i or not j :
                 messages.error(request, 'Error!!! You might not completely fill up the form !!!')
                 return redirect('register_new_block')
@@ -201,9 +203,12 @@ def register_new_block(request):
                             obj = form.save(commit=False)
                             obj.level = int(a)
                             obj.unit_number=int(b)
+                            obj.inspection_object=obj.phase_id.inspection_object+"-"+obj.block+"-"+str('{0:02}'.format(int(a)))+"-"+str('{0:02}'.format(int(b)))
                             obj.save()
+                            for x in range(1,int(r)+1):
+                                 Inspection01.objects.create(unit_number_id=UnitNumber.objects.latest('id'),inspection_count=1, template_detail_id=TemplateDetail.objects.get(pk=x))
                 else:
-                    return redirect(reverse('register_unit_list_phase',kwargs={'id':id}))
+                    return redirect('register_unit_list_all')
 
     else:
             form = RegisterNewBlockForm()
@@ -218,11 +223,6 @@ def register_unit_list_all(request):
         return redirect('register_unit_list_all')
     return render(request,'register_unit/register_unit_list.html', {'list':list,'select':select})
 
-'''
- if request.POST.get('delete'):
-        Company.objects.filter(id__in=request.POST.getlist('item')).delete()
-        return redirect('company_list')
-'''
 
 
 
