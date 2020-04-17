@@ -124,3 +124,34 @@ class TemplateDetailForm(forms.ModelForm):
             'question',
             'is_boolean_question',
         )
+
+
+class TemplateDetailForm2(forms.ModelForm):
+    group_id = forms.ModelChoiceField(queryset=Group.objects.filter(is_active=True).order_by('element_id'),
+                                      empty_label='Select Group For Questions')
+
+    def __init__(self, *args, **kwargs):
+        super(TemplateDetailForm2, self).__init__(*args, **kwargs)
+        self.fields['question'].label = ''
+        self.fields['is_boolean_question'].label = ''
+        self.fields['group_id'].label = 'Defect Group'
+        self.fields['is_boolean_question'].label = 'Boolean Question(Default = Text)'
+
+    class Meta:
+        widgets = {
+            'form_template_id': forms.HiddenInput(),
+            'legend': forms.HiddenInput(),
+            #'question_line': forms.HiddenInput(),
+            'question': forms.TextInput(
+                attrs={'placeholder': 'Enter questions here...(Tick if the answering style is True/False.)'}),
+
+        }
+        model = TemplateDetail
+        fields = (
+            'group_id',
+            'form_template_id',
+            'legend',
+            'question_line',
+            'question',
+            'is_boolean_question',
+        )

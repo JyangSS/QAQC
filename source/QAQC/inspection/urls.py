@@ -31,6 +31,7 @@ urlpatterns = [
     path('forms_type/<int:id>/template/create', template_create, name='template_create'),
     path('template/<int:id>/update', template_update, name='template_update'),
     path('template/<int:id>/delete', template_delete, name='template_delete'),
+    path('template/<int:id>/newrev', new_rev, name='new_rev'),
 
     # questions
     path('template/<int:id>/questions', question, name='question'),

@@ -7,6 +7,8 @@
 	{% csrf_token %}
 		<div class="modal-header">
 		<h5 class="modal-title" >Update Template Details</h5>
+		<a onclick="return confirm('You want to create new rev?All data in this rev will be deleted.')" href="{% url 'new_rev' template.id %}"> <button type="button" class="btn btn-block btn-info"><span class="fa fa-plus"></span> New Rev</button></a>
+
 		</div>
 		<div class="modal-body">
 		{{form|crispy}}
