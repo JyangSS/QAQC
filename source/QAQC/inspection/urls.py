@@ -38,5 +38,7 @@ urlpatterns = [
     path('template/<int:id>/question/create', question_create, name='question_create'),
     path('template/question/<int:id>/update', question_update, name='question_update'),
     path('template/question/<int:id>/delete', question_delete, name='question_delete'),
+    path('template/question/<int:id>/up', move_up, name='move_up'),
+    path('template/question/<int:id>/down', move_down, name='move_down'),
 
 ]

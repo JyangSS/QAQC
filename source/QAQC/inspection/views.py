@@ -1,10 +1,11 @@
+from django.forms import formset_factory
 from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse
 from .forms import *
 from django.template.loader import render_to_string
 from django.shortcuts import render
 import datetime
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponseRedirect
 
 
 # show all objects in table
@@ -548,13 +549,6 @@ def save_question2(request, form, template_name, id, num):
     if request.method == 'POST':
         if form.is_valid():
             form.save()
-            question = TemplateDetail.objects.filter(is_active=True, form_template_id=template.id).order_by(
-                '-last_modification_time')[0]
-            question2 = TemplateDetail.objects.filter(is_active=True, form_template_id=template.id,
-                                                      question_line=question.question_line).order_by(
-                'last_modification_time')[0]
-            question2.question_line = num
-            question2.save()
             data['form_is_valid'] = True
             questions = TemplateDetail.objects.filter(is_active=True, form_template_id=template.id).order_by(
                 'question_line')
@@ -586,16 +580,13 @@ def question_update(request, id):
     question = get_object_or_404(TemplateDetail, id=id)
     template = FormTemplate.objects.get(form_title=question.form_template_id)
     num = question.question_line
-    total = TemplateDetail.objects.filter(form_template_id=template, is_active=True).count()
     if request.method == 'POST':
-        form = TemplateDetailForm2(request.POST, instance=question)
-        if form.fields['question'].initial <=total:
-            question.last_modifier_user_id = request.user.username
-            question.last_modification_time = datetime.datetime.now().replace(microsecond=0)
-        else:
-            return
+        form = TemplateDetailForm(request.POST, instance=question)
+        question.last_modifier_user_id = request.user.username
+        question.last_modification_time = datetime.datetime.now().replace(microsecond=0)
+
     else:
-        form = TemplateDetailForm2(instance=question)
+        form = TemplateDetailForm(instance=question)
     return save_question2(request, form, 'questions/question_update.html', int(template.id), num)
 
 
@@ -621,3 +612,35 @@ def question_delete(request, id):
         context = {'question': question}
         data['html_form'] = render_to_string('questions/question_delete.html', context, request=request)
     return JsonResponse(data)
+
+
+def move_up(request, id):
+    question = get_object_or_404(TemplateDetail, id=id)
+    template = FormTemplate.objects.get(form_title=question.form_template_id)
+    question2 = TemplateDetail.objects.filter(is_active=True, form_template_id=question.form_template_id,
+                                              question_line__lt=question.question_line).order_by('-question_line')[0]
+    question.question_line = question.question_line - 1
+    question.last_modifier_user_id = request.user.username
+    question.last_modification_time = datetime.datetime.now().replace(microsecond=0)
+    question.save()
+    question2.question_line = question.question_line + 1
+    question2.last_modifier_user_id = request.user.username
+    question2.last_modification_time = datetime.datetime.now().replace(microsecond=0)
+    question2.save()
+    return redirect(reverse('question', kwargs={'id': template.id}))
+
+
+def move_down(request, id):
+    question = get_object_or_404(TemplateDetail, id=id)
+    template = FormTemplate.objects.get(form_title=question.form_template_id)
+    question2 = TemplateDetail.objects.filter(is_active=True, form_template_id=question.form_template_id,
+                                              question_line__gt=question.question_line).order_by('question_line')[0]
+    question.question_line = question.question_line + 1
+    question.last_modifier_user_id = request.user.username
+    question.last_modification_time = datetime.datetime.now().replace(microsecond=0)
+    question.save()
+    question2.question_line = question.question_line - 1
+    question2.last_modifier_user_id = request.user.username
+    question2.last_modification_time = datetime.datetime.now().replace(microsecond=0)
+    question2.save()
+    return redirect(reverse('question', kwargs={'id': template.id}))
