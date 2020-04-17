@@ -594,33 +594,44 @@ def select_form(request):
 def type_code(request, id):
     if request.POST.get('inspect_code'):
         inspect_code = request.POST.get('inspect_code')
-        if not Inspection01.objects.filter(unit_number_id__inspection_object=inspect_code,
-                                           template_detail_id__form_template_id=id):
+        if not Inspection01.objects.filter(unit_number_id__inspection_object=inspect_code,form_template_id=id):
 
             messages.error(request, 'Error! Inspect code not found ! You may type - and uppercase alphabet.')
             return redirect(reverse('type_code', kwargs={'id': id}))
 
         else:
-            Inspection01.objects.filter(unit_number_id__inspection_object=inspect_code,   template_detail_id__form_template_id=id)
-            b=UnitNumber.objects.get(inspection_object=inspect_code)
-            return redirect(reverse('inspection', kwargs={'a': id,'b':b.pk}))
+            b=Inspection01.objects.get(unit_number_id__inspection_object=inspect_code,  form_template_id=id)
+
+            return redirect(reverse('inspection', kwargs={'id': b.pk}))
 
     return render(request, 'input/type_inspect_code.html')
 
 
-def inspection(request, a,b):
-    form = FormTemplate.objects.get(pk=a)
-    y = Inspection01.objects.filter(unit_number_id=b,template_detail_id__form_template_id=form).count()
+def inspection(request,id):
+    form = Inspection01.objects.get(pk=id)
+    y = TemplateDetail.objects.filter(form_template_id=FormTemplate.objects.get(inspection01__pk=id)).count()
+    i=Inspection02.objects.filter(inspection01_id=Inspection01.objects.get(pk=id)).count()
+    previous_ins1=int(i)/int(y)
+    previous_ins=int(previous_ins1)
     if request.method == 'POST':
+        form.inspection_count += 1
         for x in range(1,int(y)+1):
               input= request.POST.get('boolean'+str('{0:01}'.format(int(x))))
-              obj=Inspection01.objects.get(unit_number_id=b,template_detail_id__question_line=x)
-              obj.inspection=input
-              obj.inspection_count+=1
-              obj.save()
-
+              Inspection02.objects.create(inspection=input,inspection01_id=form,inspection_count=form.inspection_count)
         else:
+
+                 form.save()
                  return redirect("select_form")
-    return render(request, 'input/inspection.html', {'form': form,'y':y})
+    return render(request, 'input/inspection.html', {'form': form,'previous_ins':range(previous_ins)})
+
+def previous_inspection(request,g,h):
+
+    form=Inspection01.objects.get(pk=g)
+    input=Inspection02.objects.filter(inspection01_id=Inspection01.objects.get(pk=g),inspection_count=h)
+    y = TemplateDetail.objects.filter(form_template_id=FormTemplate.objects.get(inspection01__pk=g)).count()
+    i = Inspection02.objects.filter(inspection01_id=Inspection01.objects.get(pk=g)).count()
+    previous_ins1 = int(i) / int(y)
+    previous_ins = int(previous_ins1)
+    return render(request,'input/view_previous_inspection.html',{'form':form,'input':input,'previous_ins':range(previous_ins),'h':h})
 
 

@@ -55,7 +55,7 @@ class PhaseForm(forms.ModelForm):
             'project_id',
             'phase_short_form',
             'phase_description',
-            'inspection_object',
+
         ]
 
     helper = FormHelper()

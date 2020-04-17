@@ -160,10 +160,18 @@ class Inspection01(models.Model):
         verbose_name = 'Inspection1'
         verbose_name_plural = 'Inspections1'
 
-    template_detail_id = models.ForeignKey(TemplateDetail, on_delete=models.CASCADE)
+    form_template_id=models.ForeignKey(FormTemplate, on_delete=models.CASCADE)
     unit_number_id = models.ForeignKey('objects.UnitNumber', on_delete=models.CASCADE)
-    inspection_count = models.IntegerField(null=True)  # for count the reinspection form
-    inspection = models.CharField(max_length=25, null=True)
+    inspection_count = models.IntegerField(null=True,default=0)  # for count the reinspection form
+    reason = models.CharField(max_length=200, null=True)
+    comment = RichTextUploadingField(null=True)
+    accept = models.BooleanField(null=True)
+    accept_date = models.DateTimeField(default=datetime.now, blank=True, null=True)
+    contractor_name = models.CharField(max_length=50, null=True)
+    contractor_date = models.DateTimeField(default=datetime.now, blank=True, null=True)
+    consultant_name = models.CharField(max_length=50, null=True)
+    consultant_date = models.DateTimeField(default=datetime.now, blank=True, null=True)
+    remarks = RichTextUploadingField(null=True)
     draw_ref = models.CharField(max_length=15, null=True)
     is_active = models.BooleanField(default=True)
     creation_time = models.DateTimeField(blank=True, null=True)
@@ -186,15 +194,8 @@ class Inspection02(models.Model):
         verbose_name_plural = 'Inspections02'
 
     inspection01_id = models.ForeignKey(Inspection01, on_delete=models.CASCADE)
-    reason = models.CharField(max_length=200, null=True)
-    comment = RichTextUploadingField(null=True)
-    accept = models.BooleanField(null=True)
-    accept_date = models.DateTimeField(default=datetime.now, blank=True, null=True)
-    contractor_name = models.CharField(max_length=50, null=True)
-    contractor_date = models.DateTimeField(default=datetime.now, blank=True, null=True)
-    consultant_name = models.CharField(max_length=50, null=True)
-    consultant_date = models.DateTimeField(default=datetime.now, blank=True, null=True)
-    remarks = RichTextUploadingField(null=True)
+    inspection = models.CharField(max_length=25, null=True)
+    inspection_count=models.IntegerField(default=1, null=True)
     is_active = models.BooleanField(default=True)
     creation_time = models.DateTimeField(null=True, blank=True)
     creator_user_id = models.CharField(max_length=50, blank=True)

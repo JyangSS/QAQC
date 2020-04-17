@@ -4,14 +4,16 @@
 {% load static %}
 <div class="card card-primary">
               <div class="card-header">
-                <h3 class="card-title">{{form.form_template_id.form_title}}
+                  <h3 class="card-title">{{form.form_template_id.form_title}}&emsp;<strong>Rev {{h}}</strong>
 
                 </h3>
- <div class="dropdown" style="left:35%;" >
+
+                   <div class="dropdown" style="left:35%;" >
     <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown"style="background-color: #707070;">
       View previous inspection
     </button>
-    <div class="dropdown-menu" style="color: #000;">
+    <div class="dropdown-menu" style="color: #000; ">
+        <a class="dropdown-item" href="{% url 'inspection' form.id  %}"style="color: #000;">Back to Input</a>
         {% for b in previous_ins %}
       <a class="dropdown-item" href="{% url 'previous_inspection' g=form.id h=forloop.counter %}"style="color: #000;">Rev {{forloop.counter}}</a>
         {% endfor %}
@@ -26,18 +28,22 @@
 
                <div class="form-group">
                      <div class="form-group">
-        {% for a in form.form_template_id.templatedetail_set.all %}
-                                        <label>{{a.group_id.element_id.element}}:</label><br>
+                         <div style="float: left;width: 200px;">
+                           {% for a in form.form_template_id.templatedetail_set.all %}
+                          <label>{{a.group_id.element_id.element}}:</label><br>
                                         <label>{{a.group_id.defect_group}}</label><br>
-                         &emsp;&emsp;  <label>{{ a.question_line }}.{{a.question}}</label>
-                         {% if a.is_boolean_question == True %}
-                         &emsp;&emsp; <input type="radio" id="radioPrimary1" name="boolean{{ a.question_line }}" value="Yes">Yes
-                         &emsp;       <input type="radio" id="radioPrimary2" name="boolean{{ a.question_line }}" value="No">No
-                         {% else %}
-                         &emsp;       <input type="text" name="boolean{{ a.question_line }}" maxlength="10">
-                         {% endif %}
-<br> <br><hr>
-{% endfor %}
+                         &emsp;&emsp;  <label>{{ a.question_line }}.{{a.question}}</label>   <br><br><hr>
+                         {% endfor %}
+                         </div>
+
+
+                         <div style="float: left; align:center;">Inspection on Rev {{h}}
+                              <br><br>
+                           {% for j in input %}
+                        <label>{{j.inspection}}</label><br><br><br><hr> <br><br>
+                         {% endfor %}
+                         </div>
+
 
                      </div>
 

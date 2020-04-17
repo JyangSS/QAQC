@@ -109,7 +109,6 @@ def project_delete(request,id):
 
 def phase_list(request, id):
     title = Project.objects.get(pk=id)
-    create_id = id
     list = Phase.objects.filter(project_id=id)
     context = \
         {'list': list, 'create_id': create_id, 'title': title}
@@ -192,7 +191,8 @@ def register_new_block(request):
         if form.is_valid():
             i = request.POST.get('max_level')
             j = request.POST.get('max_unit_per_level')
-            r=TemplateDetail.objects.all().count()
+            r=FormTemplate.objects.all().count()
+            x = UnitNumber.objects.last()
             if not i or not j :
                 messages.error(request, 'Error!!! You might not completely fill up the form !!!')
                 return redirect('register_new_block')
@@ -201,12 +201,21 @@ def register_new_block(request):
                         for b in range(1,int(j)+1):
                             form = RegisterNewBlockForm(request.POST)
                             obj = form.save(commit=False)
-                            obj.level = int(a)
-                            obj.unit_number=int(b)
+                            obj.level = str('{0:02}'.format(int(a)))
+                            obj.unit_number=str('{0:02}'.format(int(b)))
                             obj.inspection_object=obj.phase_id.inspection_object+"-"+obj.block+"-"+str('{0:02}'.format(int(a)))+"-"+str('{0:02}'.format(int(b)))
-                            obj.save()
-                            for x in range(1,int(r)+1):
-                                 Inspection01.objects.create(unit_number_id=UnitNumber.objects.latest('id'),inspection_count=1, template_detail_id=TemplateDetail.objects.get(pk=x))
+                            for g in range(1,x.pk+1):
+                                 if UnitNumber.objects.filter(pk=int(g)).exists():
+                                     validation =UnitNumber.objects.get(pk=int(g))
+                                     if obj.inspection_object == validation.inspection_object:
+                                             messages.error(request, 'Error!!! The inspect code is duplicated !!! Please check there are no duplicated record have fill in.')
+                                             return redirect('register_new_block')
+                                 else:
+                                     continue
+                            else:
+                                obj.save()
+                                for x in range(1,int(r)+1):
+                                      Inspection01.objects.create(unit_number_id=UnitNumber.objects.latest('id'),inspection_count=0, form_template_id=FormTemplate.objects.get(pk=x))
                 else:
                     return redirect('register_unit_list_all')
 
