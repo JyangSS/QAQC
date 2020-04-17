@@ -56,8 +56,7 @@ class Group(models.Model):
         verbose_name_plural = 'Groups'
 
     element_id = models.ForeignKey(Element, on_delete=models.CASCADE)
-    defect_group = models.CharField(max_length=100, unique=True, error_messages={
-        'unique': 'Group already exist.', })
+    defect_group = models.CharField(max_length=100)
     description = models.CharField(max_length=200, blank=True)
     is_active = models.BooleanField(default=True)
     creation_time = models.DateTimeField(null=True, blank=True)
@@ -106,7 +105,7 @@ class FormTypeTemplate(models.Model):
         verbose_name_plural = 'FormTypeTemplates'
 
     number_series_id = models.ForeignKey(NumberSeries, on_delete=models.CASCADE)
-    form_type = models.CharField(max_length=20, unique=True, error_messages={
+    form_type = models.CharField(max_length=200, unique=True, error_messages={
         'unique': 'Form type already exist.', })
     form_description = models.CharField(max_length=200, unique=True, error_messages={
         'unique': 'Short Name already exist.', })
