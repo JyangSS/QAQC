@@ -82,6 +82,11 @@
 
 
     <div id="sidebar">
+          <ul class="list-unstyled components">
+            {% if user.is_superuser %}
+            <li><a href="#" onclick="toggleSidebar()">===Admin===</a></li>
+            {% endif %}
+        </ul>
         <ul class="list-unstyled components">
             {% if user.is_superuser %}
             <li><a href="/admin" onclick="toggleSidebar()">Admin Site</a></li>
@@ -97,22 +102,33 @@
             <li><a href="/inspection/number_series/" onclick="toggleSidebar()">Number Series</a></li>
             {% endif %}
         </ul>
+
+          <ul class="list-unstyled components">
+            {% if user.is_superuser %}
+                    <li><a href="/objects/companylist/" >Object Data/Manage</a></li>
+
+
+        {% endif %}
+        </ul>
+        <ul class="list-unstyled components">
+            {% if user.is_superuser %}
+                    <li><a href="/objects/registernewblock/" >Register New Block</a></li>
+        {% endif %}
+        </ul>
+        <ul class="list-unstyled components">
+            {% if user.is_superuser %}
+            <li><a href="#" onclick="toggleSidebar()">===User===</a></li>
+            {% endif %}
+        </ul>
+        <ul class="list-unstyled components">
+            {% if user.is_superuser %}
+                    <li><a href="/objects/registerunitlist/all" >Unit List</a></li>
+        {% endif %}
+        </ul>
          <ul class="list-unstyled components">
             {% if user.is_superuser %}
             <li><a href="/inspection/selectform/" onclick="toggleSidebar()">Inspection</a></li>
             {% endif %}
-        </ul>
-          <ul class="list-unstyled components">
-            {% if user.is_superuser %}
-            <li data-toggle="collapse" data-target="#Object" class="collapsed"><a href="#" >Object     <i class="fa fa-angle-down"></i>
-</a></li>
-
-                <ul class="sub-menu collapse" id="Object">
-                    <li><a href="/objects/companylist/" >Object Data/Manage</a></li>
-                    <li><a href="/objects/registernewblock/" >Register New Block</a></li>
-                    <li><a href="/objects/registerunitlist/all" >Unit List</a></li>
-                </ul>
-        {% endif %}
         </ul>
     </div>
 

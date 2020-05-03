@@ -46,5 +46,5 @@ urlpatterns = [
     path('selectform/typecode/<int:id>', type_code, name='type_code'),
     path('selectform/typecode/inspection/<int:id>', inspection, name='inspection'),
     path('selectform/typecode/inspection/previous/<int:g>/<int:h>', previous_inspection, name='previous_inspection'),
-
+    path('selectform2/<int:id>',select_form2,name='select_form2'),
 ]
