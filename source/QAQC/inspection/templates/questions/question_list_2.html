@@ -4,12 +4,12 @@
     <td style="overflow:hidden;">{{ question.question }}</td>
     <td align="center" >
       {% if forloop.first %}
-      <a onclick="return confirm('Move Down?')" href="{% url 'move_down' question.id %}"> <button type="button" style="display:inline;width:44.5%;margin-bottom:8px;color:black;margin-left:0px;" class="btn bg-olive margin"><span class="fa  fa-sort-desc"></span></button></a>
+      <a href="{% url 'move_down' question.id %}"> <button type="button" style="display:inline;width:44.5%;margin-bottom:8px;color:black;margin-left:0px;" class="btn bg-olive margin"><span class="fa  fa-sort-desc"></span></button></a>
       {% elif forloop.last %}
-      <a onclick="return confirm('Move Up?')" href="{% url 'move_up' question.id %}"> <button type="button" style="display:inline;width:44.5%;margin-bottom:8px;color:black;margin-left:0px;" class="btn bg-olive margin"><span class="fa  fa-sort-up"></span></button></a>
+      <a href="{% url 'move_up' question.id %}"> <button type="button" style="display:inline;width:44.5%;margin-bottom:8px;color:black;margin-left:0px;" class="btn bg-olive margin"><span class="fa  fa-sort-up"></span></button></a>
         {% else %}
-      <a onclick="return confirm('Move Up?')" href="{% url 'move_up' question.id %}"> <button type="button" style="display:inline;width:44.5%;margin-bottom:8px;color:black;margin-left:0px;" class="btn bg-olive margin"><span class="fa fa-sort-up"></span></button></a>
-      <a onclick="return confirm('Move Down?')" href="{% url 'move_down' question.id %}"> <button type="button" style="display:inline;width:44.5%;margin-bottom:8px;color:black;margin-left:0px;" class="btn bg-olive margin"><span class="fa  fa-sort-desc"></span></button></a>
+      <a href="{% url 'move_up' question.id %}"> <button type="button" style="display:inline;width:44.5%;margin-bottom:8px;color:black;margin-left:0px;" class="btn bg-olive margin"><span class="fa fa-sort-up"></span></button></a>
+      <a href="{% url 'move_down' question.id %}"> <button type="button" style="display:inline;width:44.5%;margin-bottom:8px;color:black;margin-left:0px;" class="btn bg-olive margin"><span class="fa  fa-sort-desc"></span></button></a>
       {% endif%}
     </td>
     <td style="white-space:nowrap;">
