@@ -28,7 +28,7 @@
 
                <div class="form-group">
                      <div class="form-group">
-                         <div style="float: left;width: 80%;">
+                         <div style="float: left;width: 200px;">
                            {% for a in form.form_template_id.templatedetail_set.all %}
                           <label>{{a.group_id.element_id.element}}:</label><br>
                                         <label>{{a.group_id.defect_group}}</label><br>
@@ -40,7 +40,7 @@
                          <div style="float: left; align:center;">Inspection on Rev {{h}}
                               <br><br>
                            {% for j in input %}
-                        <label>{{j.inspection}}</label><br><br><br> <br><br>
+                        <label>{{j.inspection}}</label><br><br><br><hr> <br><br>
                          {% endfor %}
                          </div>
 
@@ -55,7 +55,7 @@
 
                 <div class="card-footer">
     <button type="button" class="btn btn-default" onclick="goBack()" style="background-color:#dbdbdb;">Back</button>
-
+                  <button type="submit" class="btn btn-primary" name="submit" >Submit</button>
                 </div>
               </form>
             </div>
