@@ -51,7 +51,8 @@ bottom: .5em;
 /* Create a custom checkbox */
 .checkmark {
   position: absolute;
-  left:30%;
+  left:80%;
+    bottom:4px;
   height: 25px;
   width: 25px;
   background-color: #08080842;
@@ -132,9 +133,7 @@ thead, tbody tr {
     width:100%;
     table-layout:fixed;/* even columns width , fix width of table too*/
 }
-thead {
-    width: calc( 100% - 1em )/* scrollbar is average 1em/16px width, remove it from thead width */
-}
+
     </style>
 
 <!------------ body --------->
@@ -167,7 +166,7 @@ thead {
         </th>
                <th  >Object code
         </th>
-        <th class="th-sm" style="text-align:center;" width="10%">Action
+        <th class="th-sm" style="text-align:center;" width="13%">Action
         </th>
       </tr>
      <tr>
@@ -208,7 +207,9 @@ thead {
  <td class="data" >{{ a.inspection_object }}</td>
 
 
-    <td class="item" style="white-space:nowrap;" width="10%">
+    <td class="item" style="white-space:nowrap;" width="13%">
+          <button type="button" style="display:inline;width:70%;color:black;margin-top:0.5px;" class="btn btn-block btn-warning btn-xs" onclick="window.location.href='{% url 'select_form2' a.id %}'">
+              <span class="fa fa-eye"></span>Inspection</button>
                <label class="c1">
          <input  type="checkbox"name="item" value="{{ a.id }}">
              <span class="checkmark"></span>
@@ -226,7 +227,7 @@ thead {
     </tbody>
 
   </table>
-    <button  class="btn  btn-danger " type="submit" name="delete" value="Delete Selected Unit" style="position:absolute;right:13.5%;" onclick="return confirm('Are you sure you want to delete? \n Warning This may cause other data loss!!!')">
+    <button  class="btn  btn-danger " type="submit" name="delete" value="Delete Selected Unit" style="position:absolute;right:16%;" onclick="return confirm('Are you sure you want to delete? \n Warning This may cause other data loss!!!')">
                 <span class="fa fa-fw fa-trash"></span>Delete Selected Unit
       </button>
 </form>
