@@ -22,9 +22,8 @@ table th {
 </style>
     <br>
     <a href="{% url 'templates' type.id %}"><button style="float:right;width:23%;margin-right:20px;margin-top:17px;" class="btn btn-block btn-default btn-sm"><span class="fa fa-angle-double-left" > Back</span></button></a><br><br>
-    <button style="float:right;width:23%;margin-right:20px;margin-top:20px;" class="btn btn-block btn-info btn-sm show-form-update"  onclick="window.location.href='{% url 'template_update' template.id %}'" ><span class="fa fa-edit"></span> Edit Form Details</button>
+    <button style="float:right;width:23%;margin-right:20px;margin-top:15px;" class="btn btn-block btn-info btn-sm show-form-update"  onclick="window.location.href='{% url 'template_update' template.id %}'" ><span class="fa fa-edit"></span> Edit Form Details</button>
     <h1 class="page-header">{{ template.form_title }} </h1>
-<br>
 <hr>
 
  <button id="element_form" class="btn btn-block btn-primary btn-sm show-form" data-url="{% url 'question_create' template.id %}" style="float:right;width:23%;margin-right:20px;">
@@ -35,7 +34,8 @@ table th {
     <thead>
       <tr>
         <th style="width:5%;">#</th>
-        <th style="width:60%;">Question</th>
+        <th style="width:50%;">Question</th>
+         <th style="width:10%;">Arrange</th>
         <th style="width:20%;">ACTION</th>
       </tr>
     </thead>

@@ -31,12 +31,15 @@ urlpatterns = [
     path('forms_type/<int:id>/template/create', template_create, name='template_create'),
     path('template/<int:id>/update', template_update, name='template_update'),
     path('template/<int:id>/delete', template_delete, name='template_delete'),
+    path('template/<int:id>/newrev', new_rev, name='new_rev'),
 
     # questions
     path('template/<int:id>/questions', question, name='question'),
     path('template/<int:id>/question/create', question_create, name='question_create'),
     path('template/question/<int:id>/update', question_update, name='question_update'),
     path('template/question/<int:id>/delete', question_delete, name='question_delete'),
+    path('template/question/<int:id>/up', move_up, name='move_up'),
+    path('template/question/<int:id>/down', move_down, name='move_down'),
 
     #input
     path('selectform/',select_form,name='select_form'),

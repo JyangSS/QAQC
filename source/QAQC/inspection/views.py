@@ -1,3 +1,4 @@
+from django.forms import formset_factory
 from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse
 from .forms import *
@@ -7,6 +8,8 @@ import datetime
 from django.http import JsonResponse
 from objects.models import *
 from django.contrib import messages
+from django.http import JsonResponse, HttpResponseRedirect
+
 
 
 def element_list(request):
@@ -70,7 +73,7 @@ def element_update(request, id):
 # delete
 def element_delete(request, id):
     element = get_object_or_404(Element, id=id)
-    groups = Group.objects.filter(element_id=element)
+    groups = Group.objects.filter(element_id=element, is_active=True)
     for group in groups:
         group.is_deleted = True
         group.is_active = False
@@ -268,7 +271,7 @@ def form_type_delete(request, id):
     number = NumberSeries.objects.get(series=type.number_series_id)
     templates = FormTemplate.objects.filter(form_type_template_id=id)
     for template in templates:
-        questions = TemplateDetail.objects.filter(form_template_id=template)
+        questions = TemplateDetail.objects.filter(form_template_id=template, is_active=True)
         for question in questions:
             question.is_deleted = True
             question.is_active = False
@@ -350,11 +353,11 @@ def number_series_update(request, id):
 # delete
 def number_series_delete(request, id):
     number_series = get_object_or_404(NumberSeries, id=id)
-    types = FormTypeTemplate.objects.filter(number_series_id=number_series)
+    types = FormTypeTemplate.objects.filter(number_series_id=number_series, is_active=True)
     for type in types:
-        templates = FormTemplate.objects.filter(form_type_template_id=type)
+        templates = FormTemplate.objects.filter(form_type_template_id=type, is_active=True)
         for template in templates:
-            questions = TemplateDetail.objects.filter(form_template_id=template)
+            questions = TemplateDetail.objects.filter(form_template_id=template, is_active=True)
             for question in questions:
                 question.is_deleted = True
                 question.is_active = False
@@ -383,7 +386,7 @@ def number_series_delete(request, id):
 def templates(request, id):
     type = FormTypeTemplate.objects.get(pk=id)
     number = NumberSeries.objects.get(series=type.number_series_id)
-    templates = FormTemplate.objects.filter(is_active=True, form_type_template_id=type)
+    templates = FormTemplate.objects.filter(is_active=True, form_type_template_id=type).order_by('ref_no')
     context = {
         'type': type,
         'number': number,
@@ -437,7 +440,7 @@ def save_template(request, form, template_name, id):
 def template_delete(request, id):
     template = get_object_or_404(FormTemplate, id=id)
     type = FormTypeTemplate.objects.get(form_type=template.form_type_template_id)
-    questions = TemplateDetail.objects.filter(form_template_id=id)
+    questions = TemplateDetail.objects.filter(form_template_id=id, is_active=True)
     for question in questions:
         question.is_deleted = True
         question.is_active = False
@@ -448,6 +451,22 @@ def template_delete(request, id):
     template.is_active = False
     template.delete_user_id = request.user.username
     template.deletion_time = datetime.datetime.now().replace(microsecond=0)
+    template.save()
+    return redirect(reverse('templates', kwargs={'id': type.id}))
+
+
+def new_rev(request, id):
+    template = get_object_or_404(FormTemplate, id=id)
+    num = template.rev
+    type = FormTypeTemplate.objects.get(form_type=template.form_type_template_id)
+    questions = TemplateDetail.objects.filter(form_template_id=id, is_active=True)
+    for question in questions:
+        question.is_deleted = True
+        question.is_active = False
+        question.delete_user_id = request.user.username
+        question.deletion_time = datetime.datetime.now().replace(microsecond=0)
+        question.save()
+    template.rev = (num + 1)
     template.save()
     return redirect(reverse('templates', kwargs={'id': type.id}))
 
@@ -488,8 +507,9 @@ def template_update(request, id):
 
 def question(request, id):
     template = FormTemplate.objects.get(pk=id)
-    questions = TemplateDetail.objects.filter(form_template_id=template)
+    questions = TemplateDetail.objects.filter(form_template_id=template, is_active=True).order_by('question_line')
     type = FormTypeTemplate.objects.get(form_type=template.form_type_template_id)
+
     context = {
         'template': template,
         'questions': questions,
@@ -512,7 +532,8 @@ def save_question(request, form, template_name, id):
                 obj.last_modification_time = datetime.datetime.now().replace(microsecond=0)
                 obj.save()
             data['form_is_valid'] = True
-            questions = TemplateDetail.objects.filter(is_active=True, form_template_id=template.id)
+            questions = TemplateDetail.objects.filter(is_active=True, form_template_id=template.id).order_by(
+                'question_line')
             data['element_list'] = render_to_string('questions/question_list_2.html',
                                                     {'questions': questions})
         else:
@@ -525,20 +546,23 @@ def save_question(request, form, template_name, id):
     return JsonResponse(data)
 
 
-def save_question2(request, form, template_name, id):
+def save_question2(request, form, template_name, id, num):
     data = dict()
     template = FormTemplate.objects.get(pk=id)
     if request.method == 'POST':
         if form.is_valid():
             form.save()
             data['form_is_valid'] = True
-            questions = TemplateDetail.objects.filter(is_active=True, form_template_id=template.id)
+            questions = TemplateDetail.objects.filter(is_active=True, form_template_id=template.id).order_by(
+                'question_line')
             data['element_list'] = render_to_string('questions/question_list_2.html',
                                                     {'questions': questions})
         else:
             data['form_is_valid'] = False
     context = {
         'form': form,
+        'num': num,
+
     }
     data['html_form'] = render_to_string(template_name, context, request=request)
     return JsonResponse(data)
@@ -546,10 +570,11 @@ def save_question2(request, form, template_name, id):
 
 def question_create(request, id):
     template = FormTemplate.objects.get(pk=id)
+    num = TemplateDetail.objects.filter(form_template_id=template, is_active=True).count()
     if request.method == 'POST':
-        form = TemplateDetailForm(request.POST, initial={'form_template_id': id, })
+        form = TemplateDetailForm(request.POST, initial={'form_template_id': id, 'question_line': int(num + 1)})
     else:
-        form = TemplateDetailForm(initial={'form_template_id': id, })
+        form = TemplateDetailForm(initial={'form_template_id': id, 'question_line': int(num + 1)})
 
     return save_question(request, form, 'questions/question_create.html', int(template.id))
 
@@ -557,19 +582,27 @@ def question_create(request, id):
 def question_update(request, id):
     question = get_object_or_404(TemplateDetail, id=id)
     template = FormTemplate.objects.get(form_title=question.form_template_id)
+    num = question.question_line
     if request.method == 'POST':
         form = TemplateDetailForm(request.POST, instance=question)
         question.last_modifier_user_id = request.user.username
         question.last_modification_time = datetime.datetime.now().replace(microsecond=0)
+
     else:
         form = TemplateDetailForm(instance=question)
-    return save_question2(request, form, 'questions/question_update.html', int(template.id))
+    return save_question2(request, form, 'questions/question_update.html', int(template.id), num)
 
 
 def question_delete(request, id):
     data = dict()
     question = get_object_or_404(TemplateDetail, id=id)
     if request.method == 'POST':
+        questions = TemplateDetail.objects.filter(is_active=True, form_template_id=question.form_template_id,
+                                                  question_line__gte=question.question_line)
+        for q in questions:
+            q.question_line = q.question_line - 1
+            q.save()
+        question.question_line = None
         question.is_deleted = True
         question.is_active = False
         question.delete_user_id = request.user.username
@@ -584,11 +617,17 @@ def question_delete(request, id):
     return JsonResponse(data)
 
 
+
 # ==========================================INPUT ==============================================================
 def select_form(request):
     list = FormTemplate.objects.all()
 
     return render(request, 'input/select_form.html', {'list': list})
+
+def select_form2(request,id):
+    list = Inspection01.objects.filter(unit_number_id=id)
+
+    return render(request, 'input/select_form2.html', {'list': list})
 
 
 def type_code(request, id):
@@ -615,6 +654,10 @@ def inspection(request,id):
     previous_ins=int(previous_ins1)
     if request.method == 'POST':
         form.inspection_count += 1
+        form.accept= request.POST.get('accept')
+        form.reason = request.POST.get('reason')
+        form.comment = request.POST.get('comment')
+
         for x in range(1,int(y)+1):
               input= request.POST.get('boolean'+str('{0:01}'.format(int(x))))
               Inspection02.objects.create(inspection=input,inspection01_id=form,inspection_count=form.inspection_count)
@@ -634,4 +677,36 @@ def previous_inspection(request,g,h):
     previous_ins = int(previous_ins1)
     return render(request,'input/view_previous_inspection.html',{'form':form,'input':input,'previous_ins':range(previous_ins),'h':h})
 
+
+
+def move_up(request, id):
+    question = get_object_or_404(TemplateDetail, id=id)
+    template = FormTemplate.objects.get(form_title=question.form_template_id)
+    question2 = TemplateDetail.objects.filter(is_active=True, form_template_id=question.form_template_id,
+                                              question_line__lt=question.question_line).order_by('-question_line')[0]
+    question.question_line = question.question_line - 1
+    question.last_modifier_user_id = request.user.username
+    question.last_modification_time = datetime.datetime.now().replace(microsecond=0)
+    question.save()
+    question2.question_line = question.question_line + 1
+    question2.last_modifier_user_id = request.user.username
+    question2.last_modification_time = datetime.datetime.now().replace(microsecond=0)
+    question2.save()
+    return redirect(reverse('question', kwargs={'id': template.id}))
+
+
+def move_down(request, id):
+    question = get_object_or_404(TemplateDetail, id=id)
+    template = FormTemplate.objects.get(form_title=question.form_template_id)
+    question2 = TemplateDetail.objects.filter(is_active=True, form_template_id=question.form_template_id,
+                                              question_line__gt=question.question_line).order_by('question_line')[0]
+    question.question_line = question.question_line + 1
+    question.last_modifier_user_id = request.user.username
+    question.last_modification_time = datetime.datetime.now().replace(microsecond=0)
+    question.save()
+    question2.question_line = question.question_line - 1
+    question2.last_modifier_user_id = request.user.username
+    question2.last_modification_time = datetime.datetime.now().replace(microsecond=0)
+    question2.save()
+    return redirect(reverse('question', kwargs={'id': template.id}))
 
