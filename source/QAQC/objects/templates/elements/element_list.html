@@ -1,0 +1,114 @@
+{% extends 'elements/base.html' %}
+
+{% block content %}
+{% load static %}
+	<link rel="stylesheet" href="{% static 'plugins/fontawesome-free/css/all.min.css' %}">
+    <link rel="stylesheet" href="{% static 'js/bootstrap3-typeahead.js' %}">
+    <link rel="stylesheet" href="{% static 'js/datatables.min.js' %}">
+	<link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+<style>
+table.dataTable thead .sorting:after,
+table.dataTable thead .sorting:before,
+table.dataTable thead .sorting_asc:after,
+table.dataTable thead .sorting_asc:before,
+table.dataTable thead .sorting_asc_disabled:after,
+table.dataTable thead .sorting_asc_disabled:before,
+table.dataTable thead .sorting_desc:after,
+table.dataTable thead .sorting_desc:before,
+table.dataTable thead .sorting_desc_disabled:after,
+table.dataTable thead .sorting_desc_disabled:before {
+bottom: .5em;
+}
+</style>
+    <br>
+    <h1 class="page-header">Elements <button class="btn btn-block btn-primary btn-sm show-form" data-url="{% url 'element_create' %}" style="float:right;width:20%;">
+   <span class="fa fa-fw fa-plus"></span> New Element
+  </button></h1>
+  <hr>
+
+  <table class="table table-striped table-bordered table-sm" id="element-table" >
+    <thead>
+      <tr>
+        <th width="5%" style="text-align:center;" id="no-sort">#</th>
+        <th width="37.5%" >Element</th>
+        <th width="37.5%" >Description</th>
+        <th class="th-sm" style="text-align:center;" width="35%">Action
+          </th>
+      </tr>
+    </thead>
+    <tbody>
+      {% include "elements/element_list_2.html" %}
+    </tbody>
+    <tfoot>
+      <tr>
+        <th class="th-sm" width="5%" style="text-align:center;">#</th>
+        <th class="th-sm"  width="37.5%" >Element</th>
+        <th class="th-sm" width="37.5%" >Description</th>
+        <th class="th-sm" style="text-align:center;" width="35%">Action
+          </th>
+      </tr>
+    </tfoot>
+  </table>
+
+  <div class="modal fade in" id="modal-element">
+    <div class="modal-dialog">
+      <div class="modal-content"></div>
+    </div>
+  </div>
+<br><br><br><br><br><br><br>
+
+ <h1 class="page-header">Defect Groups
+   <button class="btn btn-block btn-primary btn-sm show-form2" data-url="{% url 'group_create' %}" style="float:right;width:20%;" >
+   <span class="fa fa-fw fa-plus"></span>   New Group
+  </button></h1>
+<hr>
+  <table class="table table-bordered table-striped dataTable" id="group-table" role="grid" >
+    <thead>
+      <tr>
+        <th width="5%" class="th-sm" id="nosort" style="text-align:center;">#</th>
+        <th width="25%" class="th-sm">Defect Group</th>
+        <th width="25%" class="th-sm">Description</th>
+        <th width="25%" class="th-sm">Element</th>
+        <th class="th-sm" style="text-align:center;" width="35%">Action
+          </th>
+      </tr>
+    </thead>
+    <tbody>
+      {% include "elements/group_list_2.html" %}
+    </tbody>
+  </table>
+
+
+  <div class="modal fade in" id="modal-group">
+    <div class="modal-dialog">
+      <div class="modal-content"></div>
+    </div>
+  </div>
+<script src="{% static 'plugins/jquery/jquery.min.js' %}"></script>
+<script src="{% static 'plugins/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+<script src="{% static 'plugins/datatables/jquery.dataTables.js' %}"></script>
+<script src="{% static 'plugins/datatables-bs4/js/dataTables.bootstrap4.js' %}"></script>
+<script src="{% static 'dist/js/adminlte.min.js' %}"></script>
+<script src="{% static 'dist/js/demo.js' %}"></script>
+
+<script>
+$(document).ready(function() {
+    $('#element-table').DataTable( {
+        "scrollY":        "430px",
+        "scrollCollapse": true,
+        "paging":         false,
+        "info": false,
+        "columnDefs": [ {
+        "targets": [3],
+        "orderable": false} ]
+    });
+ }
+);
+</script>
+
+
+
+
+{% endblock %}
+

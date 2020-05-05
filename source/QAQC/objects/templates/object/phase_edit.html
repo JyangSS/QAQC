@@ -1,0 +1,14 @@
+{% extends 'object/base_kent.html' %}
+{% load static %}
+{% block content %}
+{% load crispy_forms_tags %}
+
+<form  method = 'POST' >
+        {% csrf_token %}
+
+      {{ form.as_p  }}
+	  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+	  <input type="submit" class="btn btn-primary" value="     Add     " ></input>
+</form>
+
+{% endblock %}

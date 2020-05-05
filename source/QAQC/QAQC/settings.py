@@ -29,10 +29,8 @@ ALLOWED_HOSTS = ['*']
 # Application definition
 
 INSTALLED_APPS = [
-    'objects',
+
     'inspection',
-    'adminlte3',
-    'adminlte3_theme',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -44,7 +42,7 @@ INSTALLED_APPS = [
     'crispy_forms',
     'ckeditor',
     'ckeditor_uploader',
-
+    'objects',
 
 
 ]
@@ -84,11 +82,11 @@ WSGI_APPLICATION = 'QAQC.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'qaqc(master)',
-        'USER': 'root',
-        'PASSWORD': '',
-        'HOST': '',
-        'PORT': '',
+        'NAME': 'salesform',
+        'USER': 'Yan',
+        'PASSWORD': 'killerb95',
+        'HOST': '127.0.0.1',
+        'PORT': '3306',
         'OPTIONS': {'autocommit': True,'sql_mode': 'traditional','init_command': "SET sql_mode='STRICT_TRANS_TABLES'",}
     },
 }

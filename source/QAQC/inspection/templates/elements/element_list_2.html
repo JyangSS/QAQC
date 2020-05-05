@@ -5,10 +5,18 @@
     <td style="overflow:hidden;">{{ element.description }}</td>
 
     <td style="white-space:nowrap;">
-      <button style="color:black;" class="btn btn-block btn-info btn-xs"  onclick="window.location.href='{% url 'group_list' element.id %}'">
-      <span class="fa fa-eye"></span>Groups
+      <button  style="display:inline;width:32%;color:black;" class="btn btn-block btn-info btn-xs"  onclick="window.location.href='{% url 'group_list' element.id %}'">
+      <span class="fas fa-eye"></span>View
       </button>
-    </td>
+
+       <button  style="display:inline;width:32%;margin-bottom:8px" class="btn btn-block btn-warning btn-xs show-form-update" data-url="{% url 'element_update' element.id %}" >
+        <span class="fas fa-edit"></span>Edit
+      </button>
+
+        <button  style="display:inline;width:35%;margin-bottom:8px;color:black;" class="btn btn-block btn-danger btn-xs show-form-delete" data-url="{% url 'element_delete' element.id %}" >
+      <span class="fa fa-fw fa-trash"></span>Delete
+      </button></td>
+
   </tr>
 
 

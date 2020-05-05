@@ -61,7 +61,7 @@ def signup(request):
             return redirect('accounts:login')
     else:
         form = UserRegistrationForm()
-    return render(request, 'accounts/signup.html', {'forms': form})
+    return render(request, 'accounts/signup.html', {'form': form})
 
 
 def load_department(request):
@@ -139,7 +139,7 @@ def update_profile(request):
 
     else:
         form = CustomUserChangeForm(initial=initial_data)
-    return render(request, 'accounts/profile_update_form.html', {'forms': form})
+    return render(request, 'accounts/profile_update_form.html', {'form': form})
 
 
 # class dashboard_view(View):
