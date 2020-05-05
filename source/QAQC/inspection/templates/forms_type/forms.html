@@ -1,0 +1,69 @@
+{% extends 'elements/base.html' %}
+
+{% block content %}
+{% load static %}
+		<link rel="stylesheet" href="{% static 'plugins/fontawesome-free/css/all.min.css' %}">
+    <link rel="stylesheet" href="{% static 'js/bootstrap3-typeahead.js' %}">
+    <link rel="stylesheet" href="{% static 'js/datatables.min.js' %}">
+	<link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <br>
+
+    <h1 class="page-header"><a href="{% url 'form_type' %}"><span class="fa fa-angle-double-left" ></span></a>SUMMARY OF CHECKLIST<button id="form2" class="btn btn-block btn-primary btn-sm show-form" data-url="{% url 'form_type_create' %}" style="float:right;width:20%;">
+   <span class="fa fa-fw fa-plus"></span> New_Type
+  </button></h1>
+  <hr>
+
+    <p style="width:34.5%;margin:0;display:inline;float:left"><strong>FORM TYPE</strong></p>
+    <p style="margin:0;display:inline:float:right" ><strong>:</strong>{{ type.form_type}}</p>
+    <p style="width:34.5%;margin:0;display:inline;float:left"><strong>FORM SHORT NAME</strong></p>
+    <p style="margin:0;display:inline:float:right" ><strong>:</strong>{{ type.form_description}}</p>
+  <hr>
+
+  <table class="table table-striped table-bordered" id="form-table" width="100%">
+    <thead>
+      <tr>
+        <th style="text-align:center;">REF NO</th>
+        <th style="text-align:center;">REV </th>
+        <th style="text-align:center;">FORMs</th>
+        <th style="text-align:center;">REMARKS</th>
+        <th style="text-align:center;">ACTION</th>
+      </tr>
+    </thead>
+    <tbody>
+    </tbody>
+  </table>
+
+  <div class="modal fade in" id="modal-type">
+    <div class="modal-dialog">
+      <div class="modal-content"></div>
+    </div>
+  </div>
+
+<script src="{% static 'plugins/jquery/jquery.min.js' %}"></script>
+<script src="{% static 'plugins/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+<script src="{% static 'plugins/datatables/jquery.dataTables.js' %}"></script>
+<script src="{% static 'plugins/datatables-bs4/js/dataTables.bootstrap4.js' %}"></script>
+<script src="{% static 'dist/js/adminlte.min.js' %}"></script>
+<script src="{% static 'dist/js/demo.js' %}"></script>
+
+
+<script>
+$(document).ready(function() {
+    $('#form-table').DataTable( {
+        "scrollY": 430,
+        "scrollX": true,
+        "scrollCollapse": false,
+        "paging":false,
+        "info": false,
+        "columnDefs": [ {
+        "targets": [3],
+        "orderable": false} ]
+    });
+ }
+);
+</script>
+{% endblock %}
+

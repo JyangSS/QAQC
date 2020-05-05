@@ -1,0 +1,115 @@
+{% extends 'accounts/base.html' %}
+
+{% block content %}
+{% load static %}
+	<link rel="stylesheet" href="{% static 'plugins/fontawesome-free/css/all.min.css' %}">
+    <link rel="stylesheet" href="{% static 'js/bootstrap3-typeahead.js' %}">
+    <link rel="stylesheet" href="{% static 'js/datatables.min.js' %}">
+	<link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+<!-- icon css -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+ <script src="{% static 'js/jquery-3.1.1.min.js' %}"></script>
+<style>
+table.dataTable thead .sorting:after,
+table.dataTable thead .sorting:before,
+table.dataTable thead .sorting_asc:after,
+table.dataTable thead .sorting_asc:before,
+table.dataTable thead .sorting_asc_disabled:after,
+table.dataTable thead .sorting_asc_disabled:before,
+table.dataTable thead .sorting_desc:after,
+table.dataTable thead .sorting_desc:before,
+table.dataTable thead .sorting_desc_disabled:after,
+table.dataTable thead .sorting_desc_disabled:before {
+bottom: .5em;
+}
+</style>
+
+<!------------------------------ body ----------------------------->
+<br>
+    <a href="{% url 'company_list' %}"><button style="float:right;width:23%;margin-right:20px;" class="btn btn-block btn-default btn-sm"><span class="fa fa-angle-double-left" > Back</span></button></a>
+<h1 class="page-header">Project Manage List <br>
+    </h1>
+<hr>
+<button style="float:right;width:23%;margin-right:20px;" class="btn btn-block btn-info btn-sm show-form-update"  onclick="window.location.href='{% url 'company_edit' title.id %}'" >
+        <span class="fa fa-edit"></span>Edit Company
+      </button>
+<!-- display current web which project -->
+
+ <p style="width:34.5%;margin:0;display:inline;float:left"><strong>COMPANY</strong></p>
+    <p style="margin:0;display:inline:float:right"><strong>:</strong>{{ title.company }}</p>
+    <p style="width:34.5%;margin:0;display:inline;float:left"><strong>PROJECT NAME</strong></p>
+    <p style="margin:0;display:inline:float:right"><strong>:</strong></p>
+    <p style="width:34.5%;margin:0;display:inline;float:left"><strong>PHASE</strong></p>
+    <p style="margin:0;display:inline:float:right"><strong>:</strong></p>
+<br>
+<hr>
+<!-- Button Add New Phase -->
+
+<button  class="btn btn-block btn-primary btn-sm show-form" onclick="window.location.href='{% url 'project_create' create_id %}'" style="float:right;width:23%;margin-right:20px;">
+       <span class="fa fa-fw fa-plus"></span>New Project
+      </button>
+<!----------- Table--------------->
+  <table class="table table-striped table-bordered" id="company-table" width="100%" >
+    <thead>
+      <tr>
+        <th width="5%" style="text-align:center;" >#
+        </th>
+        <th width="25%" >Project short name
+        </th>
+           <th width="35%" >Project description
+        </th>
+        <th class="th-sm" style="text-align:center;" width="20%">Action
+        </th>
+
+      </tr>
+    </thead>
+    <tbody>
+
+     {% for a in list %}
+  <tr>
+    <td class="data">{{ forloop.counter }}</td>
+    <td class="data">{{ a.project_short_form }}</td>
+       <td class="data">{{ a.project_description }}</td>
+
+    <td class="item" style="white-space:nowrap;">
+  <button style="display:inline;width:100%;color:black;" class="btn btn-block btn-info btn-xs" onclick="window.location.href='{% url 'phase_list' a.id %}'">
+      <span class="fa fa-eye"></span>View
+      </button>
+
+    </td>
+
+  </tr>
+  {% empty %}
+        <tr><td colspan="5">Currently no Data Available</td></tr>
+    {% endfor %}
+    </tbody>
+  </table>
+
+
+<br><br><br><br><br><br><br>
+
+<!------------ End body--------------------- -->
+<script src="{% static 'plugins/jquery/jquery.min.js' %}"></script>
+<script src="{% static 'plugins/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+<script src="{% static 'plugins/datatables/jquery.dataTables.js' %}"></script>
+<script src="{% static 'plugins/datatables-bs4/js/dataTables.bootstrap4.js' %}"></script>
+<script src="{% static 'dist/js/adminlte.min.js' %}"></script>
+<script src="{% static 'dist/js/demo.js' %}"></script>
+
+<script>
+$(document).ready(function() {
+    $('#company-table').DataTable( {
+        "scrollY":        "430px",
+        "scrollCollapse": true,
+        "paging":         false,
+        "info": false,
+        "columnDefs": [ {
+        "targets": [3],
+        "orderable": false} ]
+    });
+ }
+);
+</script>
+{% endblock %}
+

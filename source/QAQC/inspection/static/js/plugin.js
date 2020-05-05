@@ -47,23 +47,24 @@ $('#element-table').on("click",".show-form-delete",ShowForm);
 $('#modal-element').on("submit",".delete-form",SaveForm)
 } );
 
+
 $(document).ready(function(){
-	var ShowForm2 = function(){
+	var ShowForm3 = function(){
 		var btn = $(this);
 		$.ajax({
 			url: btn.attr("data-url"),
 			type: 'get',
 			dataType:'json',
 			beforeSend: function(){
-				$('#modal-group').modal('show');
+				$('#modal-phase').modal('show');
 			},
 			success: function(data){
-				$('#modal-group .modal-content').html(data.html_form);
+				$('#modal-phase .modal-content').html(data.html_form);
 			}
 		});
 	};
 
-	var SaveForm2 =  function(){
+	var SaveForm3 =  function(){
 		var form = $(this);
 		$.ajax({
 			url: form.attr('data-url'),
@@ -72,11 +73,11 @@ $(document).ready(function(){
 			dataType: 'json',
 			success: function(data){
 				if(data.form_is_valid){
-					$('#group-table tbody').html(data.group_list);
-					$('#modal-group').modal('hide');
+					$('#phase-table tbody').html(data.element_list);
+					$('#modal-phase').modal('hide');
 
 				} else {
-					$('#modal-group .modal-content').html(data.html_form)
+					$('#modal-phase .modal-content').html(data.html_form)
 				}
 			}
 		})
@@ -84,14 +85,15 @@ $(document).ready(function(){
 	}
 
 // create
-$("#group_form").click(ShowForm2);
-$("#modal-group").on("submit","#form2",SaveForm2);
+$("#phase_form").click(ShowForm3);
+$("#modal-phase").on("submit","#form",SaveForm3);
 
 //update
-$('#group-table').on("click",".show-form-update",ShowForm2);
-$('#modal-group').on("submit",".update-form",SaveForm2)
+$('#phase-table').on("click",".show-form-update",ShowForm3);
+$('#modal-phase').on("submit",".update-form",SaveForm3)
 
 //delete
-$('#group-table').on("click",".show-form-delete",ShowForm2);
-$('#modal-group').on("submit",".delete-form",SaveForm2)
-});
+$('#phase-table').on("click",".show-form-delete",ShowForm3);
+$('#modal-phase').on("submit",".delete-form",SaveForm3)
+} );
+
