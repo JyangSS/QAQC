@@ -1,0 +1,26 @@
+{% extends 'accounts/base.html' %}
+
+{% block content %}
+{% load static %}
+<!----POP UP ADD COMPANY-->
+<br>
+<h1>Create New Company</h1>
+<br>
+<form  method="post" >
+        {% csrf_token %}
+    {{formset.management_form}}<!-- this for django manage the number of form -->
+     {% for form in formset %}
+        {{forloop.counter}}
+         {{form.as_p}}
+         <hr>
+      {% endfor %}
+    	  <button type="button" class="btn btn-default" onclick="goBack()" style="background-color:#dbdbdb;">Back</button>
+    <button type="submit" class="btn btn-primary" >Add</button>
+
+</form>
+<script>
+function goBack() {
+  window.history.back();
+}
+</script>
+{% endblock %}
