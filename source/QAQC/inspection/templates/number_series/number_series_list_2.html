@@ -1,0 +1,17 @@
+{% for number in numbers %}
+  <tr>
+    <td style="overflow:hidden;text-align:center;">{{ forloop.counter }}</td>
+    <td style="overflow:hidden;">{{ number.series }}</td>
+    <td style="overflow:hidden;">{{ number.current }}</td>
+
+    <td style="white-space:nowrap;">
+    <button style="color:black;" class="btn btn-block btn-info btn-xs"  onclick="window.location.href='{% url 'form_type' number.id  %}'">
+      <span class="fa fa-eye"></span>Form Type
+      </button>
+    </td>
+
+
+  </tr>
+
+
+{% endfor %}

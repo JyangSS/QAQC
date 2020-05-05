@@ -1,21 +1,180 @@
-{% for a in unit %}
+{% extends 'accounts/base.html' %}
+
+{% block content %}
+{% load static %}
+	<link rel="stylesheet" href="{% static 'plugins/fontawesome-free/css/all.min.css' %}">
+    <link rel="stylesheet" href="{% static 'js/bootstrap3-typeahead.js' %}">
+    <link rel="stylesheet" href="{% static 'js/datatables.min.js' %}">
+	<link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+<!-- icon css -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+ <script src="{% static 'js/jquery-3.1.1.min.js' %}"></script>
+<style>
+table.dataTable thead .sorting:after,
+table.dataTable thead .sorting:before,
+table.dataTable thead .sorting_asc:after,
+table.dataTable thead .sorting_asc:before,
+table.dataTable thead .sorting_asc_disabled:after,
+table.dataTable thead .sorting_asc_disabled:before,
+table.dataTable thead .sorting_desc:after,
+table.dataTable thead .sorting_desc:before,
+table.dataTable thead .sorting_desc_disabled:after,
+table.dataTable thead .sorting_desc_disabled:before {
+bottom: .5em;
+}
+
+</style>
+<!-- Select checkbox CSS-->
+<style>
+/* The container */
+.c1 {
+  display: block;
+  position: relative;
+  padding-left: 35px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  font-size: 22px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* Hide the browser's default checkbox */
+.c1 input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+/* Create a custom checkbox */
+.checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 25px;
+  width: 25px;
+  background-color: #08080842;
+}
+
+/* On mouse-over, add a grey background color */
+.c1:hover input ~ .checkmark {
+  background-color: #ccc;
+}
+
+/* When the checkbox is checked, add a blue background */
+.c1 input:checked ~ .checkmark {
+  background-color: #2196F3;
+}
+
+/* Create the checkmark/indicator (hidden when not checked) */
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+/* Show the checkmark when checked */
+.c1 input:checked ~ .checkmark:after {
+  display: block;
+}
+
+/* Style the checkmark/indicator */
+.c1 .checkmark:after {
+  left: 9px;
+  top: 5px;
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 3px 3px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+</style>
+
+<!------------------------------ body ----------------------------->
+<br>
+    <a href="{% url 'phase_list' title.project_id.id %}"><button style="float:right;width:23%;margin-right:20px;" class="btn btn-block btn-default btn-sm"><span class="fa fa-angle-double-left" > Back</span></button></a>
+<h1 class="page-header">UNIT MANAGE LIST <br>
+    </h1>
+<!-- display current web which project -->
+<hr>
+<button style="float:right;width:23%;margin-right:20px;" class="btn btn-block btn-info btn-sm show-form-update"  onclick="window.location.href='{% url 'phase_edit' title.id %}'" >
+        <span class="fa fa-edit"></span>Edit Phase
+      </button>
+ <p style="width:34.5%;margin:0;display:inline;float:left"><strong>COMPANY</strong></p>
+    <p style="margin:0;display:inline:float:right"><strong>:</strong>{{ title.project_id.company_id.company }}</p>
+    <p style="width:34.5%;margin:0;display:inline;float:left"><strong>PROJECT NAME</strong></p>
+    <p style="margin:0;display:inline:float:right"><strong>:</strong>{{ title.project_id.project_short_form}}</p>
+    <p style="width:34.5%;margin:0;display:inline;float:left"><strong>PHASE</strong></p>
+    <p style="margin:0;display:inline:float:right"><strong>:</strong>{{title.phase_short_form}}</p>
+<br><hr>
+
+<!----------- Table--------------->
+  <table class="table table-striped table-bordered" id="company-table" width="100%" >
+    <thead>
+      <tr>
+        <th width="5%" style="text-align:center;" >#
+        </th>
+        <th width="25%" >Block
+        </th>
+           <th width="25%" >Level
+        </th>
+           <th width="25%" >Unit Number
+        </th>
+        <th class="th-sm" style="text-align:center;" width="10%">Action
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+
+     {% for a in list %}
   <tr>
     <td class="data">{{ forloop.counter }}</td>
-
-    <td class="data">{{ a.phase_id.phase_description }}</td>
-
-      <td class="data">{{ a.block }}</td>
-      <td class="data">{{ a.level }}</td>
-       <td class="data">{{ a.unit_number }}</td>
-    <td style="white-space:nowrap;">
-       <button  style="display:inline;width:50%" class="btn btn-block btn-warning btn-xs show-form-update" data-url="#" >
-        <span class="fas fa-edit"></span>Edit
-      </button>
-        <button  style="display:inline;width:50%;margin-bottom:8px" class="btn btn-block btn-danger btn-xs show-form-delete" data-url="#" >
-      <span class="fa fa-fw fa-trash"></span>Delete
-      </button></td>
-
+    <td class="data">{{ a.block }}</td>
+       <td class="data">{{ a.level }}</td>
+ <td class="data">{{ a.unit_number }}</td>
+    <td class="item" style="white-space:nowrap;">
+         <button type="button" style="display:inline;width:50%;color:black;margin-top:0.5px;" class="btn btn-block btn-warning btn-xs" onclick="window.location.href='{% url 'unit_edit' a.id %}'">
+              <span class="fa fa-edit"></span>Edit
+              
+    </td>
 
   </tr>
-    {% endfor %}
+  {% empty %}
+     <tr><td colspan="5">Currently no Data Available</td></tr>
+     {% endfor %}
+    </tbody>
+  </table>
+
+
+<br><br><br><br><br><br><br>
+
+<!------------ End body--------------------- -->
+<script src="{% static 'plugins/jquery/jquery.min.js' %}"></script>
+<script src="{% static 'plugins/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+<script src="{% static 'plugins/datatables/jquery.dataTables.js' %}"></script>
+<script src="{% static 'plugins/datatables-bs4/js/dataTables.bootstrap4.js' %}"></script>
+<script src="{% static 'dist/js/adminlte.min.js' %}"></script>
+<script src="{% static 'dist/js/demo.js' %}"></script>
+
+<script>
+$(document).ready(function() {
+    $('#company-table').DataTable( {
+        "scrollY":        "430px",
+        "scrollCollapse": true,
+        "paging":         false,
+        "info": false,
+        "columnDefs": [ {
+        "targets": [3],
+        "orderable": false} ]
+    });
+ }
+);
+</script>
+{% endblock %}
 

@@ -1,0 +1,27 @@
+{% extends 'accounts/base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+{% load static %}
+{% load crispy_forms_tags %}
+<form method="POST" data-url="{% url 'form_type_update' form.instance.id %}" class="update-form" >
+	{% csrf_token %}
+		<div class="modal-header">
+		<h5 class="modal-title" >Update Form Type</h5>
+		</div>
+		<div class="modal-body">
+		{{form|crispy}}
+		</div>
+		<div class="modal-footer">
+			<button type="submit" class="btn btn-primary"><i class="fa fa-fw fa-save"></i>Save Change</button>
+			<a onclick="return confirm('Are you sure you want to delete this?All related to this will be deleted.')" href="{% url 'form_type_delete' type.id %}"> <button type="button"  class="btn btn-block btn-danger"><span class="fa fa-trash"></span>Delete</button></a>
+			<input type="button" value="Cancel" onclick="window.location.href='{% url 'templates' type.id %}'" style="width:20%" class="btn btn-block btn-default"></input>
+		</div>
+
+</form>
+<style>
+	.help-block
+    {
+        color: red;
+    }
+</style>
+{% endblock %}

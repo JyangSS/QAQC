@@ -6,7 +6,7 @@ from datetime import *
 # =========PROJECT============================
 class Company(models.Model):
 
-    company = models.CharField(default=True, max_length=55, null=True)
+    company = models.CharField(default=True, max_length=55, blank=True,null=False)
 
     def __str__(self):
         return str(self.company)
@@ -20,8 +20,8 @@ class Project(models.Model):
         verbose_name_plural = 'Projects'
 
     company_id = models.ForeignKey(Company, verbose_name="Company", on_delete=models.CASCADE)
-    project_description = models.CharField(max_length=100)
-    project_short_form = models.CharField(max_length=10)
+    project_description = models.CharField(max_length=100,verbose_name="Project Description")
+    project_short_form = models.CharField(max_length=10,verbose_name="Project Short Name")
     location = models.CharField(max_length=100)
     is_active = models.BooleanField(null=True)
     creation_time = models.DateTimeField(default=datetime.now, blank=True)
@@ -33,7 +33,7 @@ class Project(models.Model):
     delete_user_id = models.CharField(max_length=50)
 
     def __str__(self):
-        return str(self.project_description)
+        return str(self.company_id.company+"--  "+self.project_description)
 
     pass
 
@@ -56,7 +56,7 @@ class Phase(models.Model):
     delete_user_id = models.CharField(max_length=50)
 
     def __str__(self):
-        return str(self.project_id.project_description + "--  " + self.phase_description)
+        return str(self.project_id.project_short_form + " ---  " + self.phase_short_form)
 
     pass
 
@@ -69,7 +69,8 @@ class UnitNumber(models.Model):
     phase_id = models.ForeignKey(Phase, verbose_name="Phase", on_delete=models.CASCADE)
     block = models.CharField(max_length=10)
     level = models.IntegerField()
-    unit_number = models.CharField(max_length=10)
+    unit_number = models.IntegerField()
+
     inspection_object = models.CharField(max_length=50)
     is_active = models.BooleanField(null=True)
     creation_time = models.DateTimeField(default=datetime.now, blank=True)
