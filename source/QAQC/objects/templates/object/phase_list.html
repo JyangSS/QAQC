@@ -58,6 +58,8 @@ bottom: .5em;
         </th>
            <th width="35%" >Phase description
         </th>
+           <th width="35%" >Object Code
+        </th>
         <th class="th-sm" style="text-align:center;" width="20%">Action
         </th>
       </tr>
@@ -69,6 +71,7 @@ bottom: .5em;
     <td class="data">{{ forloop.counter }}</td>
     <td class="data">{{ a.phase_short_form }}</td>
        <td class="data">{{ a.phase_description }}</td>
+       <td class="data">{{ a.inspection_object }}</td>
     <td class="item" style="white-space:nowrap;">
   <button style="display:inline;width:100%;color:black;" class="btn btn-block btn-info btn-xs" onclick="window.location.href='{% url 'unit_list' a.id %}'">
       <span class="fa fa-eye"></span>View

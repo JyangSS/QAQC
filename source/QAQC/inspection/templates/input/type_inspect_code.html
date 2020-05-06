@@ -1,0 +1,33 @@
+{% extends 'accounts/base.html' %}
+
+{% block content %}
+{% load static %}
+<br>
+<h1>TYPE YOUR INSPECT CODE</h1>
+<br>
+
+<form  method="post" >
+        {% csrf_token %}
+
+
+    <p><label>Inspect code:                  </label> <input type="text" name="inspect_code" maxlength="11"></p>
+
+
+    <button type="button" class="btn btn-default" onclick="goBack()" style="background-color:#dbdbdb;">Back</button>
+    <button type="submit" class="btn btn-primary" >Submit</button><br><br>
+</form>
+{% if messages %}
+{% for message in messages %}
+    <div class="alert alert-danger">
+    {{ message }}
+    </div>
+{% endfor %}
+
+{% endif %}
+<script>
+function goBack() {
+  window.history.back();
+}
+</script>
+
+{% endblock %}

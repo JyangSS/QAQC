@@ -5,10 +5,13 @@ from .forms import *
 from django.template.loader import render_to_string
 from django.shortcuts import render
 import datetime
+from django.http import JsonResponse
+from objects.models import *
+from django.contrib import messages
 from django.http import JsonResponse, HttpResponseRedirect
 
 
-# show all objects in table
+
 def element_list(request):
     elements = Element.objects.filter(is_active=True)
     context = {
@@ -614,6 +617,68 @@ def question_delete(request, id):
     return JsonResponse(data)
 
 
+
+# ==========================================INPUT ==============================================================
+def select_form(request):
+    list = FormTemplate.objects.all()
+
+    return render(request, 'input/select_form.html', {'list': list})
+
+def select_form2(request,id):
+    list = Inspection01.objects.filter(unit_number_id=id)
+
+    return render(request, 'input/select_form2.html', {'list': list})
+
+
+def type_code(request, id):
+    if request.POST.get('inspect_code'):
+        inspect_code = request.POST.get('inspect_code')
+        if not Inspection01.objects.filter(unit_number_id__inspection_object=inspect_code,form_template_id=id):
+
+            messages.error(request, 'Error! Inspect code not found ! You may type - and uppercase alphabet.')
+            return redirect(reverse('type_code', kwargs={'id': id}))
+
+        else:
+            b=Inspection01.objects.get(unit_number_id__inspection_object=inspect_code,  form_template_id=id)
+
+            return redirect(reverse('inspection', kwargs={'id': b.pk}))
+
+    return render(request, 'input/type_inspect_code.html')
+
+
+def inspection(request,id):
+    form = Inspection01.objects.get(pk=id)
+    y = TemplateDetail.objects.filter(form_template_id=FormTemplate.objects.get(inspection01__pk=id)).count()
+    i=Inspection02.objects.filter(inspection01_id=Inspection01.objects.get(pk=id)).count()
+    previous_ins1=int(i)/int(y)
+    previous_ins=int(previous_ins1)
+    if request.method == 'POST':
+        form.inspection_count += 1
+        form.accept= request.POST.get('accept')
+        form.reason = request.POST.get('reason')
+        form.comment = request.POST.get('comment')
+
+        for x in range(1,int(y)+1):
+              input= request.POST.get('boolean'+str('{0:01}'.format(int(x))))
+              Inspection02.objects.create(inspection=input,inspection01_id=form,inspection_count=form.inspection_count)
+        else:
+
+                 form.save()
+                 return redirect("select_form")
+    return render(request, 'input/inspection.html', {'form': form,'previous_ins':range(previous_ins)})
+
+def previous_inspection(request,g,h):
+
+    form=Inspection01.objects.get(pk=g)
+    input=Inspection02.objects.filter(inspection01_id=Inspection01.objects.get(pk=g),inspection_count=h)
+    y = TemplateDetail.objects.filter(form_template_id=FormTemplate.objects.get(inspection01__pk=g)).count()
+    i = Inspection02.objects.filter(inspection01_id=Inspection01.objects.get(pk=g)).count()
+    previous_ins1 = int(i) / int(y)
+    previous_ins = int(previous_ins1)
+    return render(request,'input/view_previous_inspection.html',{'form':form,'input':input,'previous_ins':range(previous_ins),'h':h})
+
+
+
 def move_up(request, id):
     question = get_object_or_404(TemplateDetail, id=id)
     template = FormTemplate.objects.get(form_title=question.form_template_id)
@@ -644,3 +709,4 @@ def move_down(request, id):
     question2.last_modification_time = datetime.datetime.now().replace(microsecond=0)
     question2.save()
     return redirect(reverse('question', kwargs={'id': template.id}))
+

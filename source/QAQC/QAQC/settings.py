@@ -29,6 +29,7 @@ ALLOWED_HOSTS = ['*']
 # Application definition
 
 INSTALLED_APPS = [
+    'objects',
     'inspection',
     'adminlte3',
     'adminlte3_theme',
@@ -43,7 +44,7 @@ INSTALLED_APPS = [
     'crispy_forms',
     'ckeditor',
     'ckeditor_uploader',
-    'objects',
+
 
 
 ]

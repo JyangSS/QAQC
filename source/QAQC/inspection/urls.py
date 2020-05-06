@@ -41,4 +41,11 @@ urlpatterns = [
     path('template/question/<int:id>/up', move_up, name='move_up'),
     path('template/question/<int:id>/down', move_down, name='move_down'),
 
+    #input
+    path('selectform/',select_form,name='select_form'),
+    path('selectform/typecode/<int:id>', type_code, name='type_code'),
+    path('selectform/typecode/inspection/<int:id>', inspection, name='inspection'),
+    path('selectform/typecode/inspection/previous/<int:g>/<int:h>', previous_inspection, name='previous_inspection'),
+    path('selectform2/<int:id>', select_form2, name='select_form2'),
+
 ]

@@ -39,6 +39,7 @@ class UnitNumberForm(forms.ModelForm):
 class RegisterNewBlockForm(forms.ModelForm):
     class Meta:
         model = UnitNumber
+
         fields = [
             'phase_id',
             'block',
