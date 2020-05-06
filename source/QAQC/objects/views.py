@@ -110,6 +110,7 @@ def project_delete(request,id):
 def phase_list(request, id):
     title = Project.objects.get(pk=id)
     list = Phase.objects.filter(project_id=id)
+    create_id=title.pk
     context = \
         {'list': list, 'create_id': create_id, 'title': title}
     return render(request, 'object/phase_list.html', context)
