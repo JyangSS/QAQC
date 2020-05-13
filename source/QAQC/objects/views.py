@@ -205,6 +205,7 @@ def register_new_block(request):
                             obj.level = str('{0:02}'.format(int(a)))
                             obj.unit_number=str('{0:02}'.format(int(b)))
                             obj.inspection_object=obj.phase_id.inspection_object+"-"+obj.block+"-"+str('{0:02}'.format(int(a)))+"-"+str('{0:02}'.format(int(b)))
+                            #if x.pk == True:
                             for g in range(1,x.pk+1):
                                  if UnitNumber.objects.filter(pk=int(g)).exists():
                                      validation =UnitNumber.objects.get(pk=int(g))
