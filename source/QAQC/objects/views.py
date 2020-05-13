@@ -194,6 +194,7 @@ def register_new_block(request):
             j = request.POST.get('max_unit_per_level')
             r=FormTemplate.objects.all().count()
             x = UnitNumber.objects.last()
+            x=x.pk
             if not i or not j :
                 messages.error(request, 'Error!!! You might not completely fill up the form !!!')
                 return redirect('register_new_block')
@@ -205,8 +206,7 @@ def register_new_block(request):
                             obj.level = str('{0:02}'.format(int(a)))
                             obj.unit_number=str('{0:02}'.format(int(b)))
                             obj.inspection_object=obj.phase_id.inspection_object+"-"+obj.block+"-"+str('{0:02}'.format(int(a)))+"-"+str('{0:02}'.format(int(b)))
-                            #if x.pk == True:
-                            for g in range(1,x.pk+1):
+                            for g in range(1,x+1):
                                  if UnitNumber.objects.filter(pk=int(g)).exists():
                                      validation =UnitNumber.objects.get(pk=int(g))
                                      if obj.inspection_object == validation.inspection_object:

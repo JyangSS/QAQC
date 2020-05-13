@@ -31,22 +31,24 @@
                                         <label>{{a.group_id.defect_group}}</label><br>
                          &emsp;&emsp;  <label>{{ a.question_line }}.{{a.question}}</label>
                          {% if a.is_boolean_question == True %}
-                         &emsp;&emsp; <input type="radio" id="radioPrimary1" name="boolean{{ a.question_line }}" value="Yes">Yes
+                         &emsp;&emsp;&emsp; <input type="radio" id="radioPrimary1" name="boolean{{ a.question_line }}" value="Yes">Yes
                          &emsp;       <input type="radio" id="radioPrimary2" name="boolean{{ a.question_line }}" value="No">No
                          {% else %}
                          &emsp;       <input type="text" name="boolean{{ a.question_line }}" maxlength="10">
                          {% endif %}
 <br> <br><hr>
 {% endfor %}
+
 <label>accept</label>
- <input type="radio" id="radioPrimary1" name="accept" value="True">Yes
-           <input type="radio" id="radioPrimary2" name="accept" value="False">No
+ &emsp;&emsp;<input type="radio" id="radioPrimary1" name="accept" value="True">Yes
+           &emsp;<input type="radio" id="radioPrimary2" name="accept" value="False">No
                          <br>
-                          <label>reason</label>
- <textarea name="reason" cols="40" rows="5"></textarea>
+                          <label>reason&emsp;</label>
+ <textarea name="reason" cols="40" rows="4"></textarea>
                             <br>
+                         <br>
                           <label>comment</label>
- <textarea name="comment" cols="40" rows="5"></textarea>
+ <textarea name="comment" cols="40" rows="4"></textarea>
                      </div>
 
 
